@@ -41,10 +41,10 @@ const Drawer = ({selected}:DrawerProps) => {
                     {items.map((item,key)=><DrawerItem item={item} state={state} selected={key==selected?true:false} key={key}/>)}
                 </div>
             </div>
-            <div className='pt-[3px] bg-primary_color ml-2 mr-2 shadow-inner'>
-                <div className={`h-[60px] w-full bg-grey cursor-pointer flex items-center pt-1 pl-3 pr-3 justify-centers`} onClick={()=>{handleClick()}}>
-                    <div className="min-h-[50px] min-w-[32px] flex justify-center items-center">
-                        {state?<ArrowFatLineLeft size={24} color=""/>:<ArrowFatLineRight size={24}/>}
+            <div>
+                <div className={`h-[60px] w-full bg-grey cursor-pointer flex items-center pt-1 pl-3 pr-3 border-t-2 border-primary_color`} onClick={()=>{handleClick()}}>
+                    <div className="min-h-[50px] min-w-[32px] flex justify-center items-center bg-grey border-0">
+                        {state?<ArrowFatLineLeft size={24}/>:<ArrowFatLineRight size={24}/>}
                     </div>
                     <div className={`${state?'flex justify-center ml-4':'hidden'}`}>
                         <h2 className={`${state?'flex min-w-[132px]':'hidden'}`}>{state?"Close Menu":"Open Menu"}</h2>

@@ -14,6 +14,7 @@
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "react": "^18.2.0",
+    "react-charts": "^3.0.0-beta.54",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.2",
     "react-redux": "^8.0.5",
