@@ -11,9 +11,6 @@ module.exports = {
       'xl': '1280px',
       '2xl': '1536px',
     },
-    boxShadow:{
-      'shadow': '0px 4px 4px rgba(0, 0, 0, 0.5)',
-    },
     extend: {
       colors: {
         'primary_color':'#292929',
@@ -23,9 +20,9 @@ module.exports = {
       dropShadow: {
         '3xl': '2px 2px 2px rgba(0, 0, 0, .25)',
       },
-      boxShadow: {
-        'inner': '-2px -2px -2px rgba(0, 0, 0, 1)',
-      },
+      boxShadow:{
+        'inner': 'inset -2px 0px 2px 0px rgba(0, 0, 0, .05)'
+      }
     }
   },
   plugins: [],
