@@ -16,9 +16,9 @@ const BottomNavigationMenu = ({selected}:BottomNavigationMenuProps) => {
     ])
 
     return (
-        <div className='h-16 w-full bg-grey flex justify-between md:hidden'>
+        <ul className='h-16 w-full bg-grey flex justify-between md:hidden'>
             {items.map((item, key) => <BottomNavigationMenuItem item={item} state={false} selected={key == selected ? true : false} key={key} />)}
-        </div>
+        </ul>
     )
 }
 
