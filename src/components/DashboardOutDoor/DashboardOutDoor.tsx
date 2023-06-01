@@ -18,15 +18,15 @@ const DashboardOutDoor = ({ name, quantity_actually, quantity_past, icon }: Dash
 
     return (
         <section title={`Outdoor ${name}`} className="h-36 flex w-full justify-end">
-            <div className="h-14 w-14 absolute z-10 bg-secundary_color hidden rounded-full md:flex justify-center items-center">
+            <div className="h-14 w-14 absolute z-10 bg-secundary_color hidden rounded-full -mt-3 lg:flex justify-center items-center">
                 <figure className="h-10 w-10 bg-primary_color rounded-full drop-shadow-3xl flex justify-center items-center">
                     {icon}
                 </figure>
             </div>
-            <div className="h-5/6 w-full rounded-lg self-end border-[1px] border-primary_color bg-white drop-shadow-3xl align-bottom md:mr-6">
+            <div className="h-5/6 mt-3 w-full rounded-lg self-end border-[1px] border-primary_color bg-white drop-shadow-3xl align-bottom lg:mr-6">
                 <div className="h-2/4 w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
                     <h2 className="text-secundary_color font-medium">{name}</h2>
-                    <figure className="h-10 w-10 bg-primary_color flex justify-center items-center md:hidden">
+                    <figure className="h-10 w-10 bg-primary_color flex justify-center items-center lg:hidden">
                         {icon}
                     </figure> 
                 </div>

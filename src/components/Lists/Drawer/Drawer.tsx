@@ -1,8 +1,8 @@
 import { ArrowFatLineLeft, ArrowFatLineRight, ClockCounterClockwise, Gear, House, UsersThree } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import icon from '../../assets/icon.png';
-import { changeMenuState } from "../../slices/stateMenuSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import icon from '../../../assets/icon.png';
+import { changeMenuState } from "../../../slices/stateMenuSlice";
 import DrawerItem from "./DrawerItem";
 
 interface DrawerProps {
