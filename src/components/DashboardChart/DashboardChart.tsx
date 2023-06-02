@@ -1,15 +1,15 @@
 
 import { ChartLineUp } from '@phosphor-icons/react';
 import {
-    CategoryScale,
-    Chart as ChartJS,
-    Filler,
-    Legend,
-    LineElement,
-    LinearScale,
-    PointElement,
-    Title,
-    Tooltip,
+  CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  Legend,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
   
@@ -73,13 +73,13 @@ const DashboardChart = () => {
             </div>
             <div className="h-full mt-0 lg:mt-7 flex flex-col w-full rounded-lg self-end border-[1px] border-primary_color bg-white drop-shadow-3xl align-bottom lg:mr-6">
                 <div className="min-h-[60px] w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
-                    <h2 className="text-secundary_color font-medium">Chamadas Recebidas nos Últimos 30 Dias</h2>
+                    <h2 className="text-secundary_color font-medium">Arroz</h2>
                     <figure className="h-10 w-10 bg-primary_color flex justify-center items-center lg:hidden">
 
                     </figure>
                 </div>
-                <div className="grow-1 w-full bg-secundary_color rounded-b-lg flex items-center justify-center">
-                    <Line className='h-full w-full p-2' options={options} data={data} />
+                <div className="grow-1 w-full h-full bg-secundary_color rounded-b-lg flex items-center justify-center">
+                    <Line className='p-2 relative' options={options} data={data} />
                 </div>
             </div>
         </section>
