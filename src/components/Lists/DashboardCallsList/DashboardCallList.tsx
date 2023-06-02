@@ -1,6 +1,6 @@
 const DashboardCallList = () => {
     return (
-        <section title="Lista das chamadas recebidas hoje" className="w-full md:w-2/6 min-h-[350px] min-w-[280px] max-w-[280px] max-h-[350px] lg:mt-0 flex justify-end">
+        <section title="Lista das chamadas recebidas hoje" className="w-full md:w-2/6 min-h-[350px] min-w-[280px] max-w-[350px] max-h-[350px] lg:mt-0 flex justify-end">
             <div className="h-14 w-14 absolute z-10 bg-secundary_color hidden rounded-full -mt-7 lg:flex justify-center items-center">
                 <figure className="h-10 w-10 bg-primary_color rounded-full drop-shadow-3xl flex justify-center items-center">
 

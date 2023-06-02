@@ -11,7 +11,7 @@ const DrawerItem = ({ item, selected, state }: DrawerItemInterface) => {
     const navigate = useNavigate();
 
     return (
-        <li className={`h-[50px] w-full bg-grey cursor-pointer flex items-center bg-gray-light justify-center ${selected ? "bg-primary_color rounded-lg drop-shadow-3xl" : "bg-transparent"}`} onClick={() => { navigate(item.route) }}>
+        <li className={`h-[50px] w-full bg-grey cursor-pointer flex items-center bg-gray-light justify-center ${selected ? "bg-primary_color rounded-lg drop-shadow-3xl" : "bg-transparent hover:bg-slate-200 rounded-lg"}`} onClick={() => { navigate(item.route) }}>
             <figure className={`min-h-[50px] min-w-[50px] flex justify-center items-center`}>
                 {selected ? item.iconSelected : item.icon}
             </figure>

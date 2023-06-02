@@ -29,7 +29,7 @@ const Drawer = ({ selected }: DrawerProps) => {
     return (
         <menu className={`h-screen ${!state ? "min-w-[72px]" : "min-w-[220px]"} bg-grey md:flex flex-col items-center justify-between shadow-inner hidden`}>
             <nav className='h-min w-min flex flex-col items-center gap-5'>
-                <figure className={`min-h-[72px] min-w-[72px] bg-grey cursor-pointer flex items-center pt-1 justify-center shadow-inner`} onClick={() => { handleClick() }}>
+                <figure className={`min-h-[72px] min-w-[72px] bg-grey cursor-pointer flex items-center pt-1 justify-center shadow-inner`}>
                     <img className="min-h-[72px] min-w-[72px] flex justify-center items-center" src={icon} />
                     <figcaption className={`${state ? 'flex min-w-[132px] ml-4 text-2xl font-bold' : 'hidden'}`}>IPorter</figcaption>
                 </figure>
