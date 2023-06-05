@@ -1,15 +1,45 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useQuery } from 'react-query';
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import icon from '../assets/icon.png';
 import MailInput from "../components/Inputs/MailInput";
 import PasswordInput from "../components/Inputs/PasswordInput";
+import { usePersistanceStore } from '../hooks/usePersistanceStore';
+
+
+
+type LoginRequest = {
+    access_token: string,
+    refresh:string
+}
 
 const Login = () => {
 
-    function handleLogin(data: any) {
-        console.log(process.env.API_LINK);
+    const [isFetching, setIsFetching] = useState(false);
+    const token_store = usePersistanceStore('token')
+    const refresh_token_store = usePersistanceStore('refresh_token')
+    const navigate=useNavigate();
+
+    const HandleLogin=(credentials: any)=> {
+        
+        const { data, isFetching, error } = useQuery<LoginRequest>("login", async () => {
+            const response= await axios.post("http://10.1.1.24:3000/auth/login", {username: credentials.email, password: credentials.password});
+            return response.data;
+        }, {})
+
+        if(isFetching){
+            setIsFetching(true);
+            return;
+        }
+        setIsFetching(false);
+        if(data){
+            navigate('/');
+        }
+        return <Navigate to={'/login'}/>;
     }
 
     const createUserFormSchema = z.object({
@@ -27,7 +57,7 @@ const Login = () => {
                     <img className='h-20 w-20 -ml-5' alt='Logo do produto IPorter' src={icon} />
                     <figcaption className="text-4xl text-primary_color font-bold">IPorter</figcaption>
                 </figcaption>
-                <form onSubmit={handleSubmit(handleLogin)} autoComplete="off" className="flex flex-col gap-2">
+                <form onSubmit={handleSubmit(HandleLogin)} autoComplete="off" className="flex flex-col gap-2">
                     <MailInput register={register} focus={setFocus} resetError={() => { clearErrors('email') }} />
                     {errors.email ?
                         <span
