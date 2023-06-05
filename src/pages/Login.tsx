@@ -8,8 +8,8 @@ import PasswordInput from "../components/Inputs/PasswordInput";
 
 const Login = () => {
 
-    function log(data: any) {
-        console.log(data)
+    function handleLogin(data: any) {
+        console.log(process.env.API_LINK);
     }
 
     const createUserFormSchema = z.object({
@@ -27,7 +27,7 @@ const Login = () => {
                     <img className='h-20 w-20 -ml-5' alt='Logo do produto IPorter' src={icon} />
                     <figcaption className="text-4xl text-primary_color font-bold">IPorter</figcaption>
                 </figcaption>
-                <form onSubmit={handleSubmit(log)} autoComplete="off" className="flex flex-col gap-2">
+                <form onSubmit={handleSubmit(handleLogin)} autoComplete="off" className="flex flex-col gap-2">
                     <MailInput register={register} focus={setFocus} resetError={() => { clearErrors('email') }} />
                     {errors.email ?
                         <span

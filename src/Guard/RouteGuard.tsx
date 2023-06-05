@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+import { usePersistanceStore } from "../hooks/usePersistanceStore";
 
 interface RouteGuardInterface {
     page: any,
@@ -6,8 +7,10 @@ interface RouteGuardInterface {
 
 const RouteGuard = ({ page }: RouteGuardInterface) => {
 
+    const auth=usePersistanceStore<boolean>('auth');
+
     const isAuthenticated = () => {
-        return false;
+        return auth.value==='true';
     }
 
     if(isAuthenticated()) {
