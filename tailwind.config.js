@@ -12,6 +12,12 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      keyframes:{
+        'hidder':{
+          '0%, 80%':{opacity:'1'},
+          '80%,100%':{opacity:'0'}
+        }
+      },
       colors: {
         'primary_color':'#292929',
         'secundary_color':'#ffffff',
