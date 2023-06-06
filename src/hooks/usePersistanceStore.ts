@@ -1,20 +1,18 @@
 import { useCookies } from "react-cookie";
 
 
-export function usePersistanceStore<T>(key: string, item_number?: number) {
+export function usePersistanceStore<T>() {
 
-    const [cookies, setCookie, removeCookie] = useCookies([key]);
+    const [cookies, setCookie, removeCookie] = useCookies();
 
-    var value=cookies.auth;
-
-    const updateValue = (newValue: T) => {
+    const updateValue = (key:string, newValue: T) => {
         setCookie(key, newValue, {path: '/', maxAge: 3600});
-        value=newValue;
     };
 
-    const deleteStore = () => {
+    const deleteStore = (key: string) => {
         removeCookie(key);
     }
 
-    return {value, updateValue, deleteStore};
+
+    return {cookies, updateValue, deleteStore};
 }

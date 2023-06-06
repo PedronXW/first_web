@@ -1,4 +1,4 @@
-import { useJwt } from "react-jwt";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { usePersistanceStore } from "../hooks/usePersistanceStore";
 
@@ -7,18 +7,13 @@ interface RouteGuardInterface {
 }
 
 const RouteGuard = ({ page }: RouteGuardInterface) => {
+    const [tokenJwt, setTokenJwt] = useState((usePersistanceStore().cookies.token));
+    const [refreshTokenJwt, setRefreshTokenJwt] = useState<any>(usePersistanceStore().cookies.refresh_token);
 
-    const tokenJwt=useJwt(usePersistanceStore<boolean>('token').value);
-    const refresh_tokenJwt=useJwt(usePersistanceStore<boolean>('refresh_token').value);
-
-    if(!tokenJwt.isExpired){
-        return page;
-    }else{
-        if(!refresh_tokenJwt.isExpired){
-            return page;
-        }else{
-            return <Navigate to={'/login'}/>;
-        }
+    if (tokenJwt && refreshTokenJwt) {
+        return page
+    } else {
+        return <Navigate to={'/login'} />
     }
 }
 

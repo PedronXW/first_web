@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { useQuery } from 'react-query';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useMutation } from 'react-query';
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import icon from '../assets/icon.png';
 import MailInput from "../components/Inputs/MailInput";
@@ -14,32 +14,33 @@ import { usePersistanceStore } from '../hooks/usePersistanceStore';
 
 type LoginRequest = {
     access_token: string,
-    refresh:string
+    refresh: string
 }
 
 const Login = () => {
 
     const [isFetching, setIsFetching] = useState(false);
-    const token_store = usePersistanceStore('token')
-    const refresh_token_store = usePersistanceStore('refresh_token')
-    const navigate=useNavigate();
+    const token_store = usePersistanceStore()
+    const refresh_token_store = usePersistanceStore()
+    const navigate = useNavigate();
 
-    const HandleLogin=(credentials: any)=> {
-        
-        const { data, isFetching, error } = useQuery<LoginRequest>("login", async () => {
-            const response= await axios.post("http://10.1.1.24:3000/auth/login", {username: credentials.email, password: credentials.password});
+    const mutation = useMutation({
+        mutationFn: async (credentials: any) => {
+            const response = await axios.post("http://10.1.1.24:3000/auth/login", { username: credentials.email, password: credentials.password });
             return response.data;
-        }, {})
-
-        if(isFetching){
-            setIsFetching(true);
-            return;
-        }
-        setIsFetching(false);
-        if(data){
+        }, 
+        onSuccess: (data: LoginRequest) => {
+            token_store.updateValue("token", data.access_token);
+            refresh_token_store.updateValue("refresh_token", data.refresh);
             navigate('/');
-        }
-        return <Navigate to={'/login'}/>;
+        },
+        onError: (error: any) => {
+            console.log(error);
+        },
+    });
+
+    const HandleLogin = (credentials: any) => {
+        mutation.mutate(credentials);
     }
 
     const createUserFormSchema = z.object({

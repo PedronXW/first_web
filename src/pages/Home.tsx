@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
 import DashboardCallList from "../components/Lists/DashboardCallsList/DashboardCallList";
 import Drawer from "../components/Lists/Drawer/Drawer";
+import Notification from "../components/Notification/Notification";
 
 const Home = () => {
 
@@ -28,6 +29,7 @@ const Home = () => {
                 </div>
                 <BottomNavigationMenu selected={0} />
             </section>
+            <Notification/>
         </div>
     )
 }
