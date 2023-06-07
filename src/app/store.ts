@@ -1,9 +1,11 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import stateMenuReducer from '../slices/stateMenuSlice';
+import stateNotificationSlice from '../slices/stateNotificationSlice';
 
 export const store = configureStore({
   reducer: {
-    state_menu: stateMenuReducer
+    state_menu: stateMenuReducer,
+    notification: stateNotificationSlice
   },
 });
 

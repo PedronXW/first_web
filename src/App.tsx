@@ -7,6 +7,9 @@ import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
 
 function App() {
+
+  console.log("arroz")
+
   return (
     <Routes>
       <Route element={

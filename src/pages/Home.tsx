@@ -1,4 +1,5 @@
 import { CheckFat, PhoneCall, PhoneX } from "@phosphor-icons/react";
+import { useAppDispatch } from "../app/hooks";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
 import DashboardChart from "../components/DashboardChart/DashboardChart";
 import DashboardOutDoor from "../components/DashboardOutDoor/DashboardOutDoor";
@@ -6,8 +7,11 @@ import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
 import DashboardCallList from "../components/Lists/DashboardCallsList/DashboardCallList";
 import Drawer from "../components/Lists/Drawer/Drawer";
+import { addNotification } from "../slices/stateNotificationSlice";
 
 const Home = () => {
+
+    const actions = useAppDispatch();
 
     return (
         <div className="h-screen w-screen flex">
@@ -21,7 +25,7 @@ const Home = () => {
                         <DashboardOutDoor name="Atendidas" quantity_actually={20} quantity_past={40} icon={<CheckFat className="text-secundary_color" size={20} />} />
                         <DashboardOutDoor name="Perdidas" quantity_actually={20} quantity_past={10} icon={<PhoneX className="text-secundary_color" size={20} />} />
                     </div>
-                    <div className="w-full grow-1 h-full flex-col lg:flex-row flex gap-7">
+                    <div className="w-full grow-1 h-full flex-col lg:flex-row flex gap-7" onClick={()=>{actions(addNotification())}}>
                         <DashboardChart/>
                         <DashboardCallList/>
                     </div>

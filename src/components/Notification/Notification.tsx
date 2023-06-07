@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { removeNotification } from "../../slices/stateNotificationSlice";
 
 const Notification=()=>{
 
-    const [state, setState]=useState(false);
+    var state = useAppSelector((state) => state.notification.state);
 
-    setTimeout(()=>{
-        setState(!state);
-    },5000)
+    const actions = useAppDispatch();
+
+    if(state==true){
+        setInterval(()=>{
+            actions(removeNotification())
+        }, 4000)
+    }
     
     return(
-        <div className={`h-20 w-72 bg-red-500 absolute bottom-4 right-4 animation-hidder`} onClick={()=>{setState(true)}}>
+        <div className={`h-20 w-72 bg-red-500 absolute bottom-4 right-4 ${state?"flex":"hidden"}`}>
             
         </div>
     )
