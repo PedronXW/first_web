@@ -2,6 +2,7 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import Notification from "./components/Notification/Notification";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Persons from "./pages/Persons";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
 
@@ -22,6 +23,7 @@ function App() {
         
         <Route path="/" element={<Home />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/persons" element={<Persons />} />
 
 
         <Route element={

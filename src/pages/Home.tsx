@@ -5,7 +5,7 @@ import DashboardChart from "../components/DashboardChart/DashboardChart";
 import DashboardOutDoor from "../components/DashboardOutDoor/DashboardOutDoor";
 import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
-import DashboardCallList from "../components/Lists/DashboardCallsList/DashboardCallList";
+import DashboardRamalList from "../components/Lists/DashboardRamalList/DashboardRamalList";
 import Drawer from "../components/Lists/Drawer/Drawer";
 import { addNotification } from "../slices/stateNotificationSlice";
 
@@ -27,7 +27,7 @@ const Home = () => {
                     </div>
                     <div className="w-full grow-1 h-full flex-col lg:flex-row flex gap-7" onClick={()=>{actions(addNotification())}}>
                         <DashboardChart/>
-                        <DashboardCallList/>
+                        <DashboardRamalList/>
                     </div>
                 </div>
                 <BottomNavigationMenu selected={0} />
