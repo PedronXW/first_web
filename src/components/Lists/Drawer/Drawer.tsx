@@ -16,11 +16,11 @@ const Drawer = ({ selected }: DrawerProps) => {
     ])
 
     return (
-        <menu className={`h-screen max-w-[280px] min-w-[280px] bg-primary_color md:flex flex-col items-center justify-between shadow-inner hidden p-5 pr-0`}>
+        <menu className={`h-screen max-w-[280px] min-w-[280px] bg-gradient-to-r from-primary_color to-gray-700 md:flex flex-col items-center justify-between drop-shadow-3xl hidden p-5 pr-0 pt-3`}>
             <nav className='h-min w-full flex flex-col items-center gap-5'>
-                <figure className={`h-[50px] w-full cursor-pointer flex items-center pt-1 justify-center`}>
+                <figure className={`h-[50px] w-full cursor-pointer flex items-center`}>
                     <img className="min-h-[50px] min-w-[50px] max-h-[70px] max-w-[70px] flex justify-center items-center" src={icon} />
-                    <figcaption className={`flex min-w-[132px] ml-4 text-2xl font-bold`}>IPorter</figcaption>
+                    <figcaption className={`flex min-w-[132px] py-5 mt-[6px] text-2xl font-bold text-secundary_color`}>IPorter</figcaption>
                 </figure>
                 <ul className='h-min w-full flex flex-col gap-2'>
                     {items.map((item, key) => <DrawerItem item={item} selected={key == selected ? true : false} key={key} />)}
