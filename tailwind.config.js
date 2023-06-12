@@ -12,6 +12,9 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      gridTemplateColumns: {
+        'auto': 'repeat(auto-fit, minmax(20px, 1fr))',
+      },
       colors: {
         'primary_color':'#292929',
         'secundary_color':'#ffffff',

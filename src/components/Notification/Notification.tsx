@@ -15,7 +15,7 @@ const Notification = () => {
     }
 
     return (
-        <div className={`h-16 w-72 bg-gradient-to-r from-primary_color to-gray-600 drop-shadow-3xl justify-between rounded-md p-1 px-3 items-center absolute bottom-4 right-4 ${state ? "flex" : "hidden"}`}>
+        <div className={`h-16 w-72 bg-gradient-to-r from-primary_color to-gray-600 drop-shadow-3xl justify-between rounded-md p-1 pr-3 pl-6 items-center absolute bottom-20 md:bottom-4 right-4 ${state ? "flex" : "hidden"}`}>
             <div className="flex flex-col justify-start">
                 <h2 className="text-secundary_color font-medium text-sm">Nome da atividade</h2>
                 <h3 className="text-secundary_color font-regular text-xs">ID da atividade</h3>
