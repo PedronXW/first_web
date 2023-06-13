@@ -19,7 +19,7 @@ const MailInput = ({register, focus, resetError}: InputInterface) =>{
                 <Envelope aria-label="Icone de um envelope." color="gray" size={20} />
             </figure>
             <input aria-label="Campo de inserção de email." {...register('email')} type="text" placeholder={"Email"} autoComplete="off" className='font-medium text-sm ml-2 bg-grey outline-none border-none w-full pr-1' onChange={(e) => { setValue(e.target.value); resetError(); }} value={value} />
-            <button className="h-5 w-5">
+            <button type="reset" className="h-5 w-5">
                 {value.length > 0 ? <X aria-label="Icone de um X para indicar o local de limpeza do campo de inserção" size={20} color="gray" onClick={() => { setValue('') }} /> : null}
             </button>
         </div>
