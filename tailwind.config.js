@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       gridTemplateColumns: {
-        'auto': 'repeat(auto-fit, minmax(20px, 1fr))',
+        'auto': 'repeat(auto-fit, minmax(260px, 1fr))',
       },
       colors: {
         'primary_color':'#292929',

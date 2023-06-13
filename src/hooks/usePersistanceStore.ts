@@ -13,5 +13,5 @@ export function usePersistanceStore<T>() {
         removeCookie(key);
     }
 
-    return { cookies, updateValue, deleteStore };
+    return { value: cookies , updateValue, deleteStore };
 }

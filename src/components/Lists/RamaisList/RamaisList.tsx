@@ -9,7 +9,6 @@ const RamaisList = () => {
             {ramais.map((ramal, key) => <RamalCellList key={key} ramal={ramal}/>)}
         </div>
     )
-
 }
 
 export default RamaisList;

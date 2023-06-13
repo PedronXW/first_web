@@ -7,7 +7,7 @@ import RamaisList from "../components/Lists/RamaisList/RamaisList";
 const Ramais = () => {
 
     return (
-        <div className="h-screen w-screen flex">
+        <div className="h-screen w-screen grid grid-cols-[240px_auto]">
             <Drawer selected={1} />
             <section title="Dashboard" className="h-screen w-full grow-1 flex flex-col overflow-y-scroll">
                 <Header />

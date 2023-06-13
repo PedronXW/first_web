@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from "react-router-dom";
@@ -18,8 +17,6 @@ type LoginRequest = {
 }
 
 const Login = () => {
-
-    const [isFetching, setIsFetching] = useState(false);
     const token_store = usePersistanceStore()
     const refresh_token_store = usePersistanceStore()
     const navigate = useNavigate();
@@ -60,13 +57,11 @@ const Login = () => {
             <form onSubmit={handleSubmit(HandleLogin)} autoComplete="off" className="flex flex-col gap-2">
                 <MailInput register={register} focus={setFocus} resetError={() => { clearErrors('email') }} />
                 {errors.email ?
-                    <span
-                        aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
+                    <span aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
                         className="h-5 text-xs text-red-500 pl-2">{errors!.email!.message?.toString()}</span> : <div className="h-5"> </div>}
                 <PasswordInput register={register} focus={setFocus} resetError={() => { clearErrors('password') }} />
                 {errors.password ?
-                    <span
-                        aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
+                    <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
                         className="h-5 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-5"> </div>}
                 <button aria-label='Confirmar Login' type="submit" className="w-full p-2 cursor-pointer flex items-center bg-primary_color border-primary_color rounded-md text-secundary_color justify-center">Login</button>
                 <Link className='h-8 w-auto p-2 flex cursor-pointer text-xs self-center' to={'/reset-password'}>Forgeted your Password?</Link>
