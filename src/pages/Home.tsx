@@ -1,4 +1,5 @@
 import { CheckFat, PhoneCall, PhoneX } from "@phosphor-icons/react";
+import { enqueueSnackbar } from "notistack";
 import { useAppDispatch } from "../app/hooks";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
 import DashboardChart from "../components/DashboardChart/DashboardChart";
@@ -7,7 +8,6 @@ import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
 import DashboardRamalList from "../components/Lists/DashboardRamalList/DashboardRamalList";
 import Drawer from "../components/Lists/Drawer/Drawer";
-import { addNotification } from "../slices/stateNotificationSlice";
 
 const Home = () => {
 
@@ -25,7 +25,7 @@ const Home = () => {
                         <DashboardOutDoor name="Atendidas" quantity_actually={20} quantity_past={40} icon={<CheckFat className="text-secundary_color" size={20} />} />
                         <DashboardOutDoor name="Perdidas" quantity_actually={20} quantity_past={10} icon={<PhoneX className="text-secundary_color" size={20} />} />
                     </div>
-                    <div className="w-full grow-1 h-full flex-col lg:flex-row flex gap-10" onClick={() => { actions(addNotification()) }}>
+                    <div className="w-full grow-1 h-full flex-col lg:flex-row flex gap-10" onClick={() => { enqueueSnackbar("ArrozDoce", { variant: 'success' }) }}>
                         <DashboardChart />
                         <DashboardRamalList />
                     </div>

@@ -1,3 +1,5 @@
+import { X } from '@phosphor-icons/react';
+import { SnackbarProvider, closeSnackbar } from 'notistack';
 import React from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { createRoot } from 'react-dom/client';
@@ -15,15 +17,28 @@ const queryClient = new QueryClient();
 
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <CookiesProvider>
-        <BrowserRouter>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </BrowserRouter>
-      </CookiesProvider>
-    </QueryClientProvider>
+    <SnackbarProvider 
+      maxSnack={4}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      autoHideDuration={4000}
+      action={(snackbarId:any) => (
+        <button onClick={() => closeSnackbar(snackbarId)}>
+          <X size={20}/>
+        </button>
+      )}>
+      <QueryClientProvider client={queryClient}>
+        <CookiesProvider>
+          <BrowserRouter>
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </BrowserRouter>
+        </CookiesProvider>
+      </QueryClientProvider>
+    </SnackbarProvider>
   </React.StrictMode>
 );
 
