@@ -8,7 +8,7 @@ const Logs=()=>{
         <div className="h-screen w-screen grid grid-cols-[240px_auto]">
             <Drawer selected={2} />
             <section title="Dashboard" className="h-screen w-full grow-1 flex flex-col overflow-y-scroll">
-                <Header/>
+                <Header title="Logs"/>
                 <HeaderMobile/>
                 <BottomNavigationMenu selected={2}/>
             </section>

@@ -23,7 +23,7 @@ root.render(
         vertical: 'bottom',
         horizontal: 'right',
       }}
-      autoHideDuration={4000}
+      autoHideDuration={400000}
       action={(snackbarId:any) => (
         <button onClick={() => closeSnackbar(snackbarId)}>
           <X size={20}/>

@@ -6,7 +6,7 @@ const DashboardRamalList = () => {
     const ramais = [1, 2, 3, 5, 6, 7, 8, 9, 10, 9, 8, 4, 5, 6];
 
     return (
-        <section title="Lista das chamadas recebidas hoje" className="w-full md:w-2/6 min-h-[350px] min-w-[280px] max-w-[350px] max-h-[350px] lg:mt-0 flex justify-end items-end flex-col">
+        <section title="Lista das chamadas recebidas hoje" className="w-full md:w-2/6 min-h-[320px] min-w-[280px] max-w-[350px] max-h-[320px] lg:mt-0 flex justify-end items-end flex-col">
             <div className="min-h-[56px] min-w-[56px] relative z-10 bg-secundary_color rounded-full flex justify-center items-center right-4">
                 <figure className="h-10 w-10 bg-gradient-to-l from-primary_color to-gray-600 rounded-full drop-shadow-3xl flex justify-center items-center">
                     <List size={20} color="white" />
@@ -16,7 +16,7 @@ const DashboardRamalList = () => {
                 <div className="min-h-[60px] w-full bg-gradient-to-r from-primary_color to-gray-600 rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
                     <h2 className="text-secundary_color font-medium">Ramais Ativos</h2>
                 </div>
-                <div className="overflow-y-scroll h-[287px] rounded-b-md">
+                <div className="overflow-y-scroll h-[257px] rounded-b-md">
                     <div className="grow-1 w-full bg-secundary_color rounded-b-lg flex flex-col items-center justify-center overflow-hidden">
                         {ramais.map((ramal, key) => <DashboardRamalListItem key={key} ramal={ramal}/>)}
                     </div>
