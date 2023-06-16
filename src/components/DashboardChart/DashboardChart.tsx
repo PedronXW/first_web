@@ -64,7 +64,7 @@ export const data = {
 
 const DashboardChart = () => {
   return (
-    <section title="Grafíco da quantidade de chamadas nos últimos 30 dias" className="lg:w-5/6 w-full min-h-[320px] max-h-[320px] flex flex-col items-end justify-end">
+    <section title="Grafíco da quantidade de chamadas nos últimos 30 dias" className="w-full min-h-[380px] max-h-[380px] flex flex-col items-end justify-end">
       <div className="h-14 w-14 relative z-10 bg-secundary_color rounded-full -mt-7 flex justify-center items-center right-4">
         <figure className="h-10 w-10 bg-gradient-to-l from-primary_color to-gray-600 rounded-full drop-shadow-3xl flex justify-center items-center">
           <ChartLineUp size={20} color='white' />
