@@ -10,9 +10,6 @@ import Drawer from "../components/Lists/Drawer/Drawer";
 
 const Home = () => {
 
-    
-
-
     return (
         <div className="h-screen w-screen flex flex-col md:grid md:grid-cols-[240px_auto]">
             <Drawer selected={0} />
