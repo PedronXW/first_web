@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePersistanceStore } from "../../../hooks/usePersistanceStore";
 
 interface SettingCellInterface{
     setting:any;
@@ -7,9 +8,18 @@ interface SettingCellInterface{
 const SettingCell=({setting}:SettingCellInterface)=>{
 
     const navigate = useNavigate();
+    const store = usePersistanceStore()
+
+    const handleClick=()=>{
+        if(setting.name=="Sair"){
+            store.deleteStore("refresh_token");
+            store.deleteStore("token");
+        } 
+        navigate(setting.route) 
+    }
 
     return(
-        <li className={`h-full w-full cursor-pointer flex flex-col border-2 drop-shadow-3xl border-primary_color rounded-md justify-between px-4 py-6 pt-4 ${setting.dark ? "bg-secundary_color" : "bg-primary_color"}`} onClick={() => { navigate(setting.route) }}>
+        <li className={`max-h-[220px] min-h-[220px] w-full cursor-pointer flex flex-col border-2 drop-shadow-3xl border-primary_color rounded-md justify-between px-4 py-6 pt-4 ${setting.dark ? "bg-secundary_color" : "bg-primary_color"}`} onClick={handleClick}>
             <figure className={`h-[40px] w-[40px] flex justify-center items-center`}>
                 {!setting.dark ? setting.iconDark : setting.icon}
             </figure>

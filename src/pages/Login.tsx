@@ -17,8 +17,7 @@ type LoginRequest = {
 }
 
 const Login = () => {
-    const token_store = usePersistanceStore()
-    const refresh_token_store = usePersistanceStore()
+    const store = usePersistanceStore()
     const navigate = useNavigate();
 
     const mutation = useMutation({
@@ -27,8 +26,8 @@ const Login = () => {
             return response.data;
         },
         onSuccess: (data: LoginRequest) => {
-            token_store.updateValue("token", data.access_token);
-            refresh_token_store.updateValue("refresh_token", data.refresh);
+            store.updateValue("token", data.access_token);
+            store.updateValue("refresh_token", data.refresh);
             navigate('/');
         },
         onError: (error: any) => {

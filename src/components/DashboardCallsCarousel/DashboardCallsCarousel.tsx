@@ -47,12 +47,11 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
 
     return (
         <div className="h-min w-full flex flex-col gap-5">
-            <h2 className="text-primary_color text-2xl font-bold">Chamadas Recentes</h2>
+            <h2 className="text-primary_color text-2xl font-bold">Últimas Chamadas Recebidas</h2>
             <Carousel
                 className="flex items-center"
                 arrows
                 pauseOnHover
-                infinite
                 centerMode
                 rewindWithAnimation
                 draggable
