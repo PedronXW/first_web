@@ -1,4 +1,3 @@
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import DashboardCallsCarouselCell from "./DashboardCallsCarouselCell";
@@ -57,21 +56,9 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
                 draggable
                 autoPlay
                 responsive={responsive}
-                customLeftArrow={
-                    <button className="absolute left-0 min-w-[32px] min-h-[32px] flex justify-center items-center cursor-pointer">
-                        <CaretLeft size={20} className="text-gray-500"/>
-                    </button>
-                }
-                customRightArrow={
-                    <button className="absolute right-0 min-w-[32px] min-h-[32px] flex justify-center items-center cursor-pointer">
-                        <CaretRight size={20}  className="text-gray-500"/>
-                    </button>
-                }
                 autoPlaySpeed={5000}
                 transitionDuration={500}>
-
                     {calls.map((call, index) => <DashboardCallsCarouselCell key={index} call={call} />)}
-
             </Carousel>
         </div>
     )

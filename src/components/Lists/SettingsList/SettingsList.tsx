@@ -1,10 +1,11 @@
 import { Archive, Lock, SignOut, UserPlus, UserSwitch, Wrench } from "@phosphor-icons/react";
 import { useState } from "react";
+import useAccessible from "../../../hooks/useAccessible";
 import SettingCell from "./SettingCell";
 
 const SettingsList = () => {
 
-    let is_admin=true
+    let is_admin=useAccessible();
 
     const [items, setItems] = useState([
         {

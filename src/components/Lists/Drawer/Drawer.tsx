@@ -1,4 +1,4 @@
-import { ClockCounterClockwise, Gear, House, List } from "@phosphor-icons/react";
+import { ClockCounterClockwise, Gear, House, List, PhoneCall } from "@phosphor-icons/react";
 import { useState } from "react";
 import icon from '../../../assets/icon.png';
 import DrawerItem from "./DrawerItem";
@@ -11,6 +11,7 @@ const Drawer = ({ selected }: DrawerProps) => {
     const [items, setItems] = useState([
         { name: "Dashboard", route: '/', icon: <House className="text-secundary_color" size={20} />, iconSelected: <House size={20} className="text-primary_color" /> },
         { name: "Ramais", route: '/ramais', icon: <List className="text-secundary_color" size={20} />, iconSelected: <List size={20} className="text-primary_color" /> },
+        { name: "Chamadas", route: '/calls', icon: <PhoneCall className="text-secundary_color" size={20} />, iconSelected: <PhoneCall size={20} className="text-primary_color" /> },
         { name: "Logs", route: '/logs', icon: <ClockCounterClockwise className="text-secundary_color" size={20} />, iconSelected: <ClockCounterClockwise size={20} className="text-primary_color" /> },
         { name: "Settings", route: '/settings', icon: <Gear className="text-secundary_color" size={20} />, iconSelected: <Gear size={20} className="text-primary_color" /> },
     ])
