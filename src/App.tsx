@@ -2,6 +2,7 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import RouteGuard from "./guard/RouteGuard";
 import Call from "./pages/Call";
 import Calls from "./pages/Calls";
+import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logs from "./pages/Logs";
@@ -19,7 +20,10 @@ function App() {
       <Route path="*" element={<div>Não tem</div>} />
 
       <Route path="/" element={<RouteGuard page={<Home />} />} />
-      <Route path="/settings" element={<RouteGuard page={<Settings />} />} />
+      <Route path="/settings">
+        <Route path="" element={<RouteGuard page={<Settings />} />} />
+        <Route path="change-password" element={<RouteGuard page={<ChangePassword />} />} />
+      </Route>
       <Route path="/ramais" element={<RouteGuard page={<Ramais />} />} />
       <Route path="/logs" element={<RouteGuard page={<Logs />} />} />
       <Route path="/calls">

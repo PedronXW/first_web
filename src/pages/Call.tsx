@@ -1,39 +1,24 @@
-import { useEffect, useRef } from "react";
+import AudioPlayer from "../components/AudioPlayer/AudioPlayer";
+import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
+import Header from "../components/Header/Header";
+import HeaderMobile from "../components/Header/HeaderMobile";
+import Drawer from "../components/Lists/Drawer/Drawer";
 
 
-const Call=()=>{
-    const ref = useRef<any>();
-
-    const soundPlay = async () => {
-        console.log(ref)
-        const audio = await fetch("http://10.1.1.24:3000/logs/audio/1687271212.464",
-            {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgzMTBjMDAwLTJmYTgtNDRlNS04MTMyLWY2NmFlM2RjY2ExNyIsImlhdCI6MTY4NzI5MTM3NywiZXhwIjoxNjg3MzAyMTc3fQ.I7nvog0Nm4zEsmJ6YBkVFI0rcxOAmzFgUiolePciMVc",
-                    client: "d471de34-7bca-46dd-acde-e173c85813ff"
-                }
-            }
-        );
-        const blob = await audio.blob();
-        if (blob && ref) {
-            ref.current.src = URL.createObjectURL(blob);
-            ref.current.parentElement.load();
-            console.info("Ready!", ref.current.src);
-        } else {
-            console.warn("Can not load");
-        }
-    }
-
-    useEffect(() => {
-        soundPlay()
-    }, [])
-
+const Call = () => {
     return (
-        <div className="w-full">
-            <audio controls className="w-full">
-                <source ref={ref} type="audio/wav" />
-            </audio>
+        <div className="h-screen w-screen flex flex-col md:flex-row">
+            <Drawer selected={2} />
+            <div className="w-full flex flex-col grow-1 overflow-hidden">
+                <HeaderMobile />
+                <section title="Dashboard" className="grow-1 w-full flex flex-col">
+                    <Header title="Chamada 1687271212.464" />
+                    <div className="grow-1 w-full px-10 pb-5">
+                        <AudioPlayer audio_id="1687271212.464" client="d471de34-7bca-46dd-acde-e173c85813ff" />
+                    </div>
+                </section>
+                <BottomNavigationMenu selected={2} />
+            </div>
         </div>
     )
 }

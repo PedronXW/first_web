@@ -25,7 +25,7 @@ const SettingCell=({setting}:SettingCellInterface)=>{
             </figure>
             <div className="flex flex-col gap-2 items-end">
                 <h3 className={`flex text-end justify-end w-full pr-[10px] ${setting.dark ? "text-primary_color" : "text-secundary_color"}`}>{setting.name}</h3>
-                <h3 className={`flex text-end justify-end w-full pr-[10px] text-xs font-normal ${setting.dark ? "text-primary_color" : "text-secundary_color"}`}>{setting.description}</h3>
+                <h3 className={`flex text-end justify-end w-2/3 pr-[10px] text-xs font-normal ${setting.dark ? "text-primary_color" : "text-secundary_color"}`}>{setting.description}</h3>
             </div>
         </li>
     )

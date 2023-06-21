@@ -8,7 +8,7 @@ import AddRamalButton from "../components/SuspendedComponents/AddRamalButton/Add
 const Ramais = () => {
 
     return (
-        <div className="h-screen w-screen flex flex-col md:grid md:grid-cols-[240px_auto]">
+        <div className="h-screen w-screen flex flex-col md:flex-row">
             <Drawer selected={1} />
             <div className="w-full flex flex-col grow-1 overflow-hidden">
                 <HeaderMobile />

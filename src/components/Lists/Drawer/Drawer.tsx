@@ -17,7 +17,7 @@ const Drawer = ({ selected }: DrawerProps) => {
     ])
 
     return (
-        <menu className={`h-screen w-full bg-gradient-to-r from-primary_color to-gray-600 md:flex flex-col items-center justify-between hidden p-5 pr-0 pt-3`}>
+        <menu className={`h-screen max-w-[240px] min-w-[240px] bg-gradient-to-r from-primary_color to-gray-600 md:flex flex-col items-center justify-between hidden p-5 pr-0 pt-3`}>
             <nav className='h-min w-full flex flex-col items-center gap-7'>
                 <figure className={`h-[70px] w-full cursor-pointer flex flex-col items-center justify-center pr-7`}>
                     <img className="min-h-[50px] min-w-[50px] max-h-[70px] max-w-[70px] flex justify-center items-center" src={icon} />

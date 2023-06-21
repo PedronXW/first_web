@@ -5,7 +5,7 @@ import Drawer from "../components/Lists/Drawer/Drawer";
 
 const Logs=()=>{
     return(
-        <div className="h-screen w-screen flex flex-col md:grid md:grid-cols-[240px_auto]">
+        <div className="h-screen w-screen flex flex-col md:flex-row">
             <Drawer selected={3} />
             <div className="w-full flex flex-col grow-1 overflow-hidden">
                 <HeaderMobile />
