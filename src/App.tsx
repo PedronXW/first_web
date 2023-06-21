@@ -1,5 +1,6 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import RouteGuard from "./guard/RouteGuard";
+import Call from "./pages/Call";
 import Calls from "./pages/Calls";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -21,7 +22,10 @@ function App() {
       <Route path="/settings" element={<RouteGuard page={<Settings />} />} />
       <Route path="/ramais" element={<RouteGuard page={<Ramais />} />} />
       <Route path="/logs" element={<RouteGuard page={<Logs />} />} />
-      <Route path="/calls" element={<RouteGuard page={<Calls />} />} />
+      <Route path="/calls">
+          <Route path="" element={<RouteGuard page={<Calls />} />} />
+          <Route path=":id" element={<RouteGuard page={<Call />} />} />
+      </Route>
 
       <Route element={
         <div className="h-screen w-screen sm:bg-grey flex justify-center items-center">

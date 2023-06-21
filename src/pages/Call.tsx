@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 
 const Call=()=>{
-    const ref = useRef<any>()
+    const ref = useRef<any>();
 
     const soundPlay = async () => {
         console.log(ref)

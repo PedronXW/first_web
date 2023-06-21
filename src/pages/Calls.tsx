@@ -11,10 +11,10 @@ const Calls=()=>{
             <div className="w-full flex flex-col grow-1 overflow-hidden">
                 <HeaderMobile />
                 <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
-                    <Header title="Ramais"/>
+                    <Header title="Chamadas"/>
                     <CallsList/>
                 </section>
-                <BottomNavigationMenu selected={1} />
+                <BottomNavigationMenu selected={2} />
             </div>
         </div>
     )
