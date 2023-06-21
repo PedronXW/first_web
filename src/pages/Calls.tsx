@@ -8,12 +8,14 @@ const Calls=()=>{
     return (
         <div className="h-screen w-screen flex flex-col md:grid md:grid-cols-[240px_auto]">
             <Drawer selected={2} />
-            <section title="Dashboard" className="h-screen w-full grow-1 flex flex-col overflow-y-scroll">
-                <Header title="Chamadas"/>
+            <div className="w-full flex flex-col grow-1 overflow-hidden">
                 <HeaderMobile />
-                <CallsList/>
-                <BottomNavigationMenu selected={2}/>
-            </section>
+                <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
+                    <Header title="Ramais"/>
+                    <CallsList/>
+                </section>
+                <BottomNavigationMenu selected={1} />
+            </div>
         </div>
     )
 }

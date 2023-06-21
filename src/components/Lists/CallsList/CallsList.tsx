@@ -1,39 +1,12 @@
-import { useEffect, useRef } from "react";
+import CallCell from "./CallCell";
 
 const CallsList = () => {
 
-    const ref = useRef<any>()
+    const calls = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
-    const soundPlay = async () => {
-        const audio = await fetch("http://10.1.1.24:3000/logs/audio/1687271212.464",
-            {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgzMTBjMDAwLTJmYTgtNDRlNS04MTMyLWY2NmFlM2RjY2ExNyIsImlhdCI6MTY4NzI5MTM3NywiZXhwIjoxNjg3MzAyMTc3fQ.I7nvog0Nm4zEsmJ6YBkVFI0rcxOAmzFgUiolePciMVc",
-                    client: "d471de34-7bca-46dd-acde-e173c85813ff"
-                }
-            }
-        );
-        const blob = await audio.blob();
-        if (blob) {
-            ref.current.src = URL.createObjectURL(blob);
-            ref.current.parentElement.load()
-            console.info("Ready!", ref.current.src);
-
-        } else {
-            console.warn("Can not load");
-        }
-    }
-
-    useEffect(() => {
-        soundPlay()
-    }, [])
-
-    return (
-        <div>
-            <audio controls>
-                <source ref={ref} type="audio/mp3" />
-            </audio>
+    return(
+        <div className="grid h-full w-full grid-cols-auto md:gap-8 gap-2 md:px-12 pl-7 pr-6 pb-5">
+            {calls.map((call, key) => <CallCell key={key} call={call}/>)}
         </div>
     )
 }

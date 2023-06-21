@@ -8,12 +8,14 @@ const Settings = () => {
     return(
         <div className="h-screen w-screen flex flex-col md:grid md:grid-cols-[240px_auto]">
             <Drawer selected={4} />
-            <section title="Dashboard" className="h-screen w-full grow-1 flex flex-col overflow-y-scroll mb-16">
-                <Header title="Configurações"/>
-                <HeaderMobile/>
-                <SettingsList/>
-                <BottomNavigationMenu selected={4}/>
-            </section>
+            <div className="w-full flex flex-col grow-1 overflow-hidden">
+                <HeaderMobile />
+                <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
+                    <Header title="Ramais"/>
+                    <SettingsList/>
+                </section>
+                <BottomNavigationMenu selected={4} />
+            </div>
         </div>
     )
 }

@@ -1,10 +1,10 @@
 import { PhoneIncoming } from "@phosphor-icons/react";
 
-interface RamalCellListInterface {
+interface RamalCellInterface {
     ramal: any;
 }
 
-const RamalCellList = ({ ramal }: RamalCellListInterface) => {
+const RamalCell = ({ ramal }: RamalCellInterface) => {
     return (
         <section title={ramal.name? ramal.name:"arroz"} className="h-36 flex flex-col w-full justify-end items-end ">
             <div className="h-8 w-8 relative z-10 bg-secundary_color rounded-full flex justify-center items-center right-4">
@@ -28,4 +28,4 @@ const RamalCellList = ({ ramal }: RamalCellListInterface) => {
     )
 }
 
-export default RamalCellList;
+export default RamalCell;

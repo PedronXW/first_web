@@ -7,12 +7,14 @@ const Logs=()=>{
     return(
         <div className="h-screen w-screen flex flex-col md:grid md:grid-cols-[240px_auto]">
             <Drawer selected={3} />
-            <section title="Dashboard" className="h-screen w-full grow-1 flex flex-col overflow-y-scroll">
-                <Header title="Logs"/>
-                <HeaderMobile/>
-                
-                <BottomNavigationMenu selected={3}/>
-            </section>
+            <div className="w-full flex flex-col grow-1 overflow-hidden">
+                <HeaderMobile />
+                <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
+                    <Header title="Ramais"/>
+                    
+                </section>
+                <BottomNavigationMenu selected={3} />
+            </div>
         </div>
     )
 }
