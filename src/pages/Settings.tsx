@@ -6,7 +6,7 @@ import SettingsList from "../components/Lists/SettingsList/SettingsList";
 
 const Settings = () => {
     return(
-        <div className="h-screen w-screen flex flex-col md:flex-row">
+        <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={4} />
             <div className="w-full flex flex-col grow-1 overflow-hidden">
                 <HeaderMobile />

@@ -11,7 +11,7 @@ const BottomNavigationMenuItem = ({ item, selected, state }: BottomNavigationMen
     const navigate=useNavigate();
 
     return (
-        <li className={`h-full w-full bg-grey cursor-pointer flex items-center bg-gray-light justify-center ${selected?"bg-primary_color":"bg-transparent"}`} onClick={()=>{navigate(item.route)}}>
+        <li className={`h-full w-full cursor-pointer flex items-center bg-gray-light justify-center ${selected?"bg-primary_color":"bg-secundary_color"}`} onClick={()=>{navigate(item.route)}}>
             {selected?item.iconSelected:item.icon}
         </li>
     )

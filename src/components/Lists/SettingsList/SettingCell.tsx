@@ -19,7 +19,7 @@ const SettingCell=({setting}:SettingCellInterface)=>{
     }
 
     return(
-        <li className={`max-h-[220px] min-h-[220px] w-full cursor-pointer flex flex-col border-2 drop-shadow-3xl border-primary_color rounded-md justify-between px-4 py-6 pt-4 ${setting.dark ? "bg-secundary_color" : "bg-primary_color"}`} onClick={handleClick}>
+        <li className={`max-h-[220px] min-h-[220px] w-full cursor-pointer flex flex-col drop-shadow-3xl rounded-md justify-between px-4 py-6 pt-4 ${setting.dark ? "bg-secundary_color" : "bg-primary_color"}`} onClick={handleClick}>
             <figure className={`h-[40px] w-[40px] flex justify-center items-center`}>
                 {!setting.dark ? setting.iconDark : setting.icon}
             </figure>

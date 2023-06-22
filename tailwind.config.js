@@ -17,12 +17,12 @@ module.exports = {
         'settings': 'repeat(auto-fit, minmax(180px, 1fr))',
       },
       colors: {
-        'primary_color':'#292929',
+        'primary_color':'#414141',
         'secundary_color':'#ffffff',
-        'grey': '#f0f0f0',
+        'background_color': '#F3F4F6',
       },
       dropShadow: {
-        '3xl': '2px 2px 2px rgba(0, 0, 0, .25)',
+        '3xl': '2px 2px 2px rgba(0, 0, 0, .35)',
       },
       boxShadow:{
         'inner': 'inset -2px 0px 2px 0px rgba(0, 0, 0, .05)'

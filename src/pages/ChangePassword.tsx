@@ -42,13 +42,13 @@ const ChangePassword = () => {
 
 
     return (
-        <div className="h-screen w-screen flex flex-col md:flex-row">
+        <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={4} />
-            <div className="w-full flex flex-col h-full">
+            <div className="w-full flex flex-col h-full gap-2">
                 <HeaderMobile />
-                <section title="Dashboard" className="w-full flex flex-col grow-1 justify-between">
+                <section title="Dashboard" className="w-full flex flex-col grow-1 justify-between overflow-hidden">
                     <Header title="Alteração de Senha" />
-                    <form onSubmit={handleSubmit(HandleLogin)} autoComplete="off" className="grow-1 max-w-[380px] mx-11">
+                    <form onSubmit={handleSubmit(HandleLogin)} autoComplete="off" className="h-screen max-w-[380px] mx-11">
                         <h2 className="text-sm h-min text-primary_color font-normal mb-10">Para alterar sua senha, por favor, preencha os campos abaixo.</h2>
                         <PasswordInput register={register} focus={setFocus} resetError={() => { clearErrors('password') }} />
                         {errors.password ?

@@ -11,12 +11,12 @@ import Drawer from "../components/Lists/Drawer/Drawer";
 const Home = () => {
 
     return (
-        <div className="h-screen w-screen flex flex-col md:flex-row">
+        <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={0} />
             <div className="w-full flex flex-col grow-1 overflow-hidden">
                 <HeaderMobile />
                 <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
-                    <Header title="Ramais" />
+                    <Header title="Bem vindo, Pedro!!" />
                     <div className="w-full  flex flex-col md:p-12 pb-3 pl-7 pr-6 md:pt-0 mb-4 gap-10">
                         <div className="grid lg:grid-cols-3 grid-cols-1 gap-2 xl:gap-8 w-full h-min">
                             <DashboardOutDoor name="Chamadas Recebidas" quantity_actually={20} quantity_past={10} icon={<PhoneCall className="text-secundary_color" size={20} />} />

@@ -18,29 +18,36 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
         stage_6: {
             // the naming can be any, depends on you.
             breakpoint: { max: 1800, min: 1400 },
-            items: 4
+            items: 4,
+            partialVisibilityGutter: 60
         },
         stage_5: {
             // the naming can be any, depends on you.
             breakpoint: { max: 1400, min: 1100 },
-            items: 3
+            items: 3,
+            partialVisibilityGutter: 60
         },
         stage_4: {
             // the naming can be any, depends on you.
             breakpoint: { max: 1100, min: 875 },
-            items: 2
+            items: 2,
+            partialVisibilityGutter: 60
         },
         stage_3: {
             breakpoint: { max: 875, min: 768 },
-            items: 1
+            items: 1,
+            partialVisibilityGutter: 60
         },
         stage_2: {
             breakpoint: { max: 768, min: 600 },
-            items: 2
+            items: 2,
+            partialVisibilityGutter: 60
         },
         stage_1: {
             breakpoint: { max: 600, min: 0 },
-            items: 1
+            items: 1,
+            partialVisibilityGutter: 60,
+
         }
     };
 
@@ -51,10 +58,11 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
                 className="flex items-center"
                 arrows
                 pauseOnHover
-                centerMode
+                swipeable
                 rewindWithAnimation
                 draggable
                 autoPlay
+                partialVisbile
                 responsive={responsive}
                 autoPlaySpeed={5000}
                 transitionDuration={500}>

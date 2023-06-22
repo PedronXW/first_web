@@ -64,17 +64,15 @@ export const data = {
 
 const DashboardChart = () => {
   return (
-    <section title="Grafíco da quantidade de chamadas nos últimos 30 dias" className="w-full min-h-[380px] max-h-[380px] flex flex-col items-end justify-end">
-      <div className="h-14 w-14 relative z-10 bg-secundary_color rounded-full -mt-7 flex justify-center items-center right-4">
-        <figure className="h-10 w-10 bg-gradient-to-l from-primary_color to-gray-600 rounded-full drop-shadow-3xl flex justify-center items-center">
-          <ChartLineUp size={20} color='white' />
-        </figure>
-      </div>
-      <div className="h-full flex flex-col w-full rounded-lg self-end border-[1px] border-primary_color bg-white drop-shadow-3xl align-bottom -mt-7">
-        <div className="min-h-[60px] w-full bg-gradient-to-r from-primary_color to-gray-600 rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
+    <section title="Grafíco da quantidade de chamadas nos últimos 30 dias" className="w-full min-h-[420px] max-h-[420px] flex flex-col items-end justify-end">
+      <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">
+        <ChartLineUp size={20} color='white' />
+      </figure>
+      <div className="h-full flex flex-col w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl align-bottom -mt-7">
+        <div className="min-h-[60px] w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
           <h2 className="text-secundary_color font-medium">Chamadas nos últimos 30 dias</h2>
         </div>
-        <div className="grow-1 w-full h-full bg-secundary_color rounded-b-lg flex items-center justify-center">
+        <div className="grow-1 w-full h-full bg-secundary_color rounded-b-lg flex items-center justify-center p-2">
           <Line className='p-2 relative' options={options} data={data} />
         </div>
       </div>

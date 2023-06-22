@@ -7,9 +7,9 @@ interface RamalCellInterface {
 const RamalCell = ({ ramal }: RamalCellInterface) => {
     return (
         <section title={ramal.name ? ramal.name : "arroz"} className="h-36 flex flex-col w-full justify-end items-end ">
-            <div className="h-[32px] w-[32px] bg-green-500 relative z-10 right-4 border-[8px] border-secundary_color rounded-full flex justify-center items-center" />
-            <div className="h-5/6 w-full rounded-lg self-end border-[1px] border-primary_color bg-white drop-shadow-3xl cursor-pointer align-bottom -mt-4">
-                <div className="h-2/4 w-full bg-gradient-to-r from-primary_color to-gray-600 rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
+            <div className="h-[32px] w-[32px] bg-green-500 relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center" />
+            <div className="h-5/6 w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl cursor-pointer align-bottom -mt-4">
+                <div className="h-2/4 w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
                     <h2 className="text-secundary_color font-medium">Administrativo</h2>
                 </div>
                 <div className="h-2/4 w-full bg-secundary_color rounded-b-lg flex items-center justify-between">
