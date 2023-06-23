@@ -7,6 +7,10 @@ body {
   font-family: 'Jost', sans-serif;
 }
 
+*{
+    outline: none;
+}
+
 
 *::-webkit-scrollbar {
     width: 4px;

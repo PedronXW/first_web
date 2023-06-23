@@ -27,7 +27,7 @@ const ResetPassword = () => {
                 <figcaption className="text-4xl text-primary_color font-bold">IPorter</figcaption>
             </figcaption>
             <form onSubmit={handleSubmit(log)} autoComplete="off" className="flex flex-col gap-2">
-                <MailInput register={register} focus={setFocus} resetError={() => { clearErrors('email') }} />
+                <MailInput register={register} focus={setFocus}/>
                 {errors.email ?
                     <span
                         aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
