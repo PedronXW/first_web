@@ -34,8 +34,9 @@ const ChangePassword = () => {
     }
 
     const createUserFormSchema = z.object({
-        email: z.string().nonempty("O email é obrigatório").email('Formato de e-mail invalido'),
-        password: z.string().nonempty("A senha é obrigatório").min(6, 'A senha precisa ter, no mínimo 6 caracteres')
+        password: z.string().nonempty("A senha é obrigatório"),
+        newPassword: z.string().nonempty("A senha é obrigatório").min(6, 'A nova senha precisa ter, no mínimo 6 caracteres'),
+        confirmPassword: z.string().nonempty("A senha é obrigatório")
     })
 
     const { register, handleSubmit, setFocus, formState: { errors }, clearErrors } = useForm({ resolver: zodResolver(createUserFormSchema) })
@@ -46,21 +47,25 @@ const ChangePassword = () => {
             <Drawer selected={4} />
             <div className="w-full flex flex-col h-full gap-2">
                 <HeaderMobile />
-                <section title="Dashboard" className="w-full flex flex-col grow-1 justify-between overflow-hidden">
+                <div title="Dashboard" className="w-full flex flex-col grow-1 justify-between overflow-hidden md:shadow-inner">
                     <Header title="Alteração de Senha" />
-                    <form onSubmit={handleSubmit(HandleLogin)} autoComplete="off" className="h-screen max-w-[380px] mx-11">
-                        <h2 className="text-sm h-min text-primary_color font-normal mb-10">Para alterar sua senha, por favor, preencha os campos abaixo.</h2>
-                        <PasswordInput register={register} focus={setFocus} resetError={() => { clearErrors('password') }} />
+                    <form onSubmit={handleSubmit(HandleLogin)} autoComplete="off" className="h-screen md:max-w-[380px] mx-8">
+                        <strong className="text-sm h-min text-primary_color font-normal mb-10">Para alterar sua senha, por favor, preencha os campos abaixo.</strong>
+                        <PasswordInput pattern_color="secundary" register={register} focus={setFocus} resetError={() => { clearErrors('password') }} />
                         {errors.password ?
                             <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
                                 className="h-10 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-10"> </div>}
-                        <PasswordInput register={register} focus={setFocus} resetError={() => { clearErrors('password') }} />
+                        <PasswordInput pattern_color="secundary" register={register} focus={setFocus} resetError={() => { clearErrors('newPassword') }} />
+                        {errors.password ?
+                            <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
+                                className="h-10 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-10"> </div>}
+                        <PasswordInput pattern_color="secundary" register={register} focus={setFocus} resetError={() => { clearErrors('confirmPassword') }} />
                         {errors.password ?
                             <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
                                 className="h-10 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-10"> </div>}
                         <button aria-label='Confirmar Login' type="submit" className="w-full p-2 cursor-pointer flex items-center bg-primary_color border-primary_color rounded-md text-secundary_color justify-center">Login</button>
                     </form>
-                </section>
+                </div>
                 <BottomNavigationMenu selected={4} />
             </div>
         </div>

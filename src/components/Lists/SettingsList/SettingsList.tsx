@@ -65,7 +65,7 @@ const SettingsList = () => {
     ])
 
     return(
-        <div className="grid h-full w-full grid-cols-settings md:gap-8 gap-6 mt-8 md:px-12 pl-7 pr-6 pb-14">
+        <div className="grid h-full w-full grid-cols-settings md:gap-8 gap-6 md:px-12 pl-7 pr-6">
             {items.map((item, key) => item.accessible? <SettingCell key={key} setting={item}/>:(is_admin? <SettingCell key={key} setting={item}/>:null))}
         </div>
     )

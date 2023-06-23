@@ -53,7 +53,7 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
 
     return (
         <div className="h-min w-full flex flex-col gap-5">
-            <h2 className="text-primary_color text-2xl font-bold">Últimas Chamadas Recebidas</h2>
+            <h3 className="text-primary_color text-2xl font-bold">Últimas Chamadas Recebidas</h3>
             <Carousel
                 className="flex items-center"
                 arrows
@@ -61,8 +61,8 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
                 swipeable
                 rewindWithAnimation
                 draggable
+                partialVisible
                 autoPlay
-                partialVisbile
                 responsive={responsive}
                 autoPlaySpeed={5000}
                 transitionDuration={500}>

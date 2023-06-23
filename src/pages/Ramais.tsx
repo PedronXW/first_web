@@ -10,14 +10,14 @@ const Ramais = () => {
     return (
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={1} />
-            <div className="w-full flex flex-col grow-1 overflow-hidden">
+            <div className="w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
-                <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
+                <div className="grow-1 w-full flex flex-col overflow-y-scroll">
                     <Header title="Ramais">
                         <AddRamalButton />
                     </Header>
                     <RamaisList />
-                </section>
+                </div>
                 <BottomNavigationMenu selected={1} />
             </div>
         </div>

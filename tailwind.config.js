@@ -7,7 +7,7 @@ module.exports = {
     screens: {
       'sm': '640px',
       'md': '768px',
-      'lg': '860px',
+      'lg': '960px',
       'xl': '1280px',
       '2xl': '1536px',
     },
@@ -25,7 +25,7 @@ module.exports = {
         '3xl': '2px 2px 2px rgba(0, 0, 0, .35)',
       },
       boxShadow:{
-        'inner': 'inset -2px 0px 2px 0px rgba(0, 0, 0, .05)'
+        'inner': 'inset 4px 0px 4px 0px rgba(0, 0, 0, .18)'
       }
     }
   },

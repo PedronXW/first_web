@@ -17,25 +17,25 @@ const DashboardOutDoor = ({ name, quantity_actually, quantity_past, icon }: Dash
     );
 
     return (
-        <section title={`Outdoor ${name}`} className="min-h-[144px] flex flex-col w-full justify-end items-end">
+        <div className="min-h-[144px] flex flex-col w-full justify-end items-end">
             <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">
                 {icon}
             </figure>
             <div className="h-5/6 w-full rounded-lg self-end drop-shadow-3xl align-bottom -mt-7">
-                <div className="h-2/4 w-full bg-primary_color rounded-t-md flex items-center pl-5 pr-5 justify-between">
-                    <h2 className="text-secundary_color font-medium">{name}</h2>
-                </div>
+                <header className="h-2/4 w-full bg-primary_color rounded-t-md flex items-center pl-5 pr-5 justify-between">
+                    <h3 className="text-secundary_color font-medium">{name}</h3>
+                </header>
                 <div className="h-2/4 w-full bg-secundary_color rounded-b-lg flex items-center justify-center">
                     <div className="h-full w-1/2 flex justify-start items-center pl-3">
                         <figure className="h-8 w-8 flex justify-center items-center">
                             {quantity_actually > quantity_past ? <CaretUp className="text-green-600" /> : <CaretDown className="text-red-600" />}
                         </figure>
-                        <h2 className={`font-medium w-1/2 ${quantity_actually > quantity_past ? "text-green-600" : "text-red-600"}`}>{diff + "%"}</h2>
+                        <strong className={`font-medium w-1/2 ${quantity_actually > quantity_past ? "text-green-600" : "text-red-600"}`}>{diff + "%"}</strong>
                     </div>
-                    <h2 className="text-primary_color font-medium h-full flex justify-end items-center pr-7 w-1/2">{quantity_actually}</h2>
+                    <strong className="text-primary_color font-medium h-full flex justify-end items-center pr-7 w-1/2">{quantity_actually}</strong>
                 </div>
             </div>
-        </section>
+        </div>
     )
 }
 

@@ -13,9 +13,9 @@ const Home = () => {
     return (
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={0} />
-            <div className="w-full flex flex-col grow-1 overflow-hidden">
+            <div className="w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
-                <section title="Dashboard" className="grow-1 w-full flex flex-col overflow-y-scroll">
+                <div className="grow-1 w-full flex flex-col overflow-y-scroll">
                     <Header title="Bem vindo, Pedro!!" />
                     <div className="w-full  flex flex-col md:p-12 pb-3 pl-7 pr-6 md:pt-0 mb-4 gap-10">
                         <div className="grid lg:grid-cols-3 grid-cols-1 gap-2 xl:gap-8 w-full h-min">
@@ -24,9 +24,9 @@ const Home = () => {
                             <DashboardOutDoor name="Perdidas" quantity_actually={20} quantity_past={10} icon={<PhoneX className="text-secundary_color" size={20} />} />
                         </div>
                         <DashboardChart />
-                        <DashboardCallsCarousel calls={[1, 2, 3, 4, 56, 7, 8, 9]} />
+                        <DashboardCallsCarousel calls={[1, 2, 3, 4, 5,6, 7, 8, 9]} />
                     </div>
-                </section>
+                </div>
                 <BottomNavigationMenu selected={0} />
             </div>
         </div>
