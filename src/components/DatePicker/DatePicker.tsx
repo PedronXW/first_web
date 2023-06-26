@@ -21,37 +21,14 @@ const DatePicker = () => {
 
     var lastDateThisMonth = new Date(year, month + 1, 0);
 
-    function setSelected(day: Day) {
-        if (startSelected == null) {
-            setStartSelected(day.date);
-            return;
-        }
-        if(day.date.getTime() == startSelected?.getTime()!){
-            setEndSelected(day.date);
-            return;
-        }
-        if (endSelected == null) {
-            if (day.date.getTime() < startSelected?.getTime()!) {
-                console.log(day.date);
-                setEndSelected(startSelected);
-                setStartSelected(day.date);
-                return;
-            }
-            setEndSelected(day.date);
-            return;
-        }
-        setStartSelected(day.date);
-        setEndSelected(null);
-    }
-
     function setStyle(day: Date) {
-        if (endSelected !==null && startSelected!==null && endSelected?.getTime() === startSelected?.getTime()) {
+        if (endSelected?.getTime() === day.getTime() && startSelected?.getTime() === day.getTime() && endSelected?.getTime() === startSelected?.getTime()) {
             return "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl";
         }
         if (day.getTime() == startSelected?.getTime()) {
             return endSelected == null ?
-            "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl":
-            "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-l-full cursor-pointer drop-shadow-3xl";
+                "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl" :
+                "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-l-full cursor-pointer drop-shadow-3xl";
         }
         if (day.getTime() == endSelected?.getTime()) {
             return "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-r-full cursor-pointer  drop-shadow-3xl";
@@ -65,11 +42,37 @@ const DatePicker = () => {
         return "text-gray-300 text-center flex items-center justify-center text-md font-normal p-[6px] m-[4px] cursor-pointer"
     }
 
+    function setSelected(day: Day) {
+        if (startSelected == null) {
+            setStartSelected(day.date);
+            return;
+        }
+        if (day.date.getTime() == startSelected?.getTime()!) {
+            setEndSelected(day.date);
+            return;
+        }
+        if (endSelected == null) {
+            if (day.date.getTime() < startSelected?.getTime()!) {
+                setEndSelected(startSelected);
+                setStartSelected(day.date);
+                return;
+            }
+            setEndSelected(day.date);
+            return;
+        }
+        setStartSelected(day.date);
+        setEndSelected(null);
+    }
+
     for (let i = 0; new Date(year, month, i).getDay() !== 0; i--) {
         days.push(new Day(new Date(year, month, i), false));
-        if (new Date(year, month, i - 1).getDay() === 0) {
-            days.push(new Day(new Date(year, month, i - 1), false));
+        if (new Date(year, month, i-1).getDay() === 0) {
+            days.push(new Day(new Date(year, month, i-1), false));
         }
+    }
+
+    if (new Date(year, month, 0).getDay() === 0) {
+        days.push(new Day(new Date(year, month, 0), false));
     }
 
     days.reverse();
@@ -78,7 +81,7 @@ const DatePicker = () => {
         days.push(new Day(new Date(year, month, i), true));
     }
 
-    for (let j = lastDateThisMonth.getDate()+1; new Date(year, month, j).getDay() !== 0; j++) {
+    for (let j = lastDateThisMonth.getDate() + 1; new Date(year, month, j).getDay() !== 0; j++) {
         days.push(new Day(new Date(year, month, j), false));
     }
 
@@ -99,7 +102,6 @@ const DatePicker = () => {
         }
     }
 
-
     function passarMes() {
         var newMonth = month + 1;
         clear(days);
@@ -110,8 +112,6 @@ const DatePicker = () => {
             setMonth(newMonth);
         }
     }
-
-
 
     return (
         <div className="min-h-[270px] w-full flex flex-col gap-4">
