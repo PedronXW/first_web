@@ -44,7 +44,8 @@ const Calls = () => {
 
     const { register, handleSubmit, setFocus, formState: { errors }, clearErrors } = useForm({ resolver: zodResolver(createUserFormSchema) })
     const [value, onChange] = useState(new Date());
-
+    const [startSelected, setStartSelected] = useState<Date | null>(null);
+    const [endSelected, setEndSelected] = useState<Date | null>(null);
 
     return (
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
@@ -58,7 +59,7 @@ const Calls = () => {
                 <BottomNavigationMenu selected={2} />
             </div>
             <div className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 hidden lg:flex lg:flex-col bg-secundary_color drop-shadow-lg gap-5">
-                <DatePicker />
+                <DatePicker onEndSelected={setEndSelected} onStartSelected={setStartSelected}/>
                 <SearchInput register={register} focus={setFocus} />
             </div>
         </div>

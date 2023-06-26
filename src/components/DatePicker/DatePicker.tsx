@@ -1,16 +1,21 @@
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 class Day {
     date: Date;
-    clicavel: boolean;
-    constructor(date: Date, clicavel: boolean) {
+    clickabel: boolean;
+    constructor(date: Date, clickabel: boolean) {
         this.date = date;
-        this.clicavel = clicavel;
+        this.clickabel = clickabel;
     }
 }
 
-const DatePicker = () => {
+interface DatePickerProps {
+    onStartSelected: (date: Date | null) => void;
+    onEndSelected: (date: Date | null) => void;
+}
+
+const DatePicker = ({onStartSelected, onEndSelected}:DatePickerProps) => {
 
     const days = new Array<Day>();
     var now = new Date();
@@ -21,20 +26,46 @@ const DatePicker = () => {
 
     var lastDateThisMonth = new Date(year, month + 1, 0);
 
+    useEffect(() => {
+        onStartSelected(startSelected);
+        onEndSelected(endSelected);
+    },[startSelected, endSelected])
+
+    for (let i = 0; new Date(year, month, i).getDay() !== 0; i--) {
+        days.push(new Day(new Date(year, month, i), false));
+        if (new Date(year, month, i-1).getDay() === 0) {
+            days.push(new Day(new Date(year, month, i-1), false));
+        }
+    }
+
+    if (new Date(year, month, 0).getDay() === 0) {
+        days.push(new Day(new Date(year, month, 0), false));
+    }
+
+    days.reverse();
+
+    for (let i = 1; i <= lastDateThisMonth.getDate(); i++) {
+        days.push(new Day(new Date(year, month, i), true));
+    }
+
+    for (let j = lastDateThisMonth.getDate() + 1; new Date(year, month, j).getDay() !== 0 || days.length!==42; j++) {
+        days.push(new Day(new Date(year, month, j), false));
+    }
+
     function setStyle(day: Date) {
         if (endSelected?.getTime() === day.getTime() && startSelected?.getTime() === day.getTime() && endSelected?.getTime() === startSelected?.getTime()) {
-            return "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl";
+            return "text-secundary_color flex items-center justify-center text-center text-md font-normal bg-primary_color p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl";
         }
         if (day.getTime() == startSelected?.getTime()) {
             return endSelected == null ?
-                "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl" :
-                "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-l-full cursor-pointer drop-shadow-3xl";
+                "text-secundary_color flex items-center justify-center text-center text-md font-normal bg-primary_color p-[6px] my-[2px] py-[8px] rounded-full cursor-pointer drop-shadow-3xl" :
+                "text-secundary_color flex items-center justify-center text-center text-md font-normal bg-primary_color p-[6px] my-[2px] py-[8px] rounded-l-full cursor-pointer drop-shadow-3xl";
         }
         if (day.getTime() == endSelected?.getTime()) {
-            return "text-primary_color flex items-center justify-center text-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] rounded-r-full cursor-pointer  drop-shadow-3xl";
+            return "text-secundary_color flex items-center justify-center text-center text-md font-normal bg-primary_color p-[6px] my-[2px] py-[8px] rounded-r-full cursor-pointer  drop-shadow-3xl";
         }
         if (day.getTime() > startSelected?.getTime()! && day.getTime() < endSelected?.getTime()!) {
-            return "text-primary_color text-center flex items-center justify-center text-md font-normal bg-red-500 p-[6px] my-[2px] py-[8px] cursor-pointer drop-shadow-3xl";
+            return "text-secundary_color text-center flex items-center justify-center text-md font-normal bg-primary_color p-[6px] my-[2px] py-[8px] cursor-pointer drop-shadow-3xl";
         }
         if (day.getTime() <= lastDateThisMonth?.getTime()! && day.getTime() > new Date(year, month, 0)?.getTime()!) {
             return "text-primary_color text-center flex items-center justify-center text-md font-normal p-[6px] m-[4px] cursor-pointer"
@@ -64,27 +95,6 @@ const DatePicker = () => {
         setEndSelected(null);
     }
 
-    for (let i = 0; new Date(year, month, i).getDay() !== 0; i--) {
-        days.push(new Day(new Date(year, month, i), false));
-        if (new Date(year, month, i-1).getDay() === 0) {
-            days.push(new Day(new Date(year, month, i-1), false));
-        }
-    }
-
-    if (new Date(year, month, 0).getDay() === 0) {
-        days.push(new Day(new Date(year, month, 0), false));
-    }
-
-    days.reverse();
-
-    for (let i = 1; i <= lastDateThisMonth.getDate(); i++) {
-        days.push(new Day(new Date(year, month, i), true));
-    }
-
-    for (let j = lastDateThisMonth.getDate() + 1; new Date(year, month, j).getDay() !== 0; j++) {
-        days.push(new Day(new Date(year, month, j), false));
-    }
-
     function clear(array: any) {
         for (var o = 0; o < array.length; o++) {
             array.pop();
@@ -92,24 +102,22 @@ const DatePicker = () => {
     }
 
     function voltarMes() {
-        var newMonth = month - 1;
         clear(days);
         if (month === 0) {
             setMonth(11);
             setYear(year - 1);
         } else {
-            setMonth(newMonth);
+            setMonth(month - 1);
         }
     }
 
     function passarMes() {
-        var newMonth = month + 1;
         clear(days);
         if (month === 11) {
             setMonth(0);
             setYear(year + 1);
         } else {
-            setMonth(newMonth);
+            setMonth(month + 1);
         }
     }
 
@@ -130,7 +138,7 @@ const DatePicker = () => {
                 <p className="text-primary_color text-md font-medium">Sab</p>
             </div>
             <div className="grid grid-cols-7">
-                {days.map((day: Day, index: number) => <p onClick={() => { setSelected(day) }} key={index} className={setStyle(day.date)}>{day.date.getDate()}</p>)}
+                {days.map((day: Day, index: number) => <p onClick={ day.clickabel ? () => { setSelected(day) }:()=>{}} key={index} className={setStyle(day.date)}>{day.date.getDate()}</p>)}
             </div>
         </div>
     )
