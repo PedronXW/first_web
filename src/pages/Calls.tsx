@@ -14,7 +14,7 @@ import CallsList from "../components/Lists/CallsList/CallsList";
 import Drawer from "../components/Lists/Drawer/Drawer";
 import { usePersistanceStore } from "../hooks/usePersistanceStore";
 
-const Calls=()=>{
+const Calls = () => {
 
     const store = usePersistanceStore()
     const navigate = useNavigate();
@@ -52,14 +52,14 @@ const Calls=()=>{
             <div className="h-full w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
                 <div className="grow-1 w-full flex flex-col overflow-y-scroll">
-                    <Header title="Chamadas"/>
-                    <CallsList/>
+                    <Header title="Chamadas" />
+                    <CallsList />
                 </div>
                 <BottomNavigationMenu selected={2} />
             </div>
             <div className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 hidden lg:flex lg:flex-col bg-secundary_color drop-shadow-lg gap-5">
-                <SearchInput register={register} focus={setFocus}/>
-                <DatePicker/>
+                <DatePicker />
+                <SearchInput register={register} focus={setFocus} />
             </div>
         </div>
     )
