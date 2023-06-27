@@ -122,7 +122,7 @@ const DatePicker = ({onStartSelected, onEndSelected}:DatePickerProps) => {
     }
 
     return (
-        <div className="min-h-[270px] w-full flex flex-col gap-4">
+        <div className="h-min w-full flex flex-col gap-4">
             <div className="flex justify-between">
                 <button onClick={voltarMes} className="text-primary_color text-2xl font-bold"><CaretLeft size={20} /></button>
                 <p className="text-primary_color text-md font-bold">{month + 1}/{year}</p>
