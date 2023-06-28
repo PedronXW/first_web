@@ -6,7 +6,8 @@ import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logs from "./pages/Logs";
-import Ramais from "./pages/Ramais";
+import Queues from "./pages/Queues";
+import QueuesAdd from "./pages/QueuesAdd";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
 
@@ -24,11 +25,14 @@ function App() {
         <Route path="" element={<RouteGuard page={<Settings />} />} />
         <Route path="change-password" element={<RouteGuard page={<ChangePassword />} />} />
       </Route>
-      <Route path="/ramais" element={<RouteGuard page={<Ramais />} />} />
+      <Route path="/queues" >
+        <Route path="" element={<RouteGuard page={<Queues />} />} />
+        <Route path="add" element={<RouteGuard page={<QueuesAdd />} />} />
+      </Route>
       <Route path="/logs" element={<RouteGuard page={<Logs />} />} />
       <Route path="/calls">
-          <Route path="" element={<RouteGuard page={<Calls />} />} />
-          <Route path=":id" element={<RouteGuard page={<Call />} />} />
+        <Route path="" element={<RouteGuard page={<Calls />} />} />
+        <Route path=":id" element={<RouteGuard page={<Call />} />} />
       </Route>
 
       <Route element={
@@ -37,9 +41,9 @@ function App() {
             <Outlet />
           </section>
         </div>}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Route>
     </Routes>
   );
 }

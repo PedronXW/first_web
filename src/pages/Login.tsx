@@ -58,7 +58,7 @@ const Login = () => {
                 {errors.email ?
                     <span aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
                         className="h-5 text-xs text-red-500 pl-2">{errors!.email!.message?.toString()}</span> : <div className="h-5"> </div>}
-                <PasswordInput id="password" pattern_color='background_color' register={register} focus={setFocus} label="Password"/>
+                <PasswordInput id="password" pattern_color='background_color' register={register} focus={setFocus} placeholder="Password"/>
                 {errors.password ?
                     <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
                         className="h-5 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-5"> </div>}

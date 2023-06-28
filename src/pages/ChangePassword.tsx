@@ -59,15 +59,15 @@ const ChangePassword = () => {
                     <Header title="Alteração de Senha" />
                     <form onSubmit={handleSubmit(HandleLogin)} onChange={()=>{clearErrors(); console.log(errors)}} autoComplete="off" className="h-screen md:max-w-[380px] md:mx-11 mx-8">
                         <strong className="text-sm h-min text-primary_color font-normal mb-8 flex">Para alterar sua senha, por favor, preencha os campos abaixo.</strong>
-                        <PasswordInput id="password" pattern_color="secundary_color" register={register} focus={setFocus} label="Password" />
+                        <PasswordInput id="password" pattern_color="secundary_color" register={register} focus={setFocus} placeholder="Password" />
                         {errors.password ?
                             <span
                                 className="h-10 text-xs text-red-500 pl-2 pt-2 flex">{errors!.password!.message?.toString()}</span> : <div className="h-10 flex"> </div>}
-                        <PasswordInput id="newPassword" pattern_color="secundary_color" register={register} focus={setFocus} label="New Password"/>
+                        <PasswordInput id="newPassword" pattern_color="secundary_color" register={register} focus={setFocus} placeholder="New Password"/>
                         {errors.newPassword ?
                             <span
                                 className="h-10 text-xs text-red-500 pl-2 pt-2 flex">{errors!.newPassword!.message?.toString()}</span> : <div className="h-10 flex"> </div>}
-                        <PasswordInput id="confirmPassword" pattern_color="secundary_color" register={register} focus={setFocus} label="Confirm Password"/>
+                        <PasswordInput id="confirmPassword" pattern_color="secundary_color" register={register} focus={setFocus} placeholder="Confirm Password"/>
                         {errors.confirmPassword ?
                             <span
                                 className="h-10 text-xs text-red-500 pl-2 pt-2 flex">{errors!.confirmPassword!.message?.toString()}</span> : <div className="h-10 flex"> </div>}

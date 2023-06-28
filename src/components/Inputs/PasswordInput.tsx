@@ -6,22 +6,22 @@ interface PasswordInputInterface{
     register:UseFormRegister<FieldValues>
     focus:any
     pattern_color:string;
-    label:string
+    placeholder:string
     id:string
 }
 
-const PasswordInput = ({register, focus, pattern_color, label, id}: PasswordInputInterface) =>{
+const PasswordInput = ({register, focus, pattern_color, placeholder, id}: PasswordInputInterface) =>{
 
     const [value, setValue] = useState('');
     const [visibility, setVisibility]=useState(true);
     
 
     return(
-        <div className={`w-full cursor-pointer p-3 flex items-center bg-${pattern_color} border-${pattern_color} rounded-md`} onClick={(event: any) => {focus(id)}}>
+        <div className={`w-full cursor-pointer drop-shadow-md p-3 flex items-center bg-${pattern_color} border-${pattern_color} rounded-md`} onClick={(event: any) => {focus(id)}}>
             <figure className="h-5 w-5">
                 <Lock className="text-primary_color" size={20} />
             </figure>
-            <input {...register(id)} type={visibility?'password':'text'} placeholder={label} autoComplete="off" className={`font-medium text-sm ml-2 bg-${pattern_color} border-${pattern_color} w-full pr-1`} onChange={(e) => { setValue(e.target.value); }} value={value} />
+            <input {...register(id)} type={visibility?'password':'text'} placeholder={placeholder} autoComplete="off" className={`font-medium text-sm ml-2 bg-${pattern_color} border-${pattern_color} w-full pr-1`} onChange={(e) => { setValue(e.target.value); }} value={value} />
             <button type="button" className="h-5 w-5 mr-4">
                 {value.length == 0 ? null : visibility ?
                     <EyeClosed size={20} className="text-primary_color" onClick={() => { setVisibility(false) }} /> : 

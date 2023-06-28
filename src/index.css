@@ -3,18 +3,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap');
 
 body {
-  margin: 0;
-  font-family: 'Jost', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    font-family: 'Jost', sans-serif;
 }
 
-*{
+* {
     outline: none;
 }
 
 
 *::-webkit-scrollbar {
     width: 4px;
-    height:8px;
+    height: 8px;
 }
 
 *::-webkit-scrollbar-track {

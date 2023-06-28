@@ -12,7 +12,7 @@ const MailInput = ({register, focus}: InputInterface) =>{
     const [state, setState] = useState(false);
     const [value, setValue] = useState('');
     return(
-        <div className='w-full p-3 flex items-center bg-background_color border-background_color rounded-md' onClick={(event: any) => {setState(!state); focus('email')}}>
+        <div className='w-full p-3 flex items-center bg-background_color border-background_color rounded-md drop-shadow-md' onClick={(event: any) => {setState(!state); focus('email')}}>
             <figure className="h-5 w-5">
                 <Envelope aria-label="Icone de um envelope." color="gray" size={20} />
             </figure>
