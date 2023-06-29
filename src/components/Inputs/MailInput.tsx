@@ -1,18 +1,18 @@
 import { Envelope, X } from "@phosphor-icons/react";
 import { useState } from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-interface InputInterface{
-    register:UseFormRegister<FieldValues>
-    focus:any;
-}
 
-const MailInput = ({register, focus}: InputInterface) =>{
+const MailInput = () =>{
 
     const [state, setState] = useState(false);
     const [value, setValue] = useState('');
+
+
+    const {register, setFocus} = useFormContext();
+
     return(
-        <div className='w-full p-3 flex items-center bg-background_color border-background_color rounded-md drop-shadow-md' onClick={(event: any) => {setState(!state); focus('email')}}>
+        <div className='w-full p-3 flex items-center bg-background_color border-background_color rounded-md drop-shadow-md' onClick={(event: any) => {setState(!state); setFocus('email')}}>
             <figure className="h-5 w-5">
                 <Envelope aria-label="Icone de um envelope." color="gray" size={20} />
             </figure>

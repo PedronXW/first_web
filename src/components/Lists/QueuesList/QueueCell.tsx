@@ -1,12 +1,25 @@
 import { PhoneIncoming } from "@phosphor-icons/react";
+import { useState } from "react";
 
 interface QueueCellInterface {
     queue: any;
 }
 
 const QueueCell = ({ queue }: QueueCellInterface) => {
+
+    const [dragging, setDragging] = useState<boolean>(false);
+
+    function handleDraggingStart(ev:any){
+        ev.dataTransfer.setData("text", String(queue));
+        setDragging(true);
+    }
+
+    function handleDraggingEnd(){
+        setDragging(false);
+    }
+
     return (
-        <section title={queue.name ? queue.name : "arroz"} className="h-36 flex flex-col w-full justify-end items-end ">
+        <li id={String(queue)} draggable="true" onDragStart={handleDraggingStart} onDragEnd={handleDraggingEnd} title={queue.name ? queue.name : "arroz"} className={`h-36 flex flex-col w-full justify-end items-end ${dragging?"opacity-0":"opacity-100"}`}>
             <div className="h-[32px] w-[32px] bg-green-500 relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center" />
             <div className="h-5/6 w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl cursor-pointer align-bottom -mt-4">
                 <header className="h-2/4 w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
@@ -19,10 +32,10 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
                         </figure>
                         <strong className="text-primary_color font-medium h-full flex items-center w-full">Chamadas Recebidas</strong>
                     </div>
-                    <strong className="text-primary_color font-medium h-full flex justify-end items-center pr-7 w-min">30</strong>
+                    <strong className="text-primary_color font-medium h-full flex justify-end items-center pr-7 w-min">{queue}</strong>
                 </div>
             </div>
-        </section>
+        </li>
     )
 }
 

@@ -1,23 +1,23 @@
 import { Eye, EyeClosed, Lock, X } from "@phosphor-icons/react";
 import { useState } from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 interface PasswordInputInterface{
-    register:UseFormRegister<FieldValues>
-    focus:any
     pattern_color:string;
     placeholder:string
     id:string
 }
 
-const PasswordInput = ({register, focus, pattern_color, placeholder, id}: PasswordInputInterface) =>{
+const PasswordInput = ({pattern_color, placeholder, id}: PasswordInputInterface) =>{
 
     const [value, setValue] = useState('');
     const [visibility, setVisibility]=useState(true);
+
+    const {register, setFocus}= useFormContext();
     
 
     return(
-        <div className={`w-full cursor-pointer drop-shadow-md p-3 flex items-center bg-${pattern_color} border-${pattern_color} rounded-md`} onClick={(event: any) => {focus(id)}}>
+        <div className={`w-full cursor-pointer drop-shadow-md p-3 flex items-center bg-${pattern_color} border-${pattern_color} rounded-md`} onClick={(event: any) => {setFocus(id)}}>
             <figure className="h-5 w-5">
                 <Lock className="text-primary_color" size={20} />
             </figure>

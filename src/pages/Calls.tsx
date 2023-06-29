@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowULeftDown, MagnifyingGlass, PhoneIncoming, PhoneOutgoing } from "@phosphor-icons/react";
 import axios from "axios";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -56,7 +56,14 @@ const Calls = () => {
     const [canceledCallStatus, setCanceledCallStatus] = useState<boolean>(true);
     const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false);
 
+    const searchSchema=z.object({
+        number:z.number().min(1).max(50),
+    })
+
+    const callsFormProvider=useForm({resolver:zodResolver(searchSchema)})
+
     return (
+
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color overflow-hidden">
             <Drawer selected={2} />
             <div className="h-full w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
@@ -67,11 +74,13 @@ const Calls = () => {
                 </div>
                 <BottomNavigationMenu selected={2} />
             </div>
-            <div className={` h-full w-screen z-40 lg:w-min absolute lg:relative ${searchLayoutStatus?"flex":"hidden lg:flex"}`}>
+            <div className={` h-full w-screen z-40 lg:w-min absolute lg:relative ${searchLayoutStatus ? "flex" : "hidden lg:flex"}`}>
                 <div className="h-full flex grow-1 w-full bg-black opacity-30" />
-                <div className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 flex flex-col bg-secundary_color drop-shadow-lg gap-5 overflow-y-scroll pb-4">
+                <form className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 flex flex-col bg-secundary_color drop-shadow-lg gap-5 overflow-y-scroll pb-4">
                     <DatePicker onEndSelected={setEndSelected} onStartSelected={setStartSelected} />
-                    <SearchInput register={register} focus={setFocus} />
+                    <FormProvider {...callsFormProvider}>
+                        <SearchInput />
+                    </FormProvider>
                     <h2 className="text-primary_color font-bold text-lg">Tipo de chamada</h2>
                     <div className="flex w-full h-min">
                         <button type="button" onClick={() => { setIncommingCallsStatus(!incommingCallsStatus) }} className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${incommingCallsStatus ? "border-green-700" : "border-primary_color"} rounded-l-lg drop-shadow-3xl`}>
@@ -110,9 +119,9 @@ const Calls = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-            <button className={`absolute lg:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${searchLayoutStatus?"right-[330px]":"right-2"}  `}>
+            <button className={`absolute lg:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${searchLayoutStatus ? "right-[330px]" : "right-2"}  `}>
                 <MagnifyingGlass size={20} className="text-primary_color" onClick={() => { setSearchLayoutStatus(!searchLayoutStatus) }} />
             </button>
         </div>

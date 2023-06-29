@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -44,8 +44,9 @@ const Login = () => {
         password: z.string().nonempty("A senha é obrigatório").min(6, 'A senha precisa ter, no mínimo 6 caracteres')
     })
 
-    const { register, handleSubmit, setFocus, formState: { errors }, clearErrors } = useForm({ resolver: zodResolver(createUserFormSchema) })
+    const loginForm = useForm({ resolver: zodResolver(createUserFormSchema) })
 
+    const {  handleSubmit, formState: { errors }, clearErrors } = loginForm;
 
     return (
         <div className='h-full w-full flex flex-col justify-evenly'>
@@ -53,17 +54,19 @@ const Login = () => {
                 <img className='h-20 w-20 -ml-5' alt='Logo do produto IPorter' src={icon} />
                 <figcaption className="text-4xl text-primary_color font-bold">IPorter</figcaption>
             </figcaption>
-            <form onSubmit={handleSubmit(HandleLogin)} onChange={()=>{clearErrors()}} autoComplete="off" className="flex flex-col gap-2">
-                <MailInput register={register} focus={setFocus}/>
-                {errors.email ?
-                    <span aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
-                        className="h-5 text-xs text-red-500 pl-2">{errors!.email!.message?.toString()}</span> : <div className="h-5"> </div>}
-                <PasswordInput id="password" pattern_color='background_color' register={register} focus={setFocus} placeholder="Password"/>
-                {errors.password ?
-                    <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
-                        className="h-5 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-5"> </div>}
-                <button aria-label='Confirmar Login' type="submit" className="w-full p-2 cursor-pointer flex items-center bg-primary_color border-primary_color rounded-md text-secundary_color justify-center">Login</button>
-                <Link className='h-8 w-auto p-2 flex cursor-pointer text-xs self-center' to={'/reset-password'}>Forgeted your Password?</Link>
+            <form onSubmit={handleSubmit(HandleLogin)} onChange={() => { clearErrors() }} autoComplete="off" className="flex flex-col gap-2">
+                <FormProvider {...loginForm}>
+                    <MailInput  />
+                    {errors.email ?
+                        <span aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
+                            className="h-5 text-xs text-red-500 pl-2">{errors!.email!.message?.toString()}</span> : <div className="h-5"> </div>}
+                    <PasswordInput id="password" pattern_color='background_color' placeholder="Password" />
+                    {errors.password ?
+                        <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
+                            className="h-5 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-5"> </div>}
+                    <button aria-label='Confirmar Login' type="submit" className="w-full p-2 cursor-pointer flex items-center bg-primary_color border-primary_color rounded-md text-secundary_color justify-center">Login</button>
+                    <Link className='h-8 w-auto p-2 flex cursor-pointer text-xs self-center' to={'/reset-password'}>Forgeted your Password?</Link>
+                </FormProvider>
             </form>
         </div>
     )

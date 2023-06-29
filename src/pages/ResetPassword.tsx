@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import MailInput from "../components/Inputs/MailInput";
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,7 +18,9 @@ const ResetPassword = () => {
         password: z.string().nonempty("A senha é obrigatório").min(6, 'A senha precisa ter, no mínimo 6 caracteres')
     })
 
-    const { register, handleSubmit, setFocus, formState: { errors }, clearErrors } = useForm({ resolver: zodResolver(createUserFormSchema) })
+    const resetPassForm= useForm({ resolver: zodResolver(createUserFormSchema) })
+
+    const {  handleSubmit,  formState: { errors } } = resetPassForm
 
     return (
         <div className='h-full w-full flex flex-col justify-evenly'>
@@ -27,7 +29,9 @@ const ResetPassword = () => {
                 <figcaption className="text-4xl text-primary_color font-bold">IPorter</figcaption>
             </figcaption>
             <form onSubmit={handleSubmit(log)} autoComplete="off" className="flex flex-col gap-2">
-                <MailInput register={register} focus={setFocus}/>
+                <FormProvider {...resetPassForm}>
+                    <MailInput/>
+                </FormProvider>
                 {errors.email ?
                     <span
                         aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}

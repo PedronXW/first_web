@@ -1,18 +1,17 @@
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
-interface InputInterface{
-    register:any;
-    focus:any;
-}
 
-const SearchInput = ({register, focus }: InputInterface) =>{
+const SearchInput = () =>{
+
+    const {register, setFocus} = useFormContext()
+
     const [state, setState] = useState(false);
-    const ref = useRef<any>(null);
-    const inputRef = useRef<any>(null);
     const [value, setValue] = useState('');
+    
     return(
-        <div className='w-full p-3 flex items-center bg-background_color border-background_color rounded-md' onClick={(event: any) => {setState(!state); focus('email')}}>
+        <div className='w-full p-3 flex items-center bg-background_color border-background_color rounded-md' onClick={(event: any) => {setState(!state); setFocus('search')}}>
             <figure className="h-5 w-5">
                 <MagnifyingGlass aria-label="Icone de um envelope." color="gray" size={20} />
             </figure>
