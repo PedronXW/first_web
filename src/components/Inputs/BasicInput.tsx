@@ -14,7 +14,7 @@ const BasicInput = ({register, focus, pattern_color, placeholder, id, icon }: In
     const [state, setState] = useState(false);
     const [value, setValue] = useState('');
     return(
-        <div className={`w-full cursor-pointer p-3 flex items-center drop-shadow-md bg-${pattern_color} border-${pattern_color} rounded-md`} onClick={(event: any) => {focus(id)}}>
+        <div className={`w-full cursor-pointer p-4 flex items-center drop-shadow-md bg-${pattern_color} border-${pattern_color} rounded-md`} onClick={(event: any) => {focus(id)}}>
             <figure className="h-5 w-5">
                 {icon}
             </figure>

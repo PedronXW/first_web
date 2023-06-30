@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import QueueCell from "./QueueCell";
 
 const QueuesList = () => {
 
     const ref = useRef<any>(null);
 
-    const queues = [1, 2, 3, 5, 6, 7, 8, 9, 10];
+    const [queues, setQueues] = useState([1, 2, 3, 5, 6, 7, 8, 9, 10]);
 
 
     function drop(ev: any) {
@@ -17,15 +17,13 @@ const QueuesList = () => {
         arr.map((item: any) => {
              if (item.id === data) { 
                 draggingItem = item; 
-            } else { 
+            } else {
                 notDraggingItems.push(item);
             } 
         });
         let nextSibling = notDraggingItems.find((notDragging:any) => {
-            console.log(notDragging.offsetTop, notDragging.offsetHeight, ev.target,  ev.target.getBoundingClientRect().top);
             return  ev.target.getBoundingClientRect().top<= notDragging.offsetTop + notDragging.offsetHeight / 2;
         });
-        console.log(nextSibling);
         const newQueuesOrder:any[]=[];
         notDraggingItems.map((queue:any)=>{
             if(queue===nextSibling.id){
@@ -33,6 +31,7 @@ const QueuesList = () => {
             }
             newQueuesOrder.push(queue);
         });
+        setQueues(newQueuesOrder)
         ref.current.insertBefore(draggingItem, nextSibling);
     }
 
