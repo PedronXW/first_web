@@ -1,6 +1,5 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import RouteGuard from "./guard/RouteGuard";
-import Call from "./pages/Call";
 import Calls from "./pages/Calls";
 import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
@@ -30,10 +29,7 @@ function App() {
         <Route path="add" element={<RouteGuard page={<QueuesAdd />} />} />
       </Route>
       <Route path="/logs" element={<RouteGuard page={<Logs />} />} />
-      <Route path="/calls">
-        <Route path="" element={<RouteGuard page={<Calls />} />} />
-        <Route path=":id" element={<RouteGuard page={<Call />} />} />
-      </Route>
+      <Route path="/calls" element={<RouteGuard page={<Calls />} />}/>
 
       <Route element={
         <div className="h-screen w-screen sm:bg-background_color flex justify-center items-center">

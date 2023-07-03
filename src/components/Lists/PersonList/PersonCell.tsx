@@ -7,7 +7,7 @@ interface PersonCellInterface {
 const PersonCell = ({ person }: PersonCellInterface) => {
 
     const [dragging, setDragging] = useState<boolean>(false);
-    const [state, setState] = useState<boolean>(false);
+    const [state, setState] = useState<boolean>(true);
 
     function handleDraggingStart(ev: any) {
         ev.dataTransfer.setData("text", String(person));

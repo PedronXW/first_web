@@ -99,9 +99,9 @@ const QueuesAdd = () => {
                             <CheckFat size={20} className="text-primary_color" />
                         </button>
                     </Header>
-                    <strong className="text-sm h-min text-primary_color font-normal flex px-12 mt-6">Para adicionar uma nova fila, por favor, preencha os campos abaixo e selecione os ramais que farão parte da fila.</strong>
-                    <div className="flex w-full h-full grow-1 px-12 gap-10 mt-8">
-                        <form className="flex flex-col gap-5 min-w-[320px] max-w-[320px]">
+                    <strong className="text-sm h-min text-primary_color font-normal flex md:px-12 px-8 mt-6">Para adicionar uma nova fila, por favor, preencha os campos abaixo e selecione os ramais que farão parte da fila.</strong>
+                    <div className="flex flex-col md:flex-row w-full h-full grow-1 md:px-12 px-8 gap-10 mt-8">
+                        <form className="flex flex-col gap-5 min-w-[320px] md:max-w-[320px]">
                             <h2 className="text-primary_color font-medium text-lg">Dados da fila</h2>
                             <BasicInput id="id" pattern_color="secundary_color" placeholder="Id" register={register} focus={setFocus} icon={<IdentificationBadge size={20} className="text-primary_color" />} />
                             <BasicInput id="name" pattern_color="secundary_color" placeholder="Name" register={register} focus={setFocus} icon={<UserList size={20} className="text-primary_color" />} />

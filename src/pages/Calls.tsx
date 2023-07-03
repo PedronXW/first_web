@@ -68,13 +68,13 @@ const Calls = () => {
             <Drawer selected={2} />
             <div className="h-full w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
-                <div className="grow-1 w-full flex flex-col overflow-y-scroll">
+                <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
                     <Header title="Chamadas" />
                     <CallsList />
                 </div>
                 <BottomNavigationMenu selected={2} />
             </div>
-            <div className={` h-full w-screen z-40 lg:w-min absolute lg:relative ${searchLayoutStatus ? "flex" : "hidden lg:flex"}`}>
+            <div className={` h-full w-screen z-40 xl:w-min absolute xl:relative ${searchLayoutStatus ? "flex" : "hidden xl:flex"}`}>
                 <div className="h-full flex grow-1 w-full bg-black opacity-30" />
                 <form className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 flex flex-col bg-secundary_color drop-shadow-lg gap-5 overflow-y-scroll pb-4">
                     <DatePicker onEndSelected={setEndSelected} onStartSelected={setStartSelected} />
@@ -121,7 +121,7 @@ const Calls = () => {
                     </div>
                 </form>
             </div>
-            <button className={`absolute lg:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${searchLayoutStatus ? "right-[330px]" : "right-2"}  `}>
+            <button className={`absolute xl:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${searchLayoutStatus ? "right-[330px]" : "right-2"}  `}>
                 <MagnifyingGlass size={20} className="text-primary_color" onClick={() => { setSearchLayoutStatus(!searchLayoutStatus) }} />
             </button>
         </div>

@@ -13,9 +13,9 @@ const Queues = () => {
     return (
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={1} />
-            <div className="w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
+            <div className="w-full flex flex-col h-full grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
-                <div className="grow-1 w-full flex flex-col overflow-y-scroll">
+                <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
                     <Header title="Filas">
                         <NavLink to={"add"} className="justify-center items-center p-3 mt-1 py-2 cursor-pointer text-primary_color flex gap-2">
                             <span className="text-base text-primary_color font-medium">Adicionar</span>
