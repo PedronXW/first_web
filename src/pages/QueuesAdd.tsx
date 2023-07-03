@@ -71,16 +71,8 @@ const QueuesAdd = () => {
                 }
             });
             let nextSibling = notDraggingItems.find((notDragging: any) => {
-                return ev.target.getBoundingClientRect().top + refScroll.current.scrollTop <= notDragging.offsetTop + notDragging.offsetHeight / 2;
+                return ev.target.getBoundingClientRect().top + refScroll.current.scrollTop+68  <= notDragging.offsetTop + notDragging.offsetHeight / 2;
             });
-
-            const arroz = document.createElement("div")
-            arroz.className = "h-14 px-6 w-full flex items-center bg-secundary_color drop-shadow-3xl mb-3 rounded-md gap-4"
-            arroz.id = "arroz"
-            console.log(nextSibling, typeof arroz)
-            if (arroz as Node && nextSibling!==undefined) {
-                ref.current.insertBefore(arroz, nextSibling);
-            }
         }
     }
 
@@ -118,7 +110,7 @@ const QueuesAdd = () => {
                         </form>
                         <div className="grow-1 w-full grid grid-cols-1 pb-4">
                             <h2 className="text-primary_color font-medium text-lg mb-5">Ramais que farão parte da fila</h2>
-                            <div ref={ref} onDrop={drop} onDragOver={handleEnter} onDragLeave={handleLeave} className="flex flex-col w-full h-full">
+                            <div ref={ref} onDrop={drop} onDragOver={handleEnter} onDragLeave={handleLeave} draggable={false} className="flex flex-col w-full h-full">
                                 {person.map((person, key) => <RamalCell key={key} person={person} />)}
                             </div>
                         </div>
