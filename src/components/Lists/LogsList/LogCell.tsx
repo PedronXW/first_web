@@ -1,18 +1,16 @@
 import { PhoneCall } from "@phosphor-icons/react";
-import AudioPlayer from "../../AudioPlayer/AudioPlayer";
 
-interface CallCellInterface {
-    call: any;
+interface LogCellInterface{
+    log:any;
 }
 
-const CallCell = ({ call }: CallCellInterface) => {
-
-    return (
-        <div className="min-h-[240px] sm:min-h-[80px] md:min-h-[240px] lg:min-h-[80px] flex flex-col w-full justify-end items-end -mt-14">
+const LogCell=({log}:LogCellInterface)=>{
+    return(
+        <div className="min-h-[190px] sm:min-h-[80px] md:min-h-[190px] lg:min-h-[80px] flex flex-col w-full justify-end items-end">
             <figure className="min-h-[54px] min-w-[54px] sm:hidden flex  md:flex lg:hidden bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full justify-center items-center">
                 <PhoneCall size={20} className="text-green-500" />
             </figure>
-            <div className="h-min w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl align-bottom md:-mt-7 lg:mt-0 sm:mt-0 -mt-7">
+            <div className="h-5/6 w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl align-bottom -mt-7">
                 <header className="h-[70px] w-full flex sm:hidden md:flex lg:hidden  bg-primary_color rounded-t-md drop-shadow-3xl  items-center pl-5 pr-5 justify-between">
                     <h3 className="text-secundary_color font-medium">Administrativo</h3>
                 </header>
@@ -29,11 +27,11 @@ const CallCell = ({ call }: CallCellInterface) => {
                             <span className="text-primary_color font-medium h-full whitespace-nowrap text-sm flex justify-center items-center">(35)99124-4060</span>
                         </div>
                     </div>
-                    <AudioPlayer audio_id="1687271212.464" client="d471de34-7bca-46dd-acde-e173c85813ff" />
+                    <span className="text-primary_color ml-3 font-medium h-full text-sm flex justify-start items-center w-full">Descrição</span>
                 </div>
             </div>
         </div>
     )
 }
 
-export default CallCell;
+export default LogCell

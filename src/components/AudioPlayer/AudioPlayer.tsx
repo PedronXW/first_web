@@ -24,7 +24,7 @@ const AudioPlayer = ({client, audio_id}:AudioPlayerInterface) => {
             }
         );
         const blob = await audio.blob();
-        if (blob && ref) {
+        if (blob && ref.current!= null && ref!=null) {
             ref.current.src = URL.createObjectURL(blob);
             ref.current.parentElement.load();
         } else {
