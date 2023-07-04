@@ -12,6 +12,12 @@ body {
     outline: none;
 }
 
+audio::-webkit-media-controls-play-button,
+     audio::-webkit-media-controls-panel {
+     background-color: white;
+     color: #000;
+     }
+
 
 *::-webkit-scrollbar {
     width: 4px;

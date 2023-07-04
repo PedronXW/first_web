@@ -124,9 +124,9 @@ const DatePicker = ({onStartSelected, onEndSelected}:DatePickerProps) => {
     return (
         <div className="h-min w-full flex flex-col gap-4">
             <div className="flex justify-between">
-                <button onClick={voltarMes} className="text-primary_color text-2xl font-bold"><CaretLeft size={20} /></button>
+                <button onClick={voltarMes} type="button" className="text-primary_color text-2xl font-bold"><CaretLeft size={20} /></button>
                 <p className="text-primary_color text-md font-bold">{month + 1}/{year}</p>
-                <button onClick={passarMes} className="text-primary_color text-2xl font-bold"><CaretRight size={20} /></button>
+                <button onClick={passarMes} type="button" className="text-primary_color text-2xl font-bold"><CaretRight size={20} /></button>
             </div>
             <div className="flex justify-between">
                 <p className="text-primary_color text-md font-medium">Dom</p>

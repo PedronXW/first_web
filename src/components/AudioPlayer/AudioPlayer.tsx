@@ -14,7 +14,6 @@ const AudioPlayer = ({client, audio_id}:AudioPlayerInterface) => {
     const store=usePersistanceStore();
 
     const soundPlay = async () => {
-        console.log(ref)
         const audio = await fetch("http://10.1.1.24:3000/logs/audio/"+audio_id,
             {
                 method: "GET",
@@ -28,7 +27,6 @@ const AudioPlayer = ({client, audio_id}:AudioPlayerInterface) => {
         if (blob && ref) {
             ref.current.src = URL.createObjectURL(blob);
             ref.current.parentElement.load();
-            console.info("Ready!", ref.current.src);
         } else {
             console.warn("Can not load");
         }
@@ -41,7 +39,7 @@ const AudioPlayer = ({client, audio_id}:AudioPlayerInterface) => {
     return (
         <div className="w-full">
             <audio controls className="w-full">
-                <source ref={ref} type="audio/wav" />
+                <source ref={ref} type="audio/wav"/>
             </audio>
         </div>
     )

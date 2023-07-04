@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowULeftDown, MagnifyingGlass, PhoneIncoming, PhoneOutgoing } from "@phosphor-icons/react";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -56,11 +56,12 @@ const Calls = () => {
     const [canceledCallStatus, setCanceledCallStatus] = useState<boolean>(true);
     const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false);
 
-    const searchSchema=z.object({
-        number:z.number().min(1).max(50),
+    const searchSchema = z.object({
+        number: z.number().min(1).max(50),
     })
 
-    const callsFormProvider=useForm({resolver:zodResolver(searchSchema)})
+    const ref=useRef<any>(null)
+    const callsFormProvider = useForm({ resolver: zodResolver(searchSchema) })
 
     return (
 
@@ -70,6 +71,19 @@ const Calls = () => {
                 <HeaderMobile />
                 <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
                     <Header title="Chamadas" />
+                    <div className="min-h-[50px] max-h-[50px] w-full drop-shadow-3xl align-bottom flex-col lg:px-12 pl-7 pr-6  self-center hidden sm:flex md:hidden lg:flex">
+                        <div className="h-full w-full bg-primary_color rounded-lg flex sm:flex-row md:flex-col flex-col lg:flex-row items-center justify-around pl-5 pr-5 lg:pr-2">
+                            <div className=" rounded-full drop-shadow-3xl hidden sm:flex md:hidden lg:flex" >
+                                <span className="text-secundary_color">Status</span>
+                            </div>
+                            <span className="text-secundary_color font-medium h-full text-sm items-center w-1/2 ml-4 hidden sm:flex md:hidden lg:flex">Ramal</span>
+                            <div className=" w-full rounded-b-lg flex items-center justify-center sm:mt-0 md:mt-2 lg:mt-0 mt-2">
+                                <time className="text-secundary_color font-medium h-full text-sm flex justify-center items-center pr-7 w-1/2">Horário</time>
+                                <span className="text-secundary_color font-medium h-full text-sm flex justify-center items-center w-1/2">Número</span>
+                            </div>
+                            <div className="w-full"/>
+                        </div>
+                    </div>
                     <CallsList />
                 </div>
                 <BottomNavigationMenu selected={2} />
