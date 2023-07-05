@@ -49,15 +49,15 @@ const Calls = () => {
     const [value, onChange] = useState(new Date());
     const [startSelected, setStartSelected] = useState<Date | null>(null);
     const [endSelected, setEndSelected] = useState<Date | null>(null);
-    
-    
+
+
     const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false);
 
     const searchSchema = z.object({
         number: z.number().min(1).max(50),
     })
 
-    const ref=useRef<any>(null)
+    const ref = useRef<any>(null)
     const callsFormProvider = useForm({ resolver: zodResolver(searchSchema) })
 
     return (
@@ -66,20 +66,18 @@ const Calls = () => {
             <Drawer selected={2} />
             <div className="h-full w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
-                <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
+                <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll gap-2 pb-4">
                     <Header title="Chamadas" />
-                    <div className="min-h-[50px] max-h-[50px] w-full drop-shadow-3xl align-bottom flex-col lg:px-12 pl-7 pr-6 gap-10 self-center hidden sm:flex md:hidden lg:flex">
-                        <div className="h-full w-full bg-primary_color rounded-lg flex sm:flex-row md:flex-col flex-col lg:flex-row items-center justify-around pl-5 pr-5 lg:pr-2">
-                            <div className=" rounded-full drop-shadow-3xl hidden sm:flex md:hidden lg:flex" >
-                                <span className="text-secundary_color font-medium h-full text-sm items-center">Status</span>
-                            </div>
-                            <span className="text-secundary_color font-medium h-full text-sm items-center w-1/2 ml-4 hidden sm:flex md:hidden lg:flex">Ramal</span>
-                            <div className=" w-full rounded-b-lg flex items-center justify-center sm:mt-0 md:mt-2 lg:mt-0 mt-2">
-                                <time className="text-secundary_color font-medium h-full text-sm flex justify-center items-center pr-7 w-1/2">Horário</time>
-                                <span className="text-secundary_color font-medium h-full text-sm flex justify-center items-center w-1/2">Número</span>
-                            </div>
-                            <div className="w-full"/>
+                    <div className="min-h-[50px] max-h-[50px] grow-1 drop-shadow-3xl bg-primary_color rounded-lg items-center lg:mx-12 ml-7 mr-6 pl-7 pr-6 flex-row hidden sm:flex md:hidden lg:flex justify-around">
+                        <div className=" rounded-full drop-shadow-3xl hidden sm:flex md:hidden lg:flex" >
+                            <span className="text-secundary_color font-medium h-full text-sm items-center">Status</span>
                         </div>
+                        <span className="text-secundary_color font-medium h-full text-sm items-center w-1/2 ml-4 hidden sm:flex md:hidden lg:flex">Ramal</span>
+                        <div className=" w-full rounded-b-lg flex items-center justify-center sm:mt-0 md:mt-2 lg:mt-0 mt-2">
+                            <time className="text-secundary_color font-medium h-full text-sm flex justify-center items-center pr-7 w-1/2">Horário</time>
+                            <span className="text-secundary_color font-medium h-full text-sm flex justify-center items-center w-1/2">Número</span>
+                        </div>
+                        <div className="w-full" />
                     </div>
                     <CallsList />
                 </div>
@@ -92,8 +90,8 @@ const Calls = () => {
                     <FormProvider {...callsFormProvider}>
                         <SearchInput />
                     </FormProvider>
-                    <SelectorCallType/>
-                    <SelectorCallResult/>
+                    <SelectorCallType />
+                    <SelectorCallResult />
                 </form>
             </div>
             <button className={`absolute xl:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${searchLayoutStatus ? "right-[330px]" : "right-2"}  `}>

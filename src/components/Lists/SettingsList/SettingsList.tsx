@@ -1,4 +1,4 @@
-import { Lock, SignOut, UserPlus, UserSwitch, Wrench } from "@phosphor-icons/react";
+import { Lock, SignOut, UserSwitch, Wrench } from "@phosphor-icons/react";
 import { useState } from "react";
 import SettingCell from "./SettingCell";
 
@@ -17,19 +17,10 @@ const SettingsList = () => {
             iconDark: <Lock className="text-secundary_color" size={20} />,
         },
         {
-            name: "Adicionar Usuário",
-            description: "Adicione um novo usuário à aplicação.",
-            route: 'change-password',
+            name: "Gerenciar Usuários",
+            description: "Adicionar e/ou gerenciar usuários da aplicação.",
+            route: 'users',
             dark: false,
-            accessible:false,
-            icon: <UserPlus className="text-primary_color" size={20} />,
-            iconDark: <UserPlus className="text-secundary_color" size={20} />,
-        },
-        {
-            name: "Alterar Permissão",
-            description: "Altere as permissões de um usuário específico.",
-            route: 'change-password',
-            dark: true,
             accessible:false,
             icon: <UserSwitch className="text-primary_color" size={20} />,
             iconDark: <UserSwitch className="text-secundary_color" size={20} />,
@@ -38,7 +29,7 @@ const SettingsList = () => {
             name: "Configurar Sistema",
             description: "Altere as configurações técnicas do sistema.",
             route: '/system-settings',
-            dark: false,
+            dark: true,
             accessible:false,
             icon: <Wrench className="text-primary_color" size={20} />,
             iconDark: <Wrench className="text-secundary_color" size={20} />,
@@ -47,7 +38,7 @@ const SettingsList = () => {
             name: "Sair",
             description: "Exclua dados de autenticação e retorne para a tela de login",
             route: '/login',
-            dark: is_admin?true:false,
+            dark: false,
             accessible:true,
             icon: <SignOut className="text-primary_color" size={20} />,
             iconDark: <SignOut className="text-secundary_color" size={20} />,
