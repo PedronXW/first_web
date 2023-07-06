@@ -75,7 +75,6 @@ const Logs = () => {
                             <span className="text-secundary_color font-medium h-full text-sm flex justify-center items-center w-1/2">Editado</span>
                         </div>
                         <span className="text-secundary_color ml-3 font-medium h-full text-sm flex justify-start items-center w-full">Descrição</span>
-
                     </div>
                     <LogsList />
                 </div>
