@@ -10,7 +10,7 @@ import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavig
 import DatePicker from "../components/DatePicker/DatePicker";
 import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
-import SearchInput from "../components/Inputs/SearchInput";
+import { Input } from "../components/Input";
 import CallsList from "../components/Lists/CallsList/CallsList";
 import Drawer from "../components/Lists/Drawer/Drawer";
 import { SelectorCallResult } from "../components/SelectorCallResult/SelectorCallResult";
@@ -88,7 +88,11 @@ const Calls = () => {
                 <form className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 flex flex-col bg-secundary_color drop-shadow-lg gap-5 overflow-y-scroll pb-4">
                     <DatePicker onEndSelected={setEndSelected} onStartSelected={setStartSelected} />
                     <FormProvider {...callsFormProvider}>
-                        <SearchInput />
+                        <Input.Root id="overflow" pattern_color="background_color" initial_visibility={false}>
+                            <Input.Icon icon={<MagnifyingGlass size={20} className="text-primary_color" />} />
+                            <Input.Text placeholder="Search" />
+                            <Input.Action />
+                        </Input.Root>
                     </FormProvider>
                     <SelectorCallType />
                     <SelectorCallResult />

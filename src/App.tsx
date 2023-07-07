@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logs from "./pages/Logs";
 import Queues from "./pages/Queues";
-import QueuesAdd from "./pages/QueuesAdd";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
 import Users from "./pages/Users";
@@ -32,7 +31,6 @@ function App() {
       </Route>
       <Route path="/queues" >
         <Route path="" element={<RouteGuard page={<Queues />} />} />
-        <Route path="add" element={<RouteGuard page={<QueuesAdd />} />} />
       </Route>
       <Route path="/logs" element={<RouteGuard page={<Logs />} />} />
       <Route path="/calls" element={<RouteGuard page={<Calls />} />}/>

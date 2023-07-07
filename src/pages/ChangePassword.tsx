@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Lock } from "@phosphor-icons/react";
 import axios from "axios";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -7,7 +8,7 @@ import { z } from "zod";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
 import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
-import PasswordInput from "../components/Inputs/PasswordInput";
+import { Input } from "../components/Input";
 import Drawer from "../components/Lists/Drawer/Drawer";
 import { usePersistanceStore } from "../hooks/usePersistanceStore";
 
@@ -61,15 +62,27 @@ const ChangePassword = () => {
                     <form onSubmit={handleSubmit(HandleLogin)} onChange={() => { clearErrors(); console.log(errors) }} autoComplete="off" className="h-screen md:max-w-[380px] md:mx-11 mx-8">
                         <FormProvider {...changePasswordForm}>
                             <strong className="text-sm h-min text-primary_color font-normal mb-8 flex">Para alterar sua senha, por favor, preencha os campos abaixo.</strong>
-                            <PasswordInput id="password" pattern_color="secundary_color" placeholder="Password" />
+                            <Input.Root id="password" pattern_color="secundary_color">
+                                <Input.Icon icon={<Lock color="gray" size={20} />} />
+                                <Input.Text placeholder="Password" />
+                                <Input.ActionPassword />
+                            </Input.Root>
                             {errors.password ?
                                 <span
                                     className="h-10 text-xs text-red-500 pl-2 pt-2 flex">{errors!.password!.message?.toString()}</span> : <div className="h-10 flex"> </div>}
-                            <PasswordInput id="newPassword" pattern_color="secundary_color" placeholder="New Password" />
+                            <Input.Root id="newPassword" pattern_color="secundary_color">
+                                <Input.Icon icon={<Lock color="gray" size={20} />} />
+                                <Input.Text placeholder="New Password" />
+                                <Input.ActionPassword />
+                            </Input.Root>
                             {errors.newPassword ?
                                 <span
                                     className="h-10 text-xs text-red-500 pl-2 pt-2 flex">{errors!.newPassword!.message?.toString()}</span> : <div className="h-10 flex"> </div>}
-                            <PasswordInput id="confirmPassword" pattern_color="secundary_color" placeholder="Confirm Password" />
+                            <Input.Root id="confirmPassword" pattern_color="secundary_color">
+                                <Input.Icon icon={<Lock color="gray" size={20} />} />
+                                <Input.Text placeholder="Confirm Password" />
+                                <Input.ActionPassword />
+                            </Input.Root>
                             {errors.confirmPassword ?
                                 <span
                                     className="h-10 text-xs text-red-500 pl-2 pt-2 flex">{errors!.confirmPassword!.message?.toString()}</span> : <div className="h-10 flex"> </div>}

@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Envelope, Lock } from '@phosphor-icons/react';
 import axios from 'axios';
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import icon from '../assets/icon.png';
-import MailInput from "../components/Inputs/MailInput";
-import PasswordInput from "../components/Inputs/PasswordInput";
+import { Input } from '../components/Input';
 import { usePersistanceStore } from '../hooks/usePersistanceStore';
 
 
@@ -46,7 +46,7 @@ const Login = () => {
 
     const loginForm = useForm({ resolver: zodResolver(createUserFormSchema) })
 
-    const {  handleSubmit, formState: { errors }, clearErrors } = loginForm;
+    const { handleSubmit, formState: { errors }, clearErrors } = loginForm;
 
     return (
         <div className='h-full w-full flex flex-col justify-evenly'>
@@ -56,11 +56,19 @@ const Login = () => {
             </figcaption>
             <form onSubmit={handleSubmit(HandleLogin)} onChange={() => { clearErrors() }} autoComplete="off" className="flex flex-col gap-2">
                 <FormProvider {...loginForm}>
-                    <MailInput  />
+                    <Input.Root id="email" pattern_color="background_color" initial_visibility={false}>
+                        <Input.Icon icon={<Envelope color="gray" size={20} />} />
+                        <Input.Text placeholder="Email" />
+                        <Input.Action />
+                    </Input.Root>
                     {errors.email ?
                         <span aria-label={"O campo email possui uma inconsistencia, por favor, verifique: " + errors!.email!.message?.toString()}
                             className="h-5 text-xs text-red-500 pl-2">{errors!.email!.message?.toString()}</span> : <div className="h-5"> </div>}
-                    <PasswordInput id="password" pattern_color='background_color' placeholder="Password" />
+                    <Input.Root id="password" pattern_color="background_color">
+                        <Input.Icon icon={<Lock color="gray" size={20} />} />
+                        <Input.Text placeholder="Password" />
+                        <Input.ActionPassword />
+                    </Input.Root>
                     {errors.password ?
                         <span aria-label={"O campo senha possui uma inconsistencia, por favor, verifique: " + errors!.password!.message?.toString()}
                             className="h-5 text-xs text-red-500 pl-2">{errors!.password!.message?.toString()}</span> : <div className="h-5"> </div>}

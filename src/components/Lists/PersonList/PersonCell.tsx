@@ -19,7 +19,7 @@ const PersonCell = ({ person }: PersonCellInterface) => {
     }
 
     return (
-        <div onClick={()=>{setState(!state)}} id={String(person)} draggable={true} onDragStart={handleDraggingStart} onDragEnd={handleDraggingEnd} className={`h-14 cursor-pointer px-6 w-full flex items-center bg-secundary_color drop-shadow-3xl mb-3 rounded-md gap-4 ${state?"opacity-100":"opacity-40"}`}>
+        <div onClick={()=>{setState(!state)}} id={String(person)} draggable={true} onDragStart={handleDraggingStart} onDragEnd={handleDraggingEnd} className={`min-h-[50px] cursor-pointer px-6 w-full flex items-center bg-background_color mb-3 rounded-md gap-4 ${state?"opacity-100":"opacity-40"}`}>
             <input type="checkbox" checked={state}/>
             <span className="grow-1 w-full text-primary_color text-base">{person}</span>
             <span className="text-primary_color text-base w-fit whitespace-nowrap">(35) 3422-9066</span>

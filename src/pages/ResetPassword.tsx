@@ -1,13 +1,17 @@
 import { FormProvider, useForm } from "react-hook-form";
-import MailInput from "../components/Inputs/MailInput";
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Envelope } from "@phosphor-icons/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 import icon from '../assets/icon.png';
+import { Input } from "../components/Input";
 
 
 const ResetPassword = () => {
+
+    const [email, setEmail] = useState('');
 
     function log(data: any) {
         console.log(data)
@@ -30,7 +34,11 @@ const ResetPassword = () => {
             </figcaption>
             <form onSubmit={handleSubmit(log)} autoComplete="off" className="flex flex-col gap-2">
                 <FormProvider {...resetPassForm}>
-                    <MailInput/>
+                    <Input.Root id="resetpassword" pattern_color="secundary_color">
+                        <Input.Icon icon={<Envelope aria-label="Icone de um envelope." color="gray" size={20} />}/>
+                        <Input.Text placeholder="Email" />
+                        <Input.Action />
+                    </Input.Root>
                 </FormProvider>
                 {errors.email ?
                     <span

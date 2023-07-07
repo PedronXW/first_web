@@ -22,10 +22,10 @@ const AddButton = ({children}:AddButtonInterface) => {
     });
 
     return (
-        <div  className={`fixed right-4 bottom-4 flex items-end gap-3 z-50`}>
-            <form ref={formLayoutReference} className={`h-96 w-80 overflow-y-scroll border-2 bg-white border-primary_color rounded-lg ${isOpen?"flex":"hidden"}`}>
+        <div  className={`fixed right-4 bottom-20 md:bottom-4  flex items-end gap-3 z-50`}>
+            <div ref={formLayoutReference} className={`h-max w-fit border-2 bg-white border-gray-300 drop-shadow-3xl rounded-lg ${isOpen?"flex":"hidden"}`}>
                 {children}
-            </form>
+            </div>
             <div className="p-3 rounded-full drop-shadow-3xl bg-secundary_color h-min cursor-pointer" onClick={(event)=>{setIsOpen(!isOpen); event.stopPropagation();}}>
                 <Plus size={22} className="text-primary_color" />
             </div>

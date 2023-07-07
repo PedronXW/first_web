@@ -1,21 +1,19 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
+import { InputContext } from "./InputRoot";
 
 
 interface InputTextInterface{
-    pattern_color:string;
     placeholder:string
-    visibility:boolean
-    id:string
 }
 
-const InputText = ({visibility, placeholder, pattern_color, id}:InputTextInterface) =>{
+const InputText = ({ placeholder }:InputTextInterface) =>{
 
-    const [value, setValue] = useState('');
+    const {visibility, pattern_color, value, changeValue, id} =useContext(InputContext);
     const {register, setFocus}= useFormContext();
 
     return(
-        <input {...register(id)} type={visibility?'password':'text'} placeholder={placeholder} autoComplete="off" className={`font-medium text-sm ml-2 bg-${pattern_color} border-${pattern_color} w-full pr-1`} onChange={(e) => { setValue(e.target.value); }} value={value} />
+        <input {...register(id)} type={visibility?'password':'text'} placeholder={placeholder} autoComplete="off" className={`font-medium text-sm ml-2 bg-${pattern_color} border-${pattern_color} w-full pr-1`} onChange={(e) => { changeValue(e.target.value); }} value={value} />
     )
 }
 
