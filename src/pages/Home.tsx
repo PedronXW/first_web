@@ -17,7 +17,7 @@ const Home = () => {
                 <HeaderMobile />
                 <div className="grow-1 w-full flex flex-col overflow-y-scroll">
                     <Header title="Bem vindo, Pedro!!" />
-                    <div className="w-full  flex flex-col md:p-12 pb-3 pl-7 pr-6 md:pt-0 mb-4 gap-10">
+                    <div className="w-full flex flex-col md:p-12 pb-3 pl-7 pr-6 md:pt-0 mb-4 gap-10">
                         <div className="grid lg:grid-cols-3 grid-cols-1 gap-2 xl:gap-8 w-full h-min">
                             <DashboardOutDoor name="Chamadas Recebidas" quantity_actually={20} quantity_past={10} icon={<PhoneCall className="text-secundary_color" size={20} />} />
                             <DashboardOutDoor name="Atendidas" quantity_actually={20} quantity_past={40} icon={<CheckFat className="text-secundary_color" size={20} />} />

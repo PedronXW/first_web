@@ -5,9 +5,11 @@ import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logs from "./pages/Logs";
+import Queue from "./pages/Queue";
 import Queues from "./pages/Queues";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
+import User from "./pages/User";
 import Users from "./pages/Users";
 import UsersAdd from "./pages/UsersAdd";
 
@@ -27,10 +29,12 @@ function App() {
         <Route path="users">
           <Route path="" element={<RouteGuard page={<Users />} />} />
           <Route path="add" element={<RouteGuard page={<UsersAdd />} />} />
+          <Route path=":id" element={<RouteGuard page={<User />} />} />
         </Route>
       </Route>
       <Route path="/queues" >
         <Route path="" element={<RouteGuard page={<Queues />} />} />
+        <Route path=":id" element={<RouteGuard page={<Queue />} />} />
       </Route>
       <Route path="/logs" element={<RouteGuard page={<Logs />} />} />
       <Route path="/calls" element={<RouteGuard page={<Calls />} />}/>

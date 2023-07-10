@@ -1,5 +1,6 @@
 import { PhoneIncoming } from "@phosphor-icons/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface QueueCellInterface {
     queue: any;
@@ -18,8 +19,10 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
         setDragging(false);
     }
 
+    const navigate=useNavigate();
+
     return (
-        <li id={String(queue)} draggable="true" onDragStart={handleDraggingStart} onDragEnd={handleDraggingEnd} title={queue.name ? queue.name : "arroz"} className={`h-36 flex-col w-full justify-end items-end ${dragging?"hidden":"flex"}`}>
+        <li id={String(queue)} draggable="true" onDragStart={handleDraggingStart} onDragEnd={handleDraggingEnd} onClick={()=>{navigate("cdscnsaocsadcsakl")}} title={queue.name ? queue.name : "arroz"} className={`h-36 flex-col w-full justify-end items-end ${dragging?"hidden":"flex"}`}>
             <div className="h-[32px] w-[32px] bg-green-500 relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center" />
             <div className="h-5/6 w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl cursor-pointer align-bottom -mt-4">
                 <header className="h-2/4 w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">

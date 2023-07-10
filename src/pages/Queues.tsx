@@ -1,5 +1,4 @@
 import { ArrowULeftDown, IdentificationBadge, Phone, Plus, UserList } from "@phosphor-icons/react";
-
 import { FormProvider, useForm } from "react-hook-form";
 import AddButton from "../components/AddButton/AddButton";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";

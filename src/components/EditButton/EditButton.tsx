@@ -1,11 +1,11 @@
-import { Plus } from "@phosphor-icons/react";
+import { Pen } from "@phosphor-icons/react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface AddButtonInterface {
     children: ReactNode
 }
 
-const AddButton = ({children}:AddButtonInterface) => {
+const EditButton = ({children}:AddButtonInterface) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,10 +27,10 @@ const AddButton = ({children}:AddButtonInterface) => {
                 {children}
             </div>
             <div className="p-3 rounded-full drop-shadow-3xl bg-secundary_color h-min cursor-pointer" onClick={(event)=>{setIsOpen(!isOpen); event.stopPropagation();}}>
-                <Plus size={22} className="text-primary_color" />
+                <Pen size={22} className="text-primary_color" />
             </div>
         </div>
     )
 }
 
-export default AddButton;
+export default EditButton;
