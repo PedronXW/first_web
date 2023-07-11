@@ -28,7 +28,7 @@ const SettingsList = () => {
         {
             name: "Configurar Sistema",
             description: "Altere as configurações técnicas do sistema.",
-            route: '/system-settings',
+            route: 'system-settings',
             dark: true,
             accessible:false,
             icon: <Wrench className="text-primary_color" size={20} />,

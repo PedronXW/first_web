@@ -14,7 +14,7 @@ const Settings = () => {
                     <Header title="Configurações" />
                     <div className="flex flex-col pb-2">
                         <SettingsList />
-                    </div>
+                    </div> 
                 </div>
                 <BottomNavigationMenu selected={4} />
             </div>

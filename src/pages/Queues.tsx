@@ -39,6 +39,7 @@ const Queues = () => {
                                 </Input.Root>
                                 <Input.Root id="digit" pattern_color="background_color" initial_visibility={false}>
                                     <Input.Icon icon={<Phone size={20} className="text-primary_color" />} />
+                                    
                                     <Input.Text placeholder="Dígito Identificador" />
                                     <Input.Action />
                                 </Input.Root>
@@ -47,7 +48,7 @@ const Queues = () => {
                                     <Input.Text placeholder="Próximo destino quando desativada" />
                                     <Input.Action />
                                 </Input.Root>
-                            </FormProvider>                        
+                            </FormProvider>
                             <h2 className="text-primary_color font-medium text-base mb-3 mt-3">Ramais que farão parte da fila</h2>
                             <div className="flex flex-col w-full h-full">
                                 {person.map((person, key) => <PersonCell key={key} person={person} />)}
