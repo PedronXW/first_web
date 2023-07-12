@@ -1,7 +1,7 @@
 import { IdentificationBadge, User, UserList } from "@phosphor-icons/react";
 import { FormProvider, useForm } from "react-hook-form";
-import AddButton from "../components/AddButton/AddButton";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
+import FloatingButton from "../components/FloatingButton/FloatingButton";
 import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
 import { Input } from "../components/Input";
@@ -24,10 +24,10 @@ const SystemSettings = () => {
                         <UserInfoCard data="Pedro de Almeida csdcdsacsa cascassadcasdcsa csdcas csadcdascsad xcsadcdsac csdacasd" name="Nome" icon={<User size={20} className="text-secundary_color" />} />
                         <UserInfoCard data="Pedro de Almeida csdcdsacsa cas" name="Nome" icon={<User size={20} className="text-secundary_color" />} />
                     </div>
-                    <AddButton>
+                    <FloatingButton type="edit" isAcceptable>
                         <form className="h-min w-80 overflow-y-scroll bg-secundary_color rounded-lg flex p-5 flex-col gap-3">
                             <FormProvider {...QueueForm}>
-                                <h2 className="text-primary_color font-medium text-base">Dados da fila</h2>
+                                <h2 className="text-primary_color font-medium text-base">Alterar configurações do sistema</h2>
                                 <Input.Root id="id" pattern_color="background_color" initial_visibility={false}>
                                     <Input.Icon icon={<IdentificationBadge size={20} className="text-primary_color" />} />
                                     <Input.Text placeholder="Id" />
@@ -40,7 +40,7 @@ const SystemSettings = () => {
                                 </Input.Root>
                             </FormProvider>
                         </form>
-                    </AddButton>
+                    </FloatingButton>
                 </div>
                 <BottomNavigationMenu selected={4} />
             </div>

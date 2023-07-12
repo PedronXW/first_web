@@ -1,12 +1,12 @@
-import { ArrowULeftDown, IdentificationBadge, Phone, Plus, UserList } from "@phosphor-icons/react";
+import { ArrowULeftDown, IdentificationBadge, Phone, UserList } from "@phosphor-icons/react";
 import { FormProvider, useForm } from "react-hook-form";
-import AddButton from "../components/AddButton/AddButton";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
+import FloatingButton from "../components/FloatingButton/FloatingButton";
 import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
 import { Input } from "../components/Input";
 import Drawer from "../components/Lists/Drawer/Drawer";
-import PersonCell from "../components/Lists/PersonList/PersonCell";
+import PersonCellSelectable from "../components/Lists/PersonList/PersonCellSelectable";
 import QueuesList from "../components/Lists/QueuesList/QueuesList";
 
 const Queues = () => {
@@ -21,9 +21,9 @@ const Queues = () => {
             <div className="w-full flex flex-col h-full grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
                 <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
-                    <Header title="Filas"/>
+                    <Header title="Filas" />
                     <QueuesList />
-                    <AddButton>
+                    <FloatingButton type="add" isAcceptable>
                         <form className="h-96 w-80 overflow-y-scroll bg-secundary_color rounded-lg flex p-5 flex-col gap-3">
                             <FormProvider {...QueueForm}>
                                 <h2 className="text-primary_color font-medium text-base">Dados da fila</h2>
@@ -39,7 +39,6 @@ const Queues = () => {
                                 </Input.Root>
                                 <Input.Root id="digit" pattern_color="background_color" initial_visibility={false}>
                                     <Input.Icon icon={<Phone size={20} className="text-primary_color" />} />
-                                    
                                     <Input.Text placeholder="Dígito Identificador" />
                                     <Input.Action />
                                 </Input.Root>
@@ -51,16 +50,13 @@ const Queues = () => {
                             </FormProvider>
                             <h2 className="text-primary_color font-medium text-base mb-3 mt-3">Ramais que farão parte da fila</h2>
                             <div className="flex flex-col w-full h-full">
-                                {person.map((person, key) => <PersonCell key={key} person={person} />)}
+                                {person.map((person, key) => <PersonCellSelectable key={key} person={person} />)}
                             </div>
                         </form>
-                    </AddButton>
+                    </FloatingButton>
                 </div>
                 <BottomNavigationMenu selected={1} />
             </div>
-            <button className={`absolute lg:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 right-2`}>
-                <Plus size={20} className="text-primary_color" />
-            </button>
         </div>
     )
 }

@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Envelope, Phone, Plus, User } from "@phosphor-icons/react";
+import { Envelope, User } from "@phosphor-icons/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-import AddButton from "../components/AddButton/AddButton";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
+import FloatingButton from "../components/FloatingButton/FloatingButton";
 import Header from "../components/Header/Header";
 import HeaderMobile from "../components/Header/HeaderMobile";
 import { Input } from "../components/Input";
@@ -29,9 +29,10 @@ const Users = () => {
                 <div className="grow-1 w-full h-full flex flex-col overflow-y-scroll pb-4">
                     <Header title="Usuários" />
                     <UsersList />
-                    <AddButton>
-                        <form className="h-min w-80 bg-secundary_color rounded-lg flex justify-center items-center p-5 flex-col gap-5">
+                    <FloatingButton isAcceptable type="add">
+                        <form className="h-min w-80 bg-secundary_color rounded-lg flex p-5 flex-col gap-5">
                             <FormProvider {...loginForm}>
+                                <h2 className="text-primary_color font-medium text-base">Dados da fila</h2>
                                 <Input.Root id="name" pattern_color="background_color" initial_visibility={false}>
                                     <Input.Icon icon={<User color="gray" size={20} />} />
                                     <Input.Text placeholder="Name" />
@@ -42,18 +43,9 @@ const Users = () => {
                                     <Input.Text placeholder="Email" />
                                     <Input.Action />
                                 </Input.Root>
-                                <Input.Root id="numero" pattern_color="background_color" initial_visibility={false}>
-                                    <Input.Icon icon={<Phone color="gray" size={20} />} />
-                                    <Input.Text placeholder="Ramal" />
-                                    <Input.Action />
-                                </Input.Root>
-                                <button className="p-2 w-full text-secundary_color bg-primary_color flex justify-center items-center gap-2 rounded-md">
-                                    <Plus size={18} className="text-secundary_color -ml-2"/>
-                                    <span>ADICIONAR</span>
-                                </button>
                             </FormProvider>
                         </form>
-                    </AddButton>
+                    </FloatingButton>
                 </div>
                 <BottomNavigationMenu selected={4} />
             </div>

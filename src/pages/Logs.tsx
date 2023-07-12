@@ -91,7 +91,6 @@ const Logs = () => {
                             <Input.Action />
                         </Input.Root>
                     </FormProvider>
-
                 </form>
             </div>
             <button className={`absolute xl:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${searchLayoutStatus ? "right-[330px]" : "right-2"}  `}>
