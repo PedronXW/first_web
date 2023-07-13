@@ -5,6 +5,7 @@ interface LogCellInterface{
 }
 
 const LogCell=({log}:LogCellInterface)=>{
+
     return(
         <div className="min-h-[240px] sm:min-h-[54px] md:min-h-[240px] lg:min-h-[54px] flex flex-col w-full items-end">
             <figure className="min-h-[54px] min-w-[54px] sm:hidden flex  md:flex lg:hidden bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full justify-center items-center">

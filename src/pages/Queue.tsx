@@ -47,7 +47,6 @@ const Queue = () => {
                                 </Input.Root>
                                 <Input.Root id="digit" pattern_color="background_color" initial_visibility={false}>
                                     <Input.Icon icon={<Phone size={20} className="text-primary_color" />} />
-
                                     <Input.Text placeholder="Dígito Identificador" />
                                     <Input.Action />
                                 </Input.Root>

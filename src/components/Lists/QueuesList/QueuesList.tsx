@@ -5,7 +5,7 @@ const QueuesList = () => {
 
     const ref = useRef<any>(null);
 
-    const [queues, setQueues] = useState([1, ]);
+    const [queues, setQueues] = useState([1, 2, 3, 4, 5, 6, 7]);
 
 
     function drop(ev: any) {
@@ -41,7 +41,7 @@ const QueuesList = () => {
 
 
     return (
-        <ul ref={ref} onDrop={drop} onDragOver={handleDragOver} className="grid md:grid-cols-3 h-full grid-cols-1 w-full md:px-12 pl-7 pr-6 pb-4 gap-10">
+        <ul ref={ref} onDrop={drop} onDragOver={handleDragOver} className="grid md:grid-cols-auto md:h-min h-full grid-cols-1 w-full md:px-12 pl-7 pr-6 pb-4 gap-10">
             {queues.map((queue, key) => <QueueCell key={key} queue={queue} />)}
         </ul>
     )

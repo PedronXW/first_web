@@ -1,4 +1,4 @@
-import { Envelope, User as UserIcon } from "@phosphor-icons/react";
+import { Envelope, Phone, User as UserIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
@@ -15,6 +15,8 @@ const User = () => {
     const editUserForm = useForm();
 
     const [userStatus, setUserStatus] = useState<boolean>(true);
+
+    const [haveRamal, setHaveRamal] = useState<boolean>(true);
 
     return (
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
@@ -47,6 +49,7 @@ const User = () => {
                                     <Input.Text placeholder="Email" />
                                     <Input.Action />
                                 </Input.Root>
+                                <h2 className="text-primary_color font-medium text-base">Status</h2>
                                 <div className="flex w-full h-min">
                                     <button type="button" onClick={() => { setUserStatus(!userStatus) }} className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${userStatus ? "border-green-500" : "border-gray-400"} rounded-l-lg drop-shadow-3xl`}>
                                         <p className={`${userStatus ? "text-green-500" : "text-gray-400"}`}>Ativado</p>
@@ -55,6 +58,20 @@ const User = () => {
                                         <p className={`${!userStatus ? "text-red-700" : "text-gray-400"}`}>Desativado</p>
                                     </button>
                                 </div>
+                                <h2 className="text-primary_color font-medium text-base">Ramal</h2>
+                                <div className="flex w-full h-min">
+                                    <button type="button" onClick={() => { setHaveRamal(!haveRamal) }} className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${haveRamal ? "border-green-500" : "border-gray-400"} rounded-l-lg drop-shadow-3xl`}>
+                                        <p className={`${haveRamal ? "text-green-500" : "text-gray-400"}`}>Ativado</p>
+                                    </button>
+                                    <button type="button" onClick={() => { setHaveRamal(!haveRamal) }} className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${!haveRamal ? "border-red-700" : "border-gray-400"} rounded-r-lg drop-shadow-3xl`}>
+                                        <p className={`${!haveRamal ? "text-red-700" : "text-gray-400"}`}>Desativado</p>
+                                    </button>
+                                </div>
+                                <Input.Root id="ramal" pattern_color="background_color" initial_visibility={false}>
+                                    <Input.Icon icon={<Phone color="gray" size={20} />} />
+                                    <Input.Text placeholder="Ramal" />
+                                    <Input.Action />
+                                </Input.Root>
                             </FormProvider>
                         </form>
                     </FloatingButton>
