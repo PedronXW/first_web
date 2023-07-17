@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider, } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { QueuesProvider } from './contexts/QueuesContext';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
@@ -29,9 +30,11 @@ root.render(
       )}>
       <QueryClientProvider client={queryClient}>
         <CookiesProvider>
-          <BrowserRouter>
+          <QueuesProvider>
+            <BrowserRouter>
               <App />
-          </BrowserRouter>
+            </BrowserRouter>
+          </QueuesProvider>
         </CookiesProvider>
       </QueryClientProvider>
     </SnackbarProvider>

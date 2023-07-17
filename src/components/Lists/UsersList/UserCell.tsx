@@ -10,7 +10,7 @@ const UserCell = ({ user }: UserCellInterface) => {
     const navigate=useNavigate();
 
     return (
-        <div className="min-h-[144px] flex flex-col w-full justify-end items-end cursor-pointer" onClick={()=>{navigate("xcdqhbdskhascbhsa")}}>
+        <div className="min-h-[144px] xl:max-w-[400px] flex flex-col w-full justify-end items-end cursor-pointer" onClick={()=>{navigate("xcdqhbdskhascbhsa")}}>
             <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">
                 <User size={20} className="text-white" />
             </figure>

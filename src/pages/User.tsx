@@ -21,9 +21,9 @@ const User = () => {
     return (
         <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
             <Drawer selected={4} />
-            <div className="w-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
+            <div className="w-full h-full flex flex-col grow-1 overflow-hidden md:shadow-inner">
                 <HeaderMobile />
-                <div className="grow-1 w-full flex flex-col overflow-y-scroll gap-4">
+                <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll gap-4">
                     <Header title="Pedro de Almeida Natali - ID 1" />
                     <div className="w-full flex md:p-12 pb-3 pl-7 pr-6 md:pt-0 mb-4 gap-14 xl:flex-row flex-col">
                         <div className="min-w-[320px] md:max-w-[320px] h-full flex flex-col gap-4">

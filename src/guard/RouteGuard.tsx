@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import useAccessible from "../hooks/useAccessible";
 import { usePersistanceStore } from "../hooks/usePersistanceStore";
+import useSecurity from "../hooks/useSecurity";
 
 interface RouteGuardInterface {
     page: any,
@@ -11,14 +11,14 @@ const RouteGuard = ({ page, restricted }: RouteGuardInterface) => {
     const tokenJwt = usePersistanceStore().value.token;
     const refreshTokenJwt = usePersistanceStore().value.refresh_token;
     
-    const isAccessible  = useAccessible();
+    const isSecurited  = useSecurity();
 
     if (tokenJwt && refreshTokenJwt) {
         if(restricted){
-            if(isAccessible){
+            if(isSecurited){
                 return page
             }
-            return <div>Vc não tem acesso otário</div>
+            return <div>Vc não tem acesso</div>
         }
         return page
     } else {

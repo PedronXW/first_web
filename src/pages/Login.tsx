@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Envelope, Lock } from '@phosphor-icons/react';
-import axios from 'axios';
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from "react-router-dom";
@@ -8,12 +7,11 @@ import { z } from "zod";
 import icon from '../assets/icon.png';
 import { Input } from '../components/Input';
 import { usePersistanceStore } from '../hooks/usePersistanceStore';
-
-
+import { api } from '../lib/axios';
 
 type LoginRequest = {
     access_token: string,
-    refresh: string
+    refresh_token: string
 }
 
 const Login = () => {
@@ -22,12 +20,12 @@ const Login = () => {
 
     const mutation = useMutation({
         mutationFn: async (credentials: any) => {
-            const response = await axios.post("http://10.1.1.24:3000/auth/login", { username: credentials.email, password: credentials.password });
+            const response = await api.post("auth/login", { username: credentials.email, password: credentials.password });
             return response.data;
         },
         onSuccess: (data: LoginRequest) => {
             store.updateValue("token", data.access_token);
-            store.updateValue("refresh_token", data.refresh);
+            store.updateValue("refresh_token", data.refresh_token);
             navigate('/');
         },
         onError: (error: any) => {
@@ -35,7 +33,7 @@ const Login = () => {
         },
     });
 
-    const HandleLogin = (credentials: any) => {
+    const handleLogin = (credentials: any) => {
         mutation.mutate(credentials);
     }
 
@@ -54,7 +52,7 @@ const Login = () => {
                 <img className='h-20 w-20 -ml-5' alt='Logo do produto IPorter' src={icon} />
                 <figcaption className="text-4xl text-primary_color font-bold">IPorter</figcaption>
             </figcaption>
-            <form onSubmit={handleSubmit(HandleLogin)} onChange={() => { clearErrors() }} autoComplete="off" className="flex flex-col gap-2">
+            <form onSubmit={handleSubmit(handleLogin)} onChange={() => { clearErrors() }} autoComplete="off" className="flex flex-col gap-2">
                 <FormProvider {...loginForm}>
                     <Input.Root id="email" pattern_color="background_color" initial_visibility={false}>
                         <Input.Icon icon={<Envelope color="gray" size={20} />} />
