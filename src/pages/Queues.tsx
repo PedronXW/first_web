@@ -1,84 +1,161 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowULeftDown, IdentificationBadge, Phone, UserList } from "@phosphor-icons/react";
-import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
-import BottomNavigationMenu from "../components/BottomNavigationMenu/BottomNavigationMenu";
-import FloatingButton from "../components/FloatingButton/FloatingButton";
-import Header from "../components/Header/Header";
-import HeaderMobile from "../components/Header/HeaderMobile";
-import { Input } from "../components/Input";
-import Drawer from "../components/Lists/Drawer/Drawer";
-import PersonCellSelectable from "../components/Lists/PersonList/PersonCellSelectable";
-import QueuesList from "../components/Lists/QueuesList/QueuesList";
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  ArrowULeftDown,
+  IdentificationBadge,
+  Phone,
+  Plus,
+  UserList,
+} from '@phosphor-icons/react'
+import * as Dialog from '@radix-ui/react-dialog'
+import { useContext, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
+import Header from '../components/Header/Header'
+import HeaderMobile from '../components/Header/HeaderMobile'
+import { Input } from '../components/Input'
+import Drawer from '../components/Lists/Drawer/Drawer'
+import QueuesList from '../components/Lists/QueuesList/QueuesList'
+import { QueuesContext } from '../contexts/QueuesContext'
 
 const newQueueFormSchema = z.object({
-    id: z.number(),
-    name: z.string().nonempty("O nome é obrigatório"),
-    digit: z.number(),
-    overflow: z.number()
+  id: z.string(),
+  name: z.string().nonempty('O nome é obrigatório'),
+  digit: z.string(),
+  overflow: z.string(),
 })
 
 export type NewQueueType = z.infer<typeof newQueueFormSchema>
 
-
 const Queues = () => {
+  const [open, setOpen] = useState(false)
 
-    const person = [1];
+  const { addQueue } = useContext(QueuesContext)
 
-    const QueueForm = useForm<NewQueueType>({
-        resolver: zodResolver(newQueueFormSchema)
-    });
+  const QueueForm = useForm<NewQueueType>({
+    resolver: zodResolver(newQueueFormSchema),
+  })
 
-    function handleCreateNewQueue(data:NewQueueType){
-        console.log(data);
-    }
+  const {
+    formState: { isSubmitting, errors },
+    handleSubmit,
+  } = QueueForm
 
-    return (
-        <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
-            <Drawer selected={1} />
-            <div className="w-full flex flex-col h-full grow-1 overflow-hidden md:shadow-inner">
-                <HeaderMobile />
-                <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
-                    <Header title="Filas" />
-                    <QueuesList />
-                    <form onSubmit={QueueForm.handleSubmit(handleCreateNewQueue)}>
-                    <FloatingButton type="add" isAcceptable>
-                        <div className="h-96 w-80 overflow-y-scroll bg-secundary_color rounded-lg flex p-5 flex-col gap-3">
-                            <FormProvider {...QueueForm}>
-                                <h2 className="text-primary_color font-medium text-base">Dados da fila</h2>
-                                <Input.Root id="id" pattern_color="background_color" initial_visibility={false}>
-                                    <Input.Icon icon={<IdentificationBadge size={20} className="text-primary_color" />} />
-                                    <Input.Text placeholder="Id" />
-                                    <Input.Action />
-                                </Input.Root>
-                                <Input.Root id="name" pattern_color="background_color" initial_visibility={false}>
-                                    <Input.Icon icon={<UserList size={20} className="text-primary_color" />} />
-                                    <Input.Text placeholder="Name" />
-                                    <Input.Action />
-                                </Input.Root>
-                                <Input.Root id="digit" pattern_color="background_color" initial_visibility={false}>
-                                    <Input.Icon icon={<Phone size={20} className="text-primary_color" />} />
-                                    <Input.Text placeholder="Dígito Identificador" />
-                                    <Input.Action />
-                                </Input.Root>
-                                <Input.Root id="overflow" pattern_color="background_color" initial_visibility={false}>
-                                    <Input.Icon icon={<ArrowULeftDown size={20} className="text-primary_color" />} />
-                                    <Input.Text placeholder="Próximo destino quando desativada" />
-                                    <Input.Action />
-                                </Input.Root>
-                            </FormProvider>
-                            <h2 className="text-primary_color font-medium text-base mb-3 mt-3">Ramais que farão parte da fila</h2>
-                            <div className="flex flex-col w-full h-full">
-                                {person.map((person, key) => <PersonCellSelectable key={key} person={person} />)}
-                            </div>
-                        </div>
-                    </FloatingButton>
-                    </form>
-                </div>
-                <BottomNavigationMenu selected={1} />
-            </div>
+  function handleCreateNewQueue(data: NewQueueType) {
+    addQueue({
+      digit: parseInt(data.digit),
+      id: parseInt(data.id),
+      name: String(data.name),
+      overflow: parseInt(data.overflow),
+    })
+    setOpen(false)
+  }
+
+  return (
+    <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
+      <Drawer selected={1} />
+      <div className="w-full flex flex-col h-full grow-1 overflow-hidden md:shadow-inner">
+        <HeaderMobile />
+        <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll">
+          <Header title="Filas" />
+          <QueuesList />
+
+          <Dialog.Root open={open} onOpenChange={setOpen}>
+            <Dialog.Trigger asChild>
+              <button className="fixed bottom-4 right-4 h-16 w-16 rounded-full bg-secundary_color drop-shadow-3xl flex justify-center items-center">
+                <Plus size={24} />
+              </button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed flex justify-center items-center w-screen h-screen inset-0 bg-black/75 z-50">
+                <Dialog.Content className="min-w-[25rem] max-w-[20rem] h-min drop-shadow-3xl rounded-md bg-white fixed flex flex-col justify-center p-8 gap-4">
+                  <Dialog.Title className="font-bold text-xl">
+                    Dados da fila
+                  </Dialog.Title>
+                  <form
+                    onSubmit={handleSubmit(handleCreateNewQueue)}
+                    className="flex flex-col gap-4"
+                  >
+                    <FormProvider {...QueueForm}>
+                      <Input.Root
+                        id="id"
+                        patternColor="background_color"
+                        initialVisibility={false}
+                      >
+                        <Input.Icon
+                          icon={
+                            <IdentificationBadge
+                              size={20}
+                              className="text-primary_color"
+                            />
+                          }
+                        />
+                        <Input.Text placeholder="Id" />
+                        <Input.Action />
+                      </Input.Root>
+                      <Input.Root
+                        id="name"
+                        patternColor="background_color"
+                        initialVisibility={false}
+                      >
+                        <Input.Icon
+                          icon={
+                            <UserList
+                              size={20}
+                              className="text-primary_color"
+                            />
+                          }
+                        />
+                        <Input.Text placeholder="Name" />
+                        <Input.Action />
+                      </Input.Root>
+                      <Input.Root
+                        id="digit"
+                        patternColor="background_color"
+                        initialVisibility={false}
+                      >
+                        <Input.Icon
+                          icon={
+                            <Phone size={20} className="text-primary_color" />
+                          }
+                        />
+                        <Input.Text placeholder="Dígito Identificador" />
+                        <Input.Action />
+                      </Input.Root>
+                      <Input.Root
+                        id="overflow"
+                        patternColor="background_color"
+                        initialVisibility={false}
+                      >
+                        <Input.Icon
+                          icon={
+                            <ArrowULeftDown
+                              size={20}
+                              className="text-primary_color"
+                            />
+                          }
+                        />
+                        <Input.Text placeholder="Próximo destino quando desativada" />
+                        <Input.Action />
+                      </Input.Root>
+                    </FormProvider>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="h-12 w-full rounded-md bg-primary_color text-secundary_color font-medium"
+                    >
+                      Criar
+                    </button>
+                  </form>
+                </Dialog.Content>
+              </Dialog.Overlay>
+            </Dialog.Portal>
+          </Dialog.Root>
         </div>
-    )
+        <BottomNavigationMenu selected={1} />
+      </div>
+    </div>
+  )
 }
 
-export default Queues;
+export default Queues

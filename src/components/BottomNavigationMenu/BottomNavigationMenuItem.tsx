@@ -1,20 +1,30 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 interface BottomNavigationMenuItemInterface {
-    item: any
-    selected: boolean
-    state: boolean
+  item: any
+  selected: boolean
+  state: boolean
 }
 
-const BottomNavigationMenuItem = ({ item, selected, state }: BottomNavigationMenuItemInterface) => {
+const BottomNavigationMenuItem = ({
+  item,
+  selected,
+  state,
+}: BottomNavigationMenuItemInterface) => {
+  const navigate = useNavigate()
 
-    const navigate=useNavigate();
-
-    return (
-        <li className={`h-full w-full cursor-pointer flex items-center bg-gray-light justify-center ${selected?"bg-primary_color":"bg-secundary_color"}`} onClick={()=>{navigate(item.route)}}>
-            {selected?item.iconSelected:item.icon}
-        </li>
-    )
+  return (
+    <li
+      className={`h-full w-full cursor-pointer flex items-center bg-gray-light justify-center ${
+        selected ? 'bg-primary_color' : 'bg-secundary_color'
+      }`}
+      onClick={() => {
+        navigate(item.route)
+      }}
+    >
+      {selected ? item.iconSelected : item.icon}
+    </li>
+  )
 }
 
-export default BottomNavigationMenuItem;
+export default BottomNavigationMenuItem
