@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { QueuesProvider } from './contexts/QueuesContext'
+import { UsersContextProvider } from './contexts/UsersContext'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
@@ -32,9 +33,11 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <CookiesProvider>
           <QueuesProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
+            <UsersContextProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </UsersContextProvider>
           </QueuesProvider>
         </CookiesProvider>
       </QueryClientProvider>

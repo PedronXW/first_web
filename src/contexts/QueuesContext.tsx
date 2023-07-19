@@ -1,11 +1,5 @@
 import { enqueueSnackbar } from 'notistack'
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import { ReactNode, createContext, useCallback, useState } from 'react'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
 import { api } from '../lib/axios'
 
@@ -56,10 +50,6 @@ export const QueuesProvider = ({ children }: QueuesContextInterface) => {
     },
     [value.token],
   )
-
-  useEffect(() => {
-    fetchQueues()
-  }, [])
 
   return (
     <QueuesContext.Provider value={{ queues, fetchQueues, addQueue }}>

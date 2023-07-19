@@ -5,13 +5,19 @@ interface UserCallListInterface {
 }
 
 const UserCallList = ({ user }: UserCallListInterface) => {
-  const calls = [1]
+  const calls: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   return (
-    <div className="grid grid-cols-1 w-full gap-4">
-      {calls.map((call, key) => (
-        <UserCallCell call={call} key={key} />
-      ))}
+    <div className="grid grid-cols-1 h-full w-full">
+      {calls.length > 0 ? (
+        calls.map((call: any, key: number) => (
+          <UserCallCell call={call} key={key} />
+        ))
+      ) : (
+        <div className="h-full w-full flex justify-center items-center text-primary_color font-medium">
+          Nenhuma chamada
+        </div>
+      )}
     </div>
   )
 }

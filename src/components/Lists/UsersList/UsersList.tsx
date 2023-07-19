@@ -1,11 +1,17 @@
+import { useContext, useEffect } from 'react'
+import { UsersContext } from '../../../contexts/UsersContext'
 import UserCell from './UserCell'
 
 const UsersList = () => {
-  const user = [1, 2, 3, 4, 5, 6]
+  const { fetchUsers, users } = useContext(UsersContext)
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
 
   return (
     <div className="grid grid-cols-auto w-full gap-4 md:px-12 pl-7 pr-6 ">
-      {user.map((user, key) => (
+      {users.map((user, key) => (
         <UserCell key={key} user={user} />
       ))}
     </div>

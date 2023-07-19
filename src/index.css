@@ -1,7 +1,5 @@
 @tailwind base;
 
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300400500&display=swap');
-
 body {
     -webkit-font-smoothing: antialiased;
     margin: 0;

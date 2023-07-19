@@ -10,9 +10,7 @@ import Queues from './pages/Queues'
 import ResetPassword from './pages/ResetPassword'
 import Settings from './pages/Settings'
 import SystemSettings from './pages/SystemSettings'
-import User from './pages/User'
 import Users from './pages/Users'
-import UsersAdd from './pages/UsersAdd'
 
 function App() {
   /* Guarded routes <RouteGuard page={} /> */
@@ -28,11 +26,7 @@ function App() {
           path="change-password"
           element={<RouteGuard page={<ChangePassword />} />}
         />
-        <Route path="users">
-          <Route path="" element={<RouteGuard page={<Users />} />} />
-          <Route path="add" element={<RouteGuard page={<UsersAdd />} />} />
-          <Route path=":id" element={<RouteGuard page={<User />} />} />
-        </Route>
+        <Route path="users" element={<RouteGuard page={<Users />} />} />
         <Route
           path="system-settings"
           element={<RouteGuard page={<SystemSettings />} />}
