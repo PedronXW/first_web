@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Envelope, Phone, Plus, User } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useContext, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
 import Header from '../components/Header/Header'
@@ -16,15 +17,19 @@ const createUserFormSchema = z.object({
   name: z.string().nonempty('O nome é obrigatório'),
   email: z.string().email('Email inválido'),
   ramal: z.string(),
+  ramal_active: z.enum(['true', 'false']),
 })
 
 export type NewUserType = z.infer<typeof createUserFormSchema>
 
 const Users = () => {
-  const { addUser } = useContext(UsersContext)
+  const { addUser, createRamal } = useContext(UsersContext)
 
   const loginForm = useForm<NewUserType>({
     resolver: zodResolver(createUserFormSchema),
+    defaultValues: {
+      ramal_active: 'true',
+    },
   })
 
   const [haveRamal, setHaveRamal] = useState<boolean>(true)
@@ -34,6 +39,7 @@ const Users = () => {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
+    control,
     clearErrors,
   } = loginForm
 
@@ -41,6 +47,8 @@ const Users = () => {
     addUser({
       name: String(user.name),
       email: String(user.email),
+      ramal: parseInt(user.ramal),
+      ramal_active: user.ramal_active === 'true',
     })
     setOpen(false)
   }
@@ -94,42 +102,40 @@ const Users = () => {
                       <h2 className="text-primary_color font-medium text-base">
                         Ramal
                       </h2>
-                      <div className="flex w-full h-min">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setHaveRamal(!haveRamal)
-                          }}
-                          className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-                            haveRamal ? 'border-green-500' : 'border-gray-400'
-                          } rounded-l-lg drop-shadow-3xl`}
-                        >
-                          <p
-                            className={`${
-                              haveRamal ? 'text-green-500' : 'text-gray-400'
-                            }`}
-                          >
-                            Ativado
-                          </p>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setHaveRamal(!haveRamal)
-                          }}
-                          className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-                            !haveRamal ? 'border-red-700' : 'border-gray-400'
-                          } rounded-r-lg drop-shadow-3xl`}
-                        >
-                          <p
-                            className={`${
-                              !haveRamal ? 'text-red-700' : 'text-gray-400'
-                            }`}
-                          >
-                            Desativado
-                          </p>
-                        </button>
-                      </div>
+                      <Controller
+                        control={control}
+                        name="ramal_active"
+                        render={({ field }) => {
+                          return (
+                            <RadioGroup.Root
+                              className="flex w-full h-min"
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <RadioGroup.Item
+                                value="true"
+                                className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2  ${
+                                  field.value === 'true'
+                                    ? 'border-green-500 text-green-500'
+                                    : 'border-gray-400 text-gray-400'
+                                } rounded-l-lg drop-shadow-3xl`}
+                              >
+                                Ativado
+                              </RadioGroup.Item>
+                              <RadioGroup.Item
+                                value="false"
+                                className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 border-gray-400 ${
+                                  field.value === 'false'
+                                    ? 'border-red-700 text-red-700'
+                                    : 'border-gray-400 text-gray-400'
+                                } rounded-r-lg drop-shadow-3xl`}
+                              >
+                                Desativado
+                              </RadioGroup.Item>
+                            </RadioGroup.Root>
+                          )
+                        }}
+                      />
                       <Input.Root
                         id="ramal"
                         patternColor="background_color"

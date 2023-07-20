@@ -1,18 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Envelope, Phone, User as UserIcon } from '@phosphor-icons/react'
+import { Phone, User as UserIcon } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useContext, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { User, UsersContext } from '../../../contexts/UsersContext'
 import { Input } from '../../Input'
 import UserCallList from '../UserCallList/UserCallList'
 
 const createUserFormSchema = z.object({
-  name: z.string().nonempty('O nome é obrigatório'),
-  email: z.string().email('Email inválido'),
-  ramal: z.string(),
+  name: z.string().min(0),
+  ramal_active: z.enum(['true', 'false']),
+  ramal: z.string().min(0),
+  is_active: z.enum(['true', 'false']),
 })
 
 export type NewUserType = z.infer<typeof createUserFormSchema>
@@ -22,30 +23,53 @@ interface UserCellInterface {
 }
 
 const UserCell = ({ user }: UserCellInterface) => {
-  const navigate = useNavigate()
-
-  const { users, selectedUser, setSelectedUser } = useContext(UsersContext)
-
   const [open, setOpen] = useState(false)
 
-  const { addUser } = useContext(UsersContext)
+  const { deleteRamal, updateRamal, desactivePerson, editUser } =
+    useContext(UsersContext)
 
   const editUserForm = useForm<NewUserType>({
     resolver: zodResolver(createUserFormSchema),
+    defaultValues: {
+      ramal_active: user.Voip_Account ? 'true' : 'false',
+      is_active: user.is_active ? 'true' : 'false',
+      name: user.name,
+      ramal: user.Voip_Account ? String(user.Voip_Account.exten) : '',
+    },
   })
 
-  const [userStatus, setUserStatus] = useState<boolean>(true)
+  const [haveRamal, setHaveRamal] = useState<boolean>(!!user.Voip_Account)
 
   const {
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
     clearErrors,
   } = editUserForm
 
-  const [haveRamal, setHaveRamal] = useState<boolean>(true)
-
-  function handleCreateNewUser(user: NewUserType) {
-    console.log(user)
+  function handleEditUser(userChanges: NewUserType) {
+    if (userChanges.is_active === 'false') {
+      desactivePerson({ id: user.id })
+    }
+    if (userChanges.ramal_active === 'false') {
+      deleteRamal({ id: user.id })
+    }
+    if (
+      userChanges.ramal !== '' &&
+      userChanges.ramal_active === 'true' &&
+      userChanges.ramal !== String(user.Voip_Account?.exten)
+    ) {
+      updateRamal({
+        id: user.id,
+        ramal: parseInt(userChanges.ramal),
+      })
+    }
+    if (userChanges.name !== '' && userChanges.name !== user.name) {
+      editUser({
+        id: user.id,
+        name: String(userChanges.name),
+      })
+    }
   }
 
   return (
@@ -53,7 +77,10 @@ const UserCell = ({ user }: UserCellInterface) => {
       className={`min-h-[260px] max-h-[260px] overflow-hidden flex rounded-b-lg flex-col w-full justify-end drop-shadow-md items-end`}
     >
       <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">
-        <UserIcon size={20} className="text-white" />
+        <UserIcon
+          size={20}
+          className={`${user.is_active ? 'text-green-500' : 'text-red-500'}`}
+        />
       </figure>
       <div
         onClick={() => {
@@ -89,7 +116,7 @@ const UserCell = ({ user }: UserCellInterface) => {
                 Dados da fila
               </Dialog.Title>
               <form
-                onSubmit={handleSubmit(handleCreateNewUser)}
+                onSubmit={handleSubmit(handleEditUser)}
                 className="h-min w-80 bg-secundary_color rounded-lg flex flex-col gap-4"
               >
                 <FormProvider {...editUserForm}>
@@ -105,102 +132,99 @@ const UserCell = ({ user }: UserCellInterface) => {
                     <Input.Text placeholder="Name" />
                     <Input.Action />
                   </Input.Root>
-                  <Input.Root
-                    id="email"
-                    patternColor="background_color"
-                    initialVisibility={false}
-                  >
-                    <Input.Icon icon={<Envelope color="gray" size={20} />} />
-                    <Input.Text placeholder="Email" />
-                    <Input.Action />
-                  </Input.Root>
                   <h2 className="text-primary_color font-medium text-base">
                     Status
                   </h2>
-                  <div className="flex w-full h-min">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setUserStatus(!userStatus)
-                      }}
-                      className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-                        userStatus ? 'border-green-500' : 'border-gray-400'
-                      } rounded-l-lg drop-shadow-3xl`}
-                    >
-                      <p
-                        className={`${
-                          userStatus ? 'text-green-500' : 'text-gray-400'
-                        }`}
-                      >
-                        Ativado
-                      </p>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setUserStatus(!userStatus)
-                      }}
-                      className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-                        !userStatus ? 'border-red-700' : 'border-gray-400'
-                      } rounded-r-lg drop-shadow-3xl`}
-                    >
-                      <p
-                        className={`${
-                          !userStatus ? 'text-red-700' : 'text-gray-400'
-                        }`}
-                      >
-                        Desativado
-                      </p>
-                    </button>
-                  </div>
+                  <Controller
+                    control={control}
+                    name="is_active"
+                    render={({ field }) => {
+                      return (
+                        <RadioGroup.Root
+                          className="flex w-full h-min"
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <RadioGroup.Item
+                            value="true"
+                            className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2  ${
+                              field.value === 'true'
+                                ? 'border-green-500 text-green-500'
+                                : 'border-gray-400 text-gray-400'
+                            } rounded-l-lg drop-shadow-3xl`}
+                          >
+                            Ativado
+                          </RadioGroup.Item>
+                          <RadioGroup.Item
+                            value="false"
+                            className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 border-gray-400 ${
+                              field.value === 'false'
+                                ? 'border-red-700 text-red-700'
+                                : 'border-gray-400 text-gray-400'
+                            } rounded-r-lg drop-shadow-3xl`}
+                          >
+                            Desativado
+                          </RadioGroup.Item>
+                        </RadioGroup.Root>
+                      )
+                    }}
+                  />
+
                   <h2 className="text-primary_color font-medium text-base">
                     Ramal
                   </h2>
-                  <div className="flex w-full h-min">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setHaveRamal(!haveRamal)
-                      }}
-                      className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-                        haveRamal ? 'border-green-500' : 'border-gray-400'
-                      } rounded-l-lg drop-shadow-3xl`}
+                  <Controller
+                    control={control}
+                    name="ramal_active"
+                    render={({ field }) => {
+                      return (
+                        <RadioGroup.Root
+                          className="flex w-full h-min"
+                          onValueChange={() => {
+                            field.onChange(
+                              field.value === 'true' ? 'false' : 'true',
+                            )
+                            setHaveRamal(field.value === 'false')
+                          }}
+                          value={field.value}
+                        >
+                          <RadioGroup.Item
+                            value="true"
+                            className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2  ${
+                              field.value === 'true'
+                                ? 'border-green-500 text-green-500'
+                                : 'border-gray-400 text-gray-400'
+                            } rounded-l-lg drop-shadow-3xl`}
+                          >
+                            Ativado
+                          </RadioGroup.Item>
+                          <RadioGroup.Item
+                            value="false"
+                            className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 border-gray-400 ${
+                              field.value === 'false'
+                                ? 'border-red-700 text-red-700'
+                                : 'border-gray-400 text-gray-400'
+                            } rounded-r-lg drop-shadow-3xl`}
+                          >
+                            Desativado
+                          </RadioGroup.Item>
+                        </RadioGroup.Root>
+                      )
+                    }}
+                  />
+
+                  {haveRamal && (
+                    <Input.Root
+                      id="ramal"
+                      patternColor="background_color"
+                      initialVisibility={false}
                     >
-                      <p
-                        className={`${
-                          haveRamal ? 'text-green-500' : 'text-gray-400'
-                        }`}
-                      >
-                        Ativado
-                      </p>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setHaveRamal(!haveRamal)
-                      }}
-                      className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-                        !haveRamal ? 'border-red-700' : 'border-gray-400'
-                      } rounded-r-lg drop-shadow-3xl`}
-                    >
-                      <p
-                        className={`${
-                          !haveRamal ? 'text-red-700' : 'text-gray-400'
-                        }`}
-                      >
-                        Desativado
-                      </p>
-                    </button>
-                  </div>
-                  <Input.Root
-                    id="ramal"
-                    patternColor="background_color"
-                    initialVisibility={false}
-                  >
-                    <Input.Icon icon={<Phone color="gray" size={20} />} />
-                    <Input.Text placeholder="Ramal" />
-                    <Input.Action />
-                  </Input.Root>
+                      <Input.Icon icon={<Phone color="gray" size={20} />} />
+                      <Input.Text placeholder="Ramal" />
+                      <Input.Action />
+                    </Input.Root>
+                  )}
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
