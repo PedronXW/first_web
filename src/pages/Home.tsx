@@ -1,6 +1,7 @@
 import { CheckFat, PhoneCall, PhoneX } from '@phosphor-icons/react'
 import 'react-multi-carousel/lib/styles.css'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
+import DashboardActiveVoipCarousel from '../components/DashboardActiveVoipCarousel/DashboardActiveVoipCarousel'
 import DashboardCallsCarousel from '../components/DashboardCallsCarousel/DashboardCallsCarousel'
 import DashboardChart from '../components/DashboardChart/DashboardChart'
 import DashboardOutDoor from '../components/DashboardOutDoor/DashboardOutDoor'
@@ -37,6 +38,7 @@ const Home = () => {
                 icon={<PhoneX className="text-secundary_color" size={20} />}
               />
             </div>
+            <DashboardActiveVoipCarousel voips={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
             <DashboardChart />
             <DashboardCallsCarousel calls={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
           </div>

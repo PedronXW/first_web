@@ -81,7 +81,7 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
   const createRamal = useCallback(async (user: EditUserRamalProps) => {
     const createRamal = await api.post(
       '/persons/voip/' + user.id,
-      { voip: user.ramal },
+      { voip: +user.ramal! },
       {
         headers: { Authorization: `Bearer ${value.token}` },
       },
@@ -141,6 +141,17 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
     const desactive = await api.delete('/persons/' + user.id, {
       headers: { Authorization: `Bearer ${value.token}` },
     })
+    setUsers((state) => {
+      const newState = state.map((userChanged) => {
+        if (userChanged.id === desactive.data.id) {
+          return {
+            ...desactive.data,
+          }
+        }
+        return userChanged
+      })
+      return newState
+    })
   }, [])
 
   const editUser = useCallback(async (user: EditUserProps) => {
@@ -151,7 +162,17 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
         headers: { Authorization: `Bearer ${value.token}` },
       },
     )
-    setUsers([changeUser.data.data, ...users])
+    setUsers((state) => {
+      const newState = state.map((userChanged) => {
+        if (userChanged.id === changeUser.data.id) {
+          return {
+            ...changeUser.data,
+          }
+        }
+        return userChanged
+      })
+      return newState
+    })
   }, [])
 
   return (

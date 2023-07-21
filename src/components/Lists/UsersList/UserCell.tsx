@@ -25,8 +25,15 @@ interface UserCellInterface {
 const UserCell = ({ user }: UserCellInterface) => {
   const [open, setOpen] = useState(false)
 
-  const { deleteRamal, updateRamal, desactivePerson, editUser } =
-    useContext(UsersContext)
+  const {
+    users,
+    deleteRamal,
+    updateRamal,
+    desactivePerson,
+    editUser,
+    addUser,
+    createRamal,
+  } = useContext(UsersContext)
 
   const editUserForm = useForm<NewUserType>({
     resolver: zodResolver(createUserFormSchema),
@@ -48,15 +55,28 @@ const UserCell = ({ user }: UserCellInterface) => {
   } = editUserForm
 
   function handleEditUser(userChanges: NewUserType) {
-    if (userChanges.is_active === 'false') {
+    if (userChanges.is_active === 'false' && user.is_active) {
       desactivePerson({ id: user.id })
     }
-    if (userChanges.ramal_active === 'false') {
+    if (userChanges.is_active === 'true' && !user.is_active) {
+      addUser({
+        name: user.name,
+        email: user.email,
+      })
+    }
+    if (userChanges.ramal_active === 'false' && user.Voip_Account) {
       deleteRamal({ id: user.id })
+    }
+    if (userChanges.ramal_active === 'true' && !user.Voip_Account) {
+      createRamal({
+        id: user.id,
+        ramal: parseInt(userChanges.ramal),
+      })
     }
     if (
       userChanges.ramal !== '' &&
       userChanges.ramal_active === 'true' &&
+      user.Voip_Account &&
       userChanges.ramal !== String(user.Voip_Account?.exten)
     ) {
       updateRamal({

@@ -12,7 +12,7 @@ const UsersList = () => {
   return (
     <div className="grid grid-cols-auto w-full gap-4 md:px-12 pl-7 pr-6 ">
       {users.map((user, key) => (
-        <UserCell key={key} user={user} />
+        <UserCell key={user.id} user={user} />
       ))}
     </div>
   )
