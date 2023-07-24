@@ -1,6 +1,7 @@
 import { enqueueSnackbar } from 'notistack'
 import { ReactNode, createContext, useCallback, useState } from 'react'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
+import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
 
 interface QueuesContextInterface {
@@ -23,6 +24,8 @@ interface QueueContext {
 export const QueuesContext = createContext({} as QueueContext)
 
 export const QueuesProvider = ({ children }: QueuesContextInterface) => {
+  const { traslateSuccess, translateError } = useResponseTranslation()
+
   const { value } = usePersistanceStore()
 
   const [queues, setQueues] = useState<Queue[]>([])
@@ -40,12 +43,16 @@ export const QueuesProvider = ({ children }: QueuesContextInterface) => {
         .post('queues', newQueue, {
           headers: { Authorization: `Bearer ${value.token}` },
         })
-        .then(() => {
-          enqueueSnackbar('Fila criada com sucesso', { variant: 'success' })
+        .then((response) => {
+          console.log(response)
+          enqueueSnackbar(traslateSuccess(response.status), {
+            variant: 'success',
+          })
           setQueues((state) => [newQueue, ...state])
         })
-        .catch(() => {
-          enqueueSnackbar('Falha ao criar fila', { variant: 'error' })
+        .catch((error) => {
+          console.log(error)
+          enqueueSnackbar(translateError(error.status), { variant: 'error' })
         })
     },
     [value.token],

@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Lock } from '@phosphor-icons/react'
 import axios from 'axios'
+import { enqueueSnackbar } from 'notistack'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
@@ -11,9 +12,38 @@ import HeaderMobile from '../components/Header/HeaderMobile'
 import { Input } from '../components/Input'
 import Drawer from '../components/Lists/Drawer/Drawer'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
+import useResponseTranslation from '../hooks/useResponseTranslation'
+import { api } from '../lib/axios'
+
+const createUserFormSchema = z
+  .object({
+    password: z
+      .string()
+      .nonempty('A senha é obrigatória')
+      .min(6, 'A sua senha antiga tem, no mínimo, 6 caracteres'),
+    newPassword: z
+      .string()
+      .nonempty('A nova senha é obrigatória')
+      .min(6, 'A nova senha precisa ter, no mínimo, 6 caracteres'),
+    confirmPassword: z
+      .string()
+      .nonempty('A confirmação de nova senha é obrigatória'),
+  })
+  .superRefine(({ confirmPassword, newPassword }, ctx) => {
+    if (confirmPassword !== newPassword) {
+      ctx.addIssue({
+        path: ['confirmPassword'],
+        code: 'custom',
+        message: 'Sua senha e a confirmação de senha não são iguais',
+      })
+    }
+  })
+
+export type ChangePassUserFormType = z.infer<typeof createUserFormSchema>
 
 const ChangePassword = () => {
-  const store = usePersistanceStore()
+  const { traslateSuccess, translateError } = useResponseTranslation()
+  const { value } = usePersistanceStore()
   const navigate = useNavigate()
 
   const mutation = useMutation({
@@ -36,33 +66,33 @@ const ChangePassword = () => {
     mutation.mutate(credentials)
   }
 
-  const createUserFormSchema = z
-    .object({
-      password: z
-        .string()
-        .nonempty('A senha é obrigatória')
-        .min(6, 'A sua senha antiga tem, no mínimo, 6 caracteres'),
-      newPassword: z
-        .string()
-        .nonempty('A nova senha é obrigatória')
-        .min(6, 'A nova senha precisa ter, no mínimo, 6 caracteres'),
-      confirmPassword: z
-        .string()
-        .nonempty('A confirmação de nova senha é obrigatória'),
-    })
-    .superRefine(({ confirmPassword, newPassword }, ctx) => {
-      if (confirmPassword !== newPassword) {
-        ctx.addIssue({
-          path: ['confirmPassword'],
-          code: 'custom',
-          message: 'Sua senha e a confirmação de senha não são iguais',
-        })
-      }
-    })
-
-  const changePasswordForm = useForm({
+  const changePasswordForm = useForm<ChangePassUserFormType>({
     resolver: zodResolver(createUserFormSchema),
   })
+
+  async function handleChangePassword(data: ChangePassUserFormType) {
+    api
+      .patch(
+        'persons/alter-pass',
+        {
+          password: data.newPassword,
+          old_password: data.password,
+        },
+        { headers: { Authorization: `Bearer ${value.token}` } },
+      )
+      .then((response) => {
+        console.log(response)
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
+  }
 
   const {
     register,
@@ -83,10 +113,9 @@ const ChangePassword = () => {
         >
           <Header title="Alteração de Senha" />
           <form
-            onSubmit={handleSubmit(HandleLogin)}
+            onSubmit={handleSubmit(handleChangePassword)}
             onChange={() => {
               clearErrors()
-              console.log(errors)
             }}
             autoComplete="off"
             className="h-screen md:max-w-[380px] md:mx-11 mx-8"

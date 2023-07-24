@@ -38,7 +38,7 @@ const UserCell = ({ user }: UserCellInterface) => {
   const editUserForm = useForm<NewUserType>({
     resolver: zodResolver(createUserFormSchema),
     defaultValues: {
-      ramal_active: user.Voip_Account ? 'true' : 'false',
+      ramal_active: user.Voip_Account !== null ? 'true' : 'false',
       is_active: user.is_active ? 'true' : 'false',
       name: user.name,
       ramal: user.Voip_Account ? String(user.Voip_Account.exten) : '',
