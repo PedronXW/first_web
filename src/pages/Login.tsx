@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Envelope, Lock } from '@phosphor-icons/react'
+import { enqueueSnackbar } from 'notistack'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import icon from '../assets/icon.png'
 import { Input } from '../components/Input'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
+import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
 
 type LoginRequest = {
@@ -18,26 +19,24 @@ const Login = () => {
   const store = usePersistanceStore()
   const navigate = useNavigate()
 
-  const mutation = useMutation({
-    mutationFn: async (credentials: any) => {
-      const response = await api.post('auth/login', {
+  const { translateError } = useResponseTranslation()
+
+  const handleLogin = (credentials: any) => {
+    api
+      .post('auth/login', {
         username: credentials.email,
         password: credentials.password,
       })
-      return response.data
-    },
-    onSuccess: (data: LoginRequest) => {
-      store.updateValue('token', data.access_token)
-      store.updateValue('refresh_token', data.refresh_token)
-      navigate('/')
-    },
-    onError: (error: any) => {
-      console.log(error)
-    },
-  })
-
-  const handleLogin = (credentials: any) => {
-    mutation.mutate(credentials)
+      .then((response) => {
+        store.updateValue('token', response.data.access_token)
+        store.updateValue('refresh_token', response.data.refresh_token)
+        navigate('/')
+      })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }
 
   const createUserFormSchema = z.object({

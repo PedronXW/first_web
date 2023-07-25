@@ -1,29 +1,30 @@
 import { useContext } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { InputContext } from './InputRoot'
+import { InputNumberContext } from './InputRootNumber'
 
 interface InputTextInterface {
   placeholder: string
+  maxLength?: number
 }
 
-const InputText = ({ placeholder }: InputTextInterface) => {
-  const { visibility, patternColor, value, changeValue, id } =
-    useContext(InputContext)
+const InputNumber = ({ placeholder, maxLength }: InputTextInterface) => {
+  const { patternColor, value, changeValue, id } =
+    useContext(InputNumberContext)
   const { register } = useFormContext()
 
   return (
     <input
-      {...register(id)}
-      type={visibility ? 'password' : 'text'}
+      {...register(id, { valueAsNumber: true })}
+      type="number"
+      max={maxLength}
       placeholder={placeholder}
-      autoComplete="off"
       className={`font-medium text-sm ml-2 bg-${patternColor} border-${patternColor} w-full pr-1`}
       onChange={(e) => {
-        changeValue(e.target.value)
+        changeValue(parseInt(e.target.value))
       }}
       value={value}
     />
   )
 }
 
-export default InputText
+export default InputNumber

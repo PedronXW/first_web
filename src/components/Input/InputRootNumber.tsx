@@ -9,36 +9,31 @@ interface InputRootInterface {
   children: ReactNode
 }
 
-interface InputContextInterface {
+interface InputNumberContextInterface {
   id: string
-  value: string
-  changeValue: (value: string) => void
-  visibility: boolean
-  changeVisibility: (visibility: boolean) => void
+  value: number
+  changeValue: (value: number) => void
   patternColor: string
 }
 
-export const InputContext = createContext({} as InputContextInterface)
+export const InputNumberContext = createContext(
+  {} as InputNumberContextInterface,
+)
 
-const InputRoot = ({
+const InputRootNumber = ({
   patternColor,
   id,
   children,
-  initialVisibility = true,
 }: InputRootInterface) => {
-  const [value, setValue] = useState<string>('')
-  const [visibility, setVisibility] = useState(initialVisibility)
-
+  const [value, setValue] = useState<number>(0)
   const { setFocus } = useFormContext()
 
   return (
-    <InputContext.Provider
+    <InputNumberContext.Provider
       value={{
         value,
-        visibility,
         patternColor,
         changeValue: setValue,
-        changeVisibility: setVisibility,
         id,
       }}
     >
@@ -54,8 +49,8 @@ const InputRoot = ({
       >
         {children}
       </div>
-    </InputContext.Provider>
+    </InputNumberContext.Provider>
   )
 }
 
-export default InputRoot
+export default InputRootNumber

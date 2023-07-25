@@ -81,13 +81,11 @@ const ChangePassword = () => {
         { headers: { Authorization: `Bearer ${value.token}` } },
       )
       .then((response) => {
-        console.log(response)
         enqueueSnackbar(traslateSuccess(response.status), {
           variant: 'success',
         })
       })
       .catch((error) => {
-        console.log(error)
         enqueueSnackbar(translateError(error.response.status), {
           variant: 'error',
         })
