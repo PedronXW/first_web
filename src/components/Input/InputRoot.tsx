@@ -1,10 +1,10 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 interface InputRootInterface {
   patternColor: string
   id: string
-  type?: string
+  getValue?: (value: string) => void
   initialVisibility?: boolean
   children: ReactNode
 }
@@ -22,6 +22,7 @@ export const InputContext = createContext({} as InputContextInterface)
 
 const InputRoot = ({
   patternColor,
+  getValue,
   id,
   children,
   initialVisibility = true,
@@ -30,6 +31,10 @@ const InputRoot = ({
   const [visibility, setVisibility] = useState(initialVisibility)
 
   const { setFocus } = useFormContext()
+
+  useEffect(() => {
+    getValue && getValue(value)
+  }, [value])
 
   return (
     <InputContext.Provider

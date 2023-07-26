@@ -44,14 +44,12 @@ export const QueuesProvider = ({ children }: QueuesContextInterface) => {
           headers: { Authorization: `Bearer ${value.token}` },
         })
         .then((response) => {
-          console.log(response)
           enqueueSnackbar(traslateSuccess(response.status), {
             variant: 'success',
           })
           setQueues((state) => [newQueue, ...state])
         })
         .catch((error) => {
-          console.log(error)
           enqueueSnackbar(translateError(error.status), { variant: 'error' })
         })
     },

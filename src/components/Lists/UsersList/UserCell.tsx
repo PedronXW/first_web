@@ -94,7 +94,7 @@ const UserCell = ({ user }: UserCellInterface) => {
 
   return (
     <div
-      className={`min-h-[260px] max-h-[260px] lg:max-w-[400px] overflow-hidden flex rounded-b-lg flex-col w-full justify-end drop-shadow-md items-end`}
+      className={`min-h-[260px] max-h-[260px] overflow-hidden flex rounded-b-lg flex-col w-full justify-end drop-shadow-md items-end`}
     >
       <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">
         <UserIcon

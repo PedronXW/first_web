@@ -1,10 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MagnifyingGlass } from '@phosphor-icons/react'
-import axios from 'axios'
-import { useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
-import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
 import DatePicker from '../components/DatePicker/DatePicker'
@@ -13,60 +10,34 @@ import HeaderMobile from '../components/Header/HeaderMobile'
 import { Input } from '../components/Input'
 import Drawer from '../components/Lists/Drawer/Drawer'
 import LogsList from '../components/Lists/LogsList/LogsList'
-import { usePersistanceStore } from '../hooks/usePersistanceStore'
+import { LogsContext } from '../contexts/LogsContext'
+
+const searchLogFormSchema = z.object({
+  text: z.string(),
+})
+
+export type SearchLogFormData = z.infer<typeof searchLogFormSchema>
 
 const Logs = () => {
-  const store = usePersistanceStore()
-  const navigate = useNavigate()
+  const { fetchLogs } = useContext(LogsContext)
 
-  const mutation = useMutation({
-    mutationFn: async (credentials: any) => {
-      const response = await axios.post('http://10.1.1.24:3000/auth/login', {
-        username: credentials.email,
-        password: credentials.password,
-      })
-      return response.data
-    },
-    onSuccess: (data: any) => {
-      store.updateValue('token', data.access_token)
-      store.updateValue('refresh_token', data.refresh)
-      navigate('/')
-    },
-    onError: (error: any) => {
-      console.log(error)
-    },
-  })
-
-  const HandleLogin = (credentials: any) => {
-    mutation.mutate(credentials)
-  }
-
-  const createUserFormSchema = z.object({
-    text: z
-      .string()
-      .nonempty('O email é obrigatório')
-      .email('Formato de e-mail invalido'),
-  })
-
-  const {
-    register,
-    handleSubmit,
-    setFocus,
-    formState: { errors },
-    clearErrors,
-  } = useForm({ resolver: zodResolver(createUserFormSchema) })
-  const [value, onChange] = useState(new Date())
+  const [searchingValue, setSearchingValue] = useState<string>('')
   const [startSelected, setStartSelected] = useState<Date | null>(null)
   const [endSelected, setEndSelected] = useState<Date | null>(null)
 
-  const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false)
-
-  const searchSchema = z.object({
-    number: z.number().min(1).max(50),
+  const searchForm = useForm<SearchLogFormData>({
+    resolver: zodResolver(searchLogFormSchema),
   })
 
-  const ref = useRef<any>(null)
-  const callsFormProvider = useForm({ resolver: zodResolver(searchSchema) })
+  useEffect(() => {
+    fetchLogs(
+      searchingValue,
+      startSelected || undefined,
+      endSelected || undefined,
+    )
+  }, [startSelected, endSelected, searchingValue])
+
+  const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false)
 
   return (
     <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color overflow-hidden">
@@ -85,14 +56,15 @@ const Logs = () => {
         }`}
       >
         <div className="h-full flex grow-1 w-full bg-black opacity-30" />
-        <form className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 flex flex-col bg-secundary_color drop-shadow-lg gap-5 overflow-y-scroll pb-4">
+        <div className="h-full min-w-[320px] max-w-[320px] px-5 pt-5 flex flex-col bg-secundary_color drop-shadow-lg gap-5 overflow-y-scroll pb-4">
           <DatePicker
             onEndSelected={setEndSelected}
             onStartSelected={setStartSelected}
           />
-          <FormProvider {...callsFormProvider}>
+          <FormProvider {...searchForm}>
             <Input.Root
               id="overflow"
+              getValue={setSearchingValue}
               patternColor="background_color"
               initialVisibility={false}
             >
@@ -105,7 +77,7 @@ const Logs = () => {
               <Input.Action />
             </Input.Root>
           </FormProvider>
-        </form>
+        </div>
       </div>
       <button
         className={`absolute xl:hidden p-4 drop-shadow-3xl rounded-full bottom-20 md:bottom-3 bg-white z-50 ${

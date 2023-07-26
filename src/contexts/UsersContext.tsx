@@ -1,5 +1,7 @@
+import { enqueueSnackbar } from 'notistack'
 import { ReactNode, createContext, useCallback, useState } from 'react'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
+import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
 import { Queue } from './QueuesContext'
 
@@ -62,6 +64,7 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
   const { value } = usePersistanceStore()
 
   const [users, setUsers] = useState<User[]>([])
+  const { translateError, traslateSuccess } = useResponseTranslation()
 
   const fetchUsers = useCallback(async () => {
     const result = await api.get('/persons', {
@@ -71,108 +74,172 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
   }, [])
 
   const addUser = useCallback(async (user: AddUserProps) => {
-    const result = await api.post('/persons', user, {
-      headers: { Authorization: `Bearer ${value.token}` },
-    })
-    user.ramal_active && createRamal({ id: result.data.id, ramal: user.ramal })
-    setUsers((state) => [result.data, ...state])
+    api
+      .post('/persons', user, {
+        headers: { Authorization: `Bearer ${value.token}` },
+      })
+      .then((response) => {
+        user.ramal_active &&
+          createRamal({ id: response.data.id, ramal: user.ramal })
+        setUsers((state) => [response.data, ...state])
+      })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }, [])
 
   const createRamal = useCallback(async (user: EditUserRamalProps) => {
-    const createRamal = await api.post(
-      '/persons/voip/' + user.id,
-      { voip: +user.ramal! },
-      {
-        headers: { Authorization: `Bearer ${value.token}` },
-      },
-    )
-    setUsers((state) => {
-      const newState = state.map((user) => {
-        if (user.id === createRamal.data.id) {
-          return {
-            ...createRamal.data,
-          }
-        }
-        return user
+    api
+      .post(
+        '/persons/voip/' + user.id,
+        { voip: +user.ramal! },
+        {
+          headers: { Authorization: `Bearer ${value.token}` },
+        },
+      )
+      .then((response) => {
+        setUsers((state) => {
+          const newState = state.map((user) => {
+            if (user.id === response.data.id) {
+              return {
+                ...response.data,
+              }
+            }
+            return user
+          })
+          return newState
+        })
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
       })
-      return newState
-    })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }, [])
 
   const deleteRamal = useCallback(async (user: UserIdProps) => {
-    const desactiveRamal = await api.delete('/persons/voip/' + user.id, {
-      headers: { Authorization: `Bearer ${value.token}` },
-    })
-    setUsers((state) => {
-      const newState = state.map((user) => {
-        if (user.id === desactiveRamal.data.id) {
-          return {
-            ...desactiveRamal.data,
-          }
-        }
-        return user
+    api
+      .delete('/persons/voip/' + user.id, {
+        headers: { Authorization: `Bearer ${value.token}` },
       })
-      return newState
-    })
+      .then((response) => {
+        setUsers((state) => {
+          const newState = state.map((user) => {
+            if (user.id === response.data.id) {
+              return {
+                ...response.data,
+              }
+            }
+            return user
+          })
+          return newState
+        })
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
+      })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }, [])
 
   const updateRamal = useCallback(async (user: EditUserRamalProps) => {
-    const updatedRamal = await api.patch(
-      '/persons/voip/' + user.id,
-      { voip: user.ramal },
-      {
-        headers: { Authorization: `Bearer ${value.token}` },
-      },
-    )
-    setUsers((state) => {
-      const newState = state.map((user) => {
-        if (user.id === updatedRamal.data.id) {
-          return {
-            ...updatedRamal.data,
-          }
-        }
-        return user
+    api
+      .patch(
+        '/persons/voip/' + user.id,
+        { voip: user.ramal },
+        {
+          headers: { Authorization: `Bearer ${value.token}` },
+        },
+      )
+      .then((response) => {
+        setUsers((state) => {
+          const newState = state.map((user) => {
+            if (user.id === response.data.id) {
+              return {
+                ...response.data,
+              }
+            }
+            return user
+          })
+          return newState
+        })
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
       })
-      return newState
-    })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }, [])
 
   const desactivePerson = useCallback(async (user: UserIdProps) => {
-    const desactive = await api.delete('/persons/' + user.id, {
-      headers: { Authorization: `Bearer ${value.token}` },
-    })
-    setUsers((state) => {
-      const newState = state.map((userChanged) => {
-        if (userChanged.id === desactive.data.id) {
-          return {
-            ...desactive.data,
-          }
-        }
-        return userChanged
+    api
+      .delete('/persons/' + user.id, {
+        headers: { Authorization: `Bearer ${value.token}` },
       })
-      return newState
-    })
+      .then((response) => {
+        setUsers((state) => {
+          const newState = state.map((userChanged) => {
+            if (userChanged.id === response.data.id) {
+              return {
+                ...response.data,
+              }
+            }
+            return userChanged
+          })
+          return newState
+        })
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
+      })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }, [])
 
   const editUser = useCallback(async (user: EditUserProps) => {
-    const changeUser = await api.patch(
-      '/persons/' + user.id,
-      { name: user.name },
-      {
-        headers: { Authorization: `Bearer ${value.token}` },
-      },
-    )
-    setUsers((state) => {
-      const newState = state.map((userChanged) => {
-        if (userChanged.id === changeUser.data.id) {
-          return {
-            ...changeUser.data,
-          }
-        }
-        return userChanged
+    const changeUser = await api
+      .patch(
+        '/persons/' + user.id,
+        { name: user.name },
+        {
+          headers: { Authorization: `Bearer ${value.token}` },
+        },
+      )
+      .then((response) => {
+        setUsers((state) => {
+          const newState = state.map((userChanged) => {
+            if (userChanged.id === response.data.id) {
+              return {
+                ...response.data,
+              }
+            }
+            return userChanged
+          })
+          return newState
+        })
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
       })
-      return newState
-    })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.response.status), {
+          variant: 'error',
+        })
+      })
   }, [])
 
   return (

@@ -5,19 +5,27 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { api } from '../lib/axios'
 
 interface CallsContextInterface {
   children: ReactNode
 }
 
-const CallsContextProvider = ({ children }: CallsContextInterface) => {
-  const [Calls, setCalls] = useState()
+export type Call = {}
 
-  const CallsContext = createContext({ Calls, setCalls })
+interface CallsContext {
+  calls: Call[]
+  setCalls: (calls: Call[]) => void
+}
+
+export const CallsContext = createContext({} as CallsContext)
+
+const CallsContextProvider = ({ children }: CallsContextInterface) => {
+  const [calls, setCalls] = useState<Call[]>([])
 
   const fetchCalls = useCallback(async () => {
-    // const result=await axios.get("http://localhost:3000/")
-    // setCalls(result.data)
+    const result = await api.get('calls')
+    setCalls(result.data)
   }, [])
 
   useEffect(() => {
@@ -25,7 +33,7 @@ const CallsContextProvider = ({ children }: CallsContextInterface) => {
   }, [])
 
   return (
-    <CallsContext.Provider value={{ Calls, setCalls }}>
+    <CallsContext.Provider value={{ calls, setCalls }}>
       {children}
     </CallsContext.Provider>
   )

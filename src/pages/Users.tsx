@@ -38,6 +38,7 @@ const Users = () => {
 
   const {
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
     control,
     clearErrors,
@@ -50,6 +51,7 @@ const Users = () => {
       ramal: parseInt(user.ramal),
       ramal_active: user.ramal_active === 'true',
     })
+    reset()
     setOpen(false)
   }
 

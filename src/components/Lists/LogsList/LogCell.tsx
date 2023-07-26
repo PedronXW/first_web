@@ -1,7 +1,8 @@
 import { PhoneCall } from '@phosphor-icons/react'
+import { Log } from '../../../contexts/LogsContext'
 
 interface LogCellInterface {
-  log: any
+  log: Log
 }
 
 const LogCell = ({ log }: LogCellInterface) => {
@@ -12,12 +13,14 @@ const LogCell = ({ log }: LogCellInterface) => {
       </figure>
       <div className="min-h-[186x] sm:min-h-[54px] md:min-h-[186x] lg:min-h-[54px] w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl align-bottom lg:mt-0 md:-mt-7 sm:mt-0 xs:-mt-7">
         <header className="h-[70px] w-full flex sm:hidden md:flex lg:hidden  bg-primary_color rounded-t-md drop-shadow-3xl  items-center pl-5 pr-5 justify-between">
-          <h3 className="text-secundary_color font-medium">Administrativo</h3>
+          <h3 className="text-secundary_color font-medium">
+            {log.Person.name}
+          </h3>
         </header>
         <div className="h-full w-full bg-secundary_color rounded-b-lg sm:rounded-lg md:rounded-b-lg lg:rounded-lg flex sm:flex-row md:flex-col flex-col lg:flex-row items-center justify-around pl-5 pr-5 lg:pr-2">
           <div className="min-h-[10px] min-w-[10px] mx-4 bg-green-500 rounded-full drop-shadow-3xl hidden sm:flex md:hidden lg:flex" />
           <span className="text-primary_color font-medium h-full text-sm items-center w-1/2 ml-4 hidden sm:flex md:hidden lg:flex">
-            Administrativo
+            {log.Person.name}
           </span>
           <div className=" w-full bg-secundary_color rounded-b-lg h-full flex items-center justify-between sm:mt-0 md:mt-2 lg:mt-0 mt-2 sm:pl-0 lg:pl-0 pl-2">
             <div className="flex justify-start items-center sm:justify-center md:justify-start lg:justify-center gap-2 w-1/2">
@@ -25,7 +28,13 @@ const LogCell = ({ log }: LogCellInterface) => {
                 Horário:
               </span>
               <time className="text-primary_color font-medium h-full whitespace-nowrap text-sm flex justify-center items-center">
-                18:04:23
+                {new Date(log.created_at).toLocaleDateString('pt-BR', {
+                  minute: 'numeric',
+                  hour: 'numeric',
+                  day: 'numeric',
+                  month: 'numeric',
+                  year: 'numeric',
+                })}
               </time>
             </div>
             <div className="flex justify-center items-center sm:justify-center md:justify-end lg:justify-center gap-2 w-1/2">
@@ -33,12 +42,12 @@ const LogCell = ({ log }: LogCellInterface) => {
                 Número:
               </span>
               <span className="text-primary_color font-medium h-full whitespace-nowrap text-sm flex justify-center items-center">
-                (35)99124-4060
+                {log.operation}
               </span>
             </div>
           </div>
           <span className="text-primary_color ml-3 font-medium text-sm h-full flex justify-start items-center w-full">
-            Descrição
+            {log.description}
           </span>
         </div>
       </div>
