@@ -1,10 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MagnifyingGlass } from '@phosphor-icons/react'
-import axios from 'axios'
 import { useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
-import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
 import DatePicker from '../components/DatePicker/DatePicker'
@@ -17,38 +14,21 @@ import { SelectorCallResult } from '../components/SelectorCallResult/SelectorCal
 import { SelectorCallType } from '../components/SelectorCallType/SelectorCallType'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
 
+const callSearchFormSchema = z.object({
+  text: z
+    .string()
+    .nonempty('O email é obrigatório')
+    .email('Formato de e-mail invalido'),
+})
+
+export type CallSearchrFormType = z.infer<typeof callSearchFormSchema>
+
 const Calls = () => {
   const store = usePersistanceStore()
-  const navigate = useNavigate()
 
-  const mutation = useMutation({
-    mutationFn: async (credentials: any) => {
-      const response = await axios.post('http://10.1.1.24:3000/auth/login', {
-        username: credentials.email,
-        password: credentials.password,
-      })
-      return response.data
-    },
-    onSuccess: (data: any) => {
-      store.updateValue('token', data.access_token)
-      store.updateValue('refresh_token', data.refresh)
-      navigate('/')
-    },
-    onError: (error: any) => {
-      console.log(error)
-    },
-  })
-
-  const HandleLogin = (credentials: any) => {
-    mutation.mutate(credentials)
+  const HandleLogin = (data: CallSearchrFormType) => {
+    console.log(data)
   }
-
-  const createUserFormSchema = z.object({
-    text: z
-      .string()
-      .nonempty('O email é obrigatório')
-      .email('Formato de e-mail invalido'),
-  })
 
   const {
     register,
@@ -56,7 +36,9 @@ const Calls = () => {
     setFocus,
     formState: { errors },
     clearErrors,
-  } = useForm({ resolver: zodResolver(createUserFormSchema) })
+  } = useForm<CallSearchrFormType>({
+    resolver: zodResolver(callSearchFormSchema),
+  })
   const [value, onChange] = useState(new Date())
   const [startSelected, setStartSelected] = useState<Date | null>(null)
   const [endSelected, setEndSelected] = useState<Date | null>(null)

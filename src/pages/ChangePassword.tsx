@@ -107,7 +107,7 @@ const ChangePassword = () => {
         <HeaderMobile />
         <div
           title="Dashboard"
-          className="w-full flex flex-col grow-1 justify-between overflow-hidden md:shadow-inner gap-3"
+          className="w-full flex flex-col h-full grow-1 justify-start overflow-hidden md:shadow-inner gap-3"
         >
           <Header title="Alteração de Senha" />
           <form
@@ -116,13 +116,13 @@ const ChangePassword = () => {
               clearErrors()
             }}
             autoComplete="off"
-            className="h-screen md:max-w-[380px] md:mx-11 mx-8"
+            className="h-min md:max-w-[380px] md:mx-11 mx-8 bg-secundary_color rounded-md p-8 flex flex-col drop-shadow-3xl"
           >
             <FormProvider {...changePasswordForm}>
               <strong className="text-sm h-min text-primary_color font-normal mb-8 flex">
                 Para alterar sua senha, por favor, preencha os campos abaixo.
               </strong>
-              <Input.Root id="password" patternColor="secundary_color">
+              <Input.Root id="password" patternColor="background_color">
                 <Input.Icon icon={<Lock color="gray" size={20} />} />
                 <Input.Text placeholder="Password" />
                 <Input.ActionPassword />
@@ -134,7 +134,7 @@ const ChangePassword = () => {
               ) : (
                 <div className="h-10 flex"> </div>
               )}
-              <Input.Root id="newPassword" patternColor="secundary_color">
+              <Input.Root id="newPassword" patternColor="background_color">
                 <Input.Icon icon={<Lock color="gray" size={20} />} />
                 <Input.Text placeholder="New Password" />
                 <Input.ActionPassword />
@@ -146,7 +146,7 @@ const ChangePassword = () => {
               ) : (
                 <div className="h-10 flex"> </div>
               )}
-              <Input.Root id="confirmPassword" patternColor="secundary_color">
+              <Input.Root id="confirmPassword" patternColor="background_color">
                 <Input.Icon icon={<Lock color="gray" size={20} />} />
                 <Input.Text placeholder="Confirm Password" />
                 <Input.ActionPassword />

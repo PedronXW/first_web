@@ -46,7 +46,7 @@ const SettingsList = () => {
   ])
 
   return (
-    <div className="grid h-full w-full md:grid-cols-3 grid-cols-settings md:gap-8 gap-6 md:px-12 pl-7 pr-6">
+    <div className="grid h-full w-full sm:grid-cols-3 lg:grid-cols-3 md:grid-cols-settings grid-cols-settings md:gap-8 gap-6 md:px-12 pl-7 pr-6">
       {items.map((item, key) =>
         item.Security ? (
           <SettingCell key={key} setting={item} />
