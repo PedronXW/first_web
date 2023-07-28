@@ -15,7 +15,7 @@ const ResetPassword = () => {
     console.log(data)
   }
 
-  const createUserFormSchema = z.object({
+  const createPersonFormSchema = z.object({
     email: z
       .string()
       .nonempty('O email é obrigatório')
@@ -27,7 +27,7 @@ const ResetPassword = () => {
   })
 
   const resetPassForm = useForm({
-    resolver: zodResolver(createUserFormSchema),
+    resolver: zodResolver(createPersonFormSchema),
   })
 
   const {

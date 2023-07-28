@@ -1,8 +1,8 @@
-interface UserCallCellInterface {
+interface PersonCallCellInterface {
   call: any
 }
 
-const UserCallCell = ({ call }: UserCallCellInterface) => {
+const PersonCallCell = ({ call }: PersonCallCellInterface) => {
   return (
     <div className="max-h-[64px] grow-1 w-full bg-secundary_color border-b-[1px] border-gray flex flex-row items-center p-1 py-5">
       <div className="min-h-[10px] min-w-[10px] mx-4 bg-green-500 rounded-full drop-shadow-3xl flex" />
@@ -23,4 +23,4 @@ const UserCallCell = ({ call }: UserCallCellInterface) => {
   )
 }
 
-export default UserCallCell
+export default PersonCallCell

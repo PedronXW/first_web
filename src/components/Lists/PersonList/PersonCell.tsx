@@ -9,11 +9,7 @@ const PersonCell = ({
 }: PersonCellSelectableInterface) => {
   return (
     <div
-      className={`min-h-[50px] px-6 w-full flex items-center ${
-        type === 'gray'
-          ? 'bg-background_color'
-          : 'bg-secundary_color drop-shadow-3xl'
-      } mb-3 rounded-md gap-4 opacity-100`}
+      className={` p-5 w-full flex items-center bg-secundary_color rounded-md opacity-100  border-b-[1px] border-gray`}
     >
       <span className="grow-1 w-full text-primary_color text-base">
         {person}

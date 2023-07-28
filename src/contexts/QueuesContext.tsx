@@ -19,6 +19,7 @@ interface QueueContext {
   queues: Queue[]
   fetchQueues: () => void
   addQueue: (newQueue: Queue) => void
+  editQueue: (editedQueue: Queue) => void
 }
 
 export const QueuesContext = createContext({} as QueueContext)
@@ -56,8 +57,44 @@ export const QueuesProvider = ({ children }: QueuesContextInterface) => {
     [value.token],
   )
 
+  const editQueue = useCallback(async (queue: Queue) => {
+    api
+      .patch(
+        `queues/${queue.id}`,
+        {
+          name: queue.name,
+          digit: queue.digit,
+          overflow: queue.overflow,
+        },
+        {
+          headers: { Authorization: `Bearer ${value.token}` },
+        },
+      )
+      .then((response) => {
+        setQueues((state) => {
+          const newState = state.map((person) => {
+            if (person.id === response.data.id) {
+              return {
+                ...response.data,
+              }
+            }
+            return person
+          })
+          return newState
+        })
+        enqueueSnackbar(traslateSuccess(response.status), {
+          variant: 'success',
+        })
+      })
+      .catch((error) => {
+        enqueueSnackbar(translateError(error.status), { variant: 'error' })
+      })
+  }, [])
+
   return (
-    <QueuesContext.Provider value={{ queues, fetchQueues, addQueue }}>
+    <QueuesContext.Provider
+      value={{ queues, fetchQueues, addQueue, editQueue }}
+    >
       {children}
     </QueuesContext.Provider>
   )

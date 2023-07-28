@@ -61,7 +61,6 @@ const DashboardActiveVoipCarousel = ({
         rewindWithAnimation
         draggable
         partialVisible
-        partialVisbile
         autoPlay
         responsive={responsive}
         autoPlaySpeed={5000}

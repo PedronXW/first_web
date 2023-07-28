@@ -3,7 +3,7 @@ import { ReactNode, createContext, useCallback, useState } from 'react'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
 import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
-import { VoipAccount } from './UsersContext'
+import { VoipAccount } from './PersonsContext'
 
 interface LogsContextInterface {
   children: ReactNode

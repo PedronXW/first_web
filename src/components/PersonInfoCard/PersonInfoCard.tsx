@@ -4,7 +4,7 @@ interface DashboardOutDoorInterface {
   icon: any
 }
 
-const UserInfoCard = ({ name, data, icon }: DashboardOutDoorInterface) => {
+const PersonInfoCard = ({ name, data, icon }: DashboardOutDoorInterface) => {
   return (
     <div className="min-h-[120px] w-full flex flex-col w-full justify-end items-end drop-shadow-3xl">
       <header className="h-2/4 w-full bg-primary_color rounded-t-md flex items-center pl-5 pr-5 justify-between">
@@ -20,4 +20,4 @@ const UserInfoCard = ({ name, data, icon }: DashboardOutDoorInterface) => {
   )
 }
 
-export default UserInfoCard
+export default PersonInfoCard

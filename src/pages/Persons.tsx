@@ -10,46 +10,43 @@ import Header from '../components/Header/Header'
 import HeaderMobile from '../components/Header/HeaderMobile'
 import { Input } from '../components/Input'
 import Drawer from '../components/Lists/Drawer/Drawer'
-import UsersList from '../components/Lists/UsersList/UsersList'
-import { UsersContext } from '../contexts/UsersContext'
+import PersonList from '../components/Lists/PersonCardList/PersonCardList'
+import { PersonsContext } from '../contexts/PersonsContext'
 
-const createUserFormSchema = z.object({
+const createPersonFormSchema = z.object({
   name: z.string().nonempty('O nome é obrigatório'),
   email: z.string().email('Email inválido'),
   ramal: z.string(),
   ramal_active: z.enum(['true', 'false']),
 })
 
-export type NewUserType = z.infer<typeof createUserFormSchema>
+export type NewPersonType = z.infer<typeof createPersonFormSchema>
 
-const Users = () => {
-  const { addUser, createRamal } = useContext(UsersContext)
+const Person = () => {
+  const { addPerson } = useContext(PersonsContext)
 
-  const loginForm = useForm<NewUserType>({
-    resolver: zodResolver(createUserFormSchema),
+  const loginForm = useForm<NewPersonType>({
+    resolver: zodResolver(createPersonFormSchema),
     defaultValues: {
       ramal_active: 'true',
     },
   })
-
-  const [haveRamal, setHaveRamal] = useState<boolean>(true)
 
   const [open, setOpen] = useState(false)
 
   const {
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
-    clearErrors,
   } = loginForm
 
-  function handleCreateNewUser(user: NewUserType) {
-    addUser({
-      name: String(user.name),
-      email: String(user.email),
-      ramal: parseInt(user.ramal),
-      ramal_active: user.ramal_active === 'true',
+  function handleCreateNewPerson(person: NewPersonType) {
+    addPerson({
+      name: String(person.name),
+      email: String(person.email),
+      ramal: parseInt(person.ramal),
+      ramal_active: person.ramal_active === 'true',
     })
     reset()
     setOpen(false)
@@ -62,7 +59,7 @@ const Users = () => {
         <HeaderMobile />
         <div className="grow-1 w-full h-full flex flex-col overflow-y-scroll pb-4">
           <Header title="Usuários" />
-          <UsersList />
+          <PersonList />
 
           <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
@@ -77,7 +74,7 @@ const Users = () => {
                     Dados da fila
                   </Dialog.Title>
                   <form
-                    onSubmit={handleSubmit(handleCreateNewUser)}
+                    onSubmit={handleSubmit(handleCreateNewPerson)}
                     className="h-min w-80 bg-secundary_color rounded-lg flex flex-col gap-4"
                   >
                     <FormProvider {...loginForm}>
@@ -167,4 +164,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Person

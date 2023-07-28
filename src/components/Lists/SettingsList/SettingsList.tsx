@@ -18,7 +18,7 @@ const SettingsList = () => {
     {
       name: 'Gerenciar Usuários',
       description: 'Adicionar e/ou gerenciar usuários da aplicação.',
-      route: 'users',
+      route: 'person',
       dark: false,
       Security: false,
       icon: <UserSwitch className="text-primary_color" size={20} />,

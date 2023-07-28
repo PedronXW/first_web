@@ -1,5 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IdentificationBadge, Pen, User, UserList } from '@phosphor-icons/react'
+import {
+  IdentificationBadge,
+  Pen,
+  Person,
+  UserList,
+} from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
@@ -10,7 +15,7 @@ import Header from '../components/Header/Header'
 import HeaderMobile from '../components/Header/HeaderMobile'
 import { Input } from '../components/Input'
 import Drawer from '../components/Lists/Drawer/Drawer'
-import UserInfoCard from '../components/UserInfoCard/UserInfoCard'
+import PersonInfoCard from '../components/PersonInfoCard/PersonInfoCard'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
 import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
@@ -87,15 +92,15 @@ const SystemSettings = () => {
             <h2 className="text-primary_color font-medium text-xl">
               Informações
             </h2>
-            <UserInfoCard
+            <PersonInfoCard
               data="Pedro de Almeida csdcdsacsa cascassadcasdcsa csdcas csadcdascsad xcsadcdsac csdacasd"
               name="Nome"
-              icon={<User size={20} className="text-secundary_color" />}
+              icon={<Person size={20} className="text-secundary_color" />}
             />
-            <UserInfoCard
+            <PersonInfoCard
               data="Pedro de Almeida csdcdsacsa cas"
               name="Nome"
-              icon={<User size={20} className="text-secundary_color" />}
+              icon={<Person size={20} className="text-secundary_color" />}
             />
           </div>
 

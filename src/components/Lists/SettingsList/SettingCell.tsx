@@ -11,8 +11,8 @@ const SettingCell = ({ setting }: SettingCellInterface) => {
 
   const handleClick = () => {
     if (setting.name === 'Sair') {
-      store.deleteStore('refresh_token')
-      store.deleteStore('token')
+      store.deleteValue('refresh_token')
+      store.deleteValue('token')
     }
     navigate(setting.route)
   }

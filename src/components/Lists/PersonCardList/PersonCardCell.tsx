@@ -1,93 +1,93 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Phone, User as UserIcon } from '@phosphor-icons/react'
+import { Person as PersonIcon, Phone } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useContext, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { User, UsersContext } from '../../../contexts/UsersContext'
+import { Person, PersonsContext } from '../../../contexts/PersonsContext'
 import { Input } from '../../Input'
-import UserCallList from '../UserCallList/UserCallList'
+import PersonCallList from '../PersonCallList/PersonCallList'
 
-const createUserFormSchema = z.object({
+const createPersonFormSchema = z.object({
   name: z.string().min(0),
   ramal_active: z.enum(['true', 'false']),
   ramal: z.string().min(0),
   is_active: z.enum(['true', 'false']),
 })
 
-export type NewUserType = z.infer<typeof createUserFormSchema>
+export type NewPersonType = z.infer<typeof createPersonFormSchema>
 
-interface UserCellInterface {
-  user: User
+interface PersonCellInterface {
+  person: Person
 }
 
-const UserCell = ({ user }: UserCellInterface) => {
+const PersonCardCell = ({ person }: PersonCellInterface) => {
   const [open, setOpen] = useState(false)
 
   const {
-    users,
+    persons,
     deleteRamal,
     updateRamal,
     desactivePerson,
-    editUser,
-    addUser,
+    editPerson,
+    addPerson,
     createRamal,
-  } = useContext(UsersContext)
+  } = useContext(PersonsContext)
 
-  const editUserForm = useForm<NewUserType>({
-    resolver: zodResolver(createUserFormSchema),
+  const editPersonForm = useForm<NewPersonType>({
+    resolver: zodResolver(createPersonFormSchema),
     defaultValues: {
-      ramal_active: user.Voip_Account !== null ? 'true' : 'false',
-      is_active: user.is_active ? 'true' : 'false',
-      name: user.name,
-      ramal: user.Voip_Account ? String(user.Voip_Account.exten) : '',
+      ramal_active: person.Voip_Account !== null ? 'true' : 'false',
+      is_active: person.is_active ? 'true' : 'false',
+      name: person.name,
+      ramal: person.Voip_Account ? String(person.Voip_Account.exten) : '',
     },
   })
 
-  const [haveRamal, setHaveRamal] = useState<boolean>(!!user.Voip_Account)
+  const [haveRamal, setHaveRamal] = useState<boolean>(!!person.Voip_Account)
 
   const {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
     clearErrors,
-  } = editUserForm
+  } = editPersonForm
 
-  function handleEditUser(userChanges: NewUserType) {
-    if (userChanges.is_active === 'false' && user.is_active) {
-      desactivePerson({ id: user.id })
+  function handleEditPerson(personChanges: NewPersonType) {
+    if (personChanges.is_active === 'false' && person.is_active) {
+      desactivePerson({ id: person.id })
     }
-    if (userChanges.is_active === 'true' && !user.is_active) {
-      addUser({
-        name: user.name,
-        email: user.email,
+    if (personChanges.is_active === 'true' && !person.is_active) {
+      addPerson({
+        name: person.name,
+        email: person.email,
       })
     }
-    if (userChanges.ramal_active === 'false' && user.Voip_Account) {
-      deleteRamal({ id: user.id })
+    if (personChanges.ramal_active === 'false' && person.Voip_Account) {
+      deleteRamal({ id: person.id })
     }
-    if (userChanges.ramal_active === 'true' && !user.Voip_Account) {
+    if (personChanges.ramal_active === 'true' && !person.Voip_Account) {
       createRamal({
-        id: user.id,
-        ramal: parseInt(userChanges.ramal),
+        id: person.id,
+        ramal: parseInt(personChanges.ramal),
       })
     }
     if (
-      userChanges.ramal !== '' &&
-      userChanges.ramal_active === 'true' &&
-      user.Voip_Account &&
-      userChanges.ramal !== String(user.Voip_Account?.exten)
+      personChanges.ramal !== '' &&
+      personChanges.ramal_active === 'true' &&
+      person.Voip_Account &&
+      personChanges.ramal !== String(person.Voip_Account?.exten)
     ) {
       updateRamal({
-        id: user.id,
-        ramal: parseInt(userChanges.ramal),
+        id: person.id,
+        ramal: parseInt(personChanges.ramal),
       })
     }
-    if (userChanges.name !== '' && userChanges.name !== user.name) {
-      editUser({
-        id: user.id,
-        name: String(userChanges.name),
+    if (personChanges.name !== '' && personChanges.name !== person.name) {
+      editPerson({
+        id: person.id,
+        name: String(personChanges.name),
       })
     }
   }
@@ -97,9 +97,9 @@ const UserCell = ({ user }: UserCellInterface) => {
       className={`min-h-[260px] max-h-[260px] overflow-hidden flex rounded-b-lg flex-col w-full justify-end drop-shadow-md items-end`}
     >
       <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">
-        <UserIcon
+        <PersonIcon
           size={20}
-          className={`${user.is_active ? 'text-green-500' : 'text-red-500'}`}
+          className={`${person.is_active ? 'text-green-500' : 'text-red-500'}`}
         />
       </figure>
       <div
@@ -111,20 +111,20 @@ const UserCell = ({ user }: UserCellInterface) => {
         <div className="min-h-[90px] max-h-[90px] w-full bg-primary_color rounded-t-md  pl-5 pr-5 flex justify-between items-center ">
           <div className="h-full flex flex-col justify-center items-start">
             <strong className="text-secundary_color font-medium h-full w-1/2 whitespace-nowrap overflow-ellipsis">
-              {user.name}
+              {person.name}
             </strong>
             <span className="text-background_color font-thin text-xs">
-              {user.email}
+              {person.email}
             </span>
           </div>
           <strong className="text-secundary_color font-medium h-full flex justify-end items-center w-1/2">
-            {user.Voip_Account
-              ? 'Ramal: ' + user.Voip_Account.exten
+            {person.Voip_Account
+              ? 'Ramal: ' + person.Voip_Account.exten
               : 'Ramal Desativado'}
           </strong>
         </div>
         <div className="h-[142px] drop-shadow-3xl overflow-y-scroll w-full bg-secundary_color rounded-b-lg flex">
-          <UserCallList user="" />
+          <PersonCallList person="" />
         </div>
       </div>
 
@@ -136,10 +136,10 @@ const UserCell = ({ user }: UserCellInterface) => {
                 Dados da fila
               </Dialog.Title>
               <form
-                onSubmit={handleSubmit(handleEditUser)}
+                onSubmit={handleSubmit(handleEditPerson)}
                 className="h-min w-80 bg-secundary_color rounded-lg flex flex-col gap-4"
               >
-                <FormProvider {...editUserForm}>
+                <FormProvider {...editPersonForm}>
                   <h2 className="text-primary_color font-medium text-base">
                     Editar informações do usuário
                   </h2>
@@ -148,7 +148,7 @@ const UserCell = ({ user }: UserCellInterface) => {
                     patternColor="background_color"
                     initialVisibility={false}
                   >
-                    <Input.Icon icon={<UserIcon color="gray" size={20} />} />
+                    <Input.Icon icon={<PersonIcon color="gray" size={20} />} />
                     <Input.Text placeholder="Name" />
                     <Input.Action />
                   </Input.Root>
@@ -262,4 +262,4 @@ const UserCell = ({ user }: UserCellInterface) => {
   )
 }
 
-export default UserCell
+export default PersonCardCell

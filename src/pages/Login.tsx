@@ -39,7 +39,7 @@ const Login = () => {
       })
   }
 
-  const createUserFormSchema = z.object({
+  const createPersonFormSchema = z.object({
     email: z
       .string()
       .nonempty('O email é obrigatório')
@@ -50,7 +50,7 @@ const Login = () => {
       .min(6, 'A senha precisa ter, no mínimo 6 caracteres'),
   })
 
-  const loginForm = useForm({ resolver: zodResolver(createUserFormSchema) })
+  const loginForm = useForm({ resolver: zodResolver(createPersonFormSchema) })
 
   const {
     handleSubmit,

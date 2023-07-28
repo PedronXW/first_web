@@ -15,7 +15,7 @@ import { usePersistanceStore } from '../hooks/usePersistanceStore'
 import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
 
-const createUserFormSchema = z
+const createPersonFormSchema = z
   .object({
     password: z
       .string()
@@ -39,7 +39,7 @@ const createUserFormSchema = z
     }
   })
 
-export type ChangePassUserFormType = z.infer<typeof createUserFormSchema>
+export type ChangePassPersonFormType = z.infer<typeof createPersonFormSchema>
 
 const ChangePassword = () => {
   const { traslateSuccess, translateError } = useResponseTranslation()
@@ -66,11 +66,11 @@ const ChangePassword = () => {
     mutation.mutate(credentials)
   }
 
-  const changePasswordForm = useForm<ChangePassUserFormType>({
-    resolver: zodResolver(createUserFormSchema),
+  const changePasswordForm = useForm<ChangePassPersonFormType>({
+    resolver: zodResolver(createPersonFormSchema),
   })
 
-  async function handleChangePassword(data: ChangePassUserFormType) {
+  async function handleChangePassword(data: ChangePassPersonFormType) {
     api
       .patch(
         'persons/alter-pass',

@@ -1,41 +1,168 @@
-import { PhoneIncoming } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
-import { Queue } from '../../../contexts/QueuesContext'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  ArrowULeftDown,
+  Person as PersonIcon,
+  Phone,
+} from '@phosphor-icons/react'
+import * as Dialog from '@radix-ui/react-dialog'
+import { useContext, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Queue, QueuesContext } from '../../../contexts/QueuesContext'
+import { Input } from '../../Input'
+import PersonCellSelectable from '../PersonList/PersonCellSelectable'
+import PersonList from '../PersonList/PersonList'
+
+const editQueueFormSchema = z.object({
+  id: z.number().min(0).max(99),
+  name: z.string().min(0),
+  digit: z.number().min(0).max(99),
+  overflow: z.number().min(0).max(9999),
+})
+
+export type EditQueueType = z.infer<typeof editQueueFormSchema>
 
 interface QueueCellInterface {
   queue: Queue
 }
 
 const QueueCell = ({ queue }: QueueCellInterface) => {
-  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+
+  const person = [1, 2, 3]
+
+  const { editQueue } = useContext(QueuesContext)
+
+  const editPersonForm = useForm<EditQueueType>({
+    resolver: zodResolver(editQueueFormSchema),
+    defaultValues: {
+      id: queue.id,
+      name: queue.name,
+      digit: queue.digit,
+      overflow: queue.overflow,
+    },
+  })
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+    clearErrors,
+  } = editPersonForm
+
+  function handleEditQueue(queueChanges: EditQueueType) {
+    editQueue({
+      id: queueChanges.id,
+      name: queueChanges.name,
+      digit: queueChanges.digit,
+      overflow: queueChanges.overflow,
+    })
+    setOpen(false)
+  }
+
   return (
-    <li
-      onClick={() => {
-        navigate(String(queue.id))
-      }}
-      title={queue.name ? queue.name : 'arroz'}
-      className={`h-36 flex-col w-full justify-end items-end flex`}
+    <div
+      className={`min-h-[260px] max-h-[260px] overflow-hidden flex rounded-b-lg flex-col w-full justify-end drop-shadow-md items-end`}
     >
-      <div className="h-[32px] w-[32px] bg-green-500 relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center" />
-      <div className="h-5/6 w-full rounded-lg self-end bg-secundary_color drop-shadow-3xl cursor-pointer align-bottom -mt-4">
-        <header className="h-2/4 w-full bg-primary_color rounded-t-md drop-shadow-3xl flex items-center pl-5 pr-5 justify-between">
-          <h3 className="text-secundary_color font-medium">{queue.name}</h3>
-        </header>
-        <div className="h-2/4 w-full bg-secundary_color rounded-b-lg flex items-center justify-between">
-          <div className="h-full grow-1 flex justify-start items-center pl-3 gap-3">
-            <figure className="h-8 w-8 flex justify-center items-center">
-              <PhoneIncoming size={20} />
-            </figure>
-            <strong className="text-primary_color font-medium h-full flex items-center w-full">
-              Chamadas Recebidas
+      <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center"></figure>
+      <div
+        onClick={() => {
+          setOpen(true)
+        }}
+        className="min-h-[206px] w-full rounded-lg self-end drop-shadow-3xl align-bottom -mt-5 cursor-pointer"
+      >
+        <div className="min-h-[90px] max-h-[90px] w-full bg-primary_color rounded-t-md  pl-5 pr-5 flex justify-between items-center ">
+          <div className="h-full flex flex-col justify-center items-start">
+            <strong className="text-secundary_color font-medium h-full w-1/2 whitespace-nowrap overflow-ellipsis">
+              {queue.name}
             </strong>
+            <span className="text-background_color font-thin text-xs">
+              {queue.id}
+            </span>
           </div>
-          <strong className="text-primary_color font-medium h-full flex justify-end items-center pr-7 w-min">
-            {queue.digit}
+          <strong className="text-secundary_color font-medium h-full flex justify-end items-center w-1/2">
+            {queue.digit ? 'Ramal: ' + queue.digit : 'Ramal Desativado'}
           </strong>
         </div>
+        <div className="h-[142px] drop-shadow-3xl overflow-y-scroll w-full bg-secundary_color rounded-b-lg flex">
+          <PersonList />
+        </div>
       </div>
-    </li>
+
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed flex justify-center items-center w-screen h-screen inset-0 bg-black/75 z-50">
+            <Dialog.Content className="min-w-[25rem] max-w-[20rem] h-min drop-shadow-3xl rounded-md bg-white fixed flex flex-col justify-center p-8 gap-4">
+              <Dialog.Title className="font-bold text-xl">
+                Editar dados da fila
+              </Dialog.Title>
+              <form
+                onSubmit={handleSubmit(handleEditQueue)}
+                className="h-min w-80 bg-secundary_color rounded-lg flex flex-col gap-4"
+              >
+                <FormProvider {...editPersonForm}>
+                  <Input.Root
+                    id="name"
+                    patternColor="background_color"
+                    initialVisibility={false}
+                  >
+                    <Input.Icon icon={<PersonIcon color="gray" size={20} />} />
+                    <Input.Text placeholder="Name" />
+                    <Input.Action />
+                  </Input.Root>
+                  <Input.Root
+                    id="digit"
+                    patternColor="background_color"
+                    initialVisibility={false}
+                  >
+                    <Input.Icon
+                      icon={<Phone size={20} className="text-primary_color" />}
+                    />
+                    <Input.Text placeholder="Dígito Identificador" />
+                    <Input.Action />
+                  </Input.Root>
+                  <Input.Root
+                    id="overflow"
+                    patternColor="background_color"
+                    initialVisibility={false}
+                  >
+                    <Input.Icon
+                      icon={
+                        <ArrowULeftDown
+                          size={20}
+                          className="text-primary_color"
+                        />
+                      }
+                    />
+                    <Input.Text placeholder="Próximo destino quando desativada" />
+                    <Input.Action />
+                  </Input.Root>
+
+                  <h2 className="text-primary_color font-medium text-base">
+                    Pessoas na fila
+                  </h2>
+                  <div className="h-[142px] overflow-y-scroll w-full flex">
+                    <div className="flex flex-col w-full h-full">
+                      {person.map((person, key) => (
+                        <PersonCellSelectable key={key} person={person} />
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="h-12 w-full rounded-md bg-primary_color text-secundary_color font-medium"
+                  >
+                    Editar
+                  </button>
+                </FormProvider>
+              </form>
+            </Dialog.Content>
+          </Dialog.Overlay>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </div>
   )
 }
 

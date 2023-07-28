@@ -7,8 +7,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { LogsProvider } from './contexts/LogsContext'
+import { PersonsContextProvider } from './contexts/PersonsContext'
 import { QueuesProvider } from './contexts/QueuesContext'
-import { UsersContextProvider } from './contexts/UsersContext'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
@@ -34,13 +34,13 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <CookiesProvider>
           <QueuesProvider>
-            <UsersContextProvider>
+            <PersonsContextProvider>
               <LogsProvider>
                 <BrowserRouter>
                   <App />
                 </BrowserRouter>
               </LogsProvider>
-            </UsersContextProvider>
+            </PersonsContextProvider>
           </QueuesProvider>
         </CookiesProvider>
       </QueryClientProvider>

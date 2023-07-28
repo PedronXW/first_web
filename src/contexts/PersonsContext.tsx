@@ -5,19 +5,19 @@ import useResponseTranslation from '../hooks/useResponseTranslation'
 import { api } from '../lib/axios'
 import { Queue } from './QueuesContext'
 
-interface UsersContextInterface {
+interface PersonsContextInterface {
   children: ReactNode
 }
 
 export type VoipAccount = {
   exten: number
-  user: string
+  person: string
   password: string
   personId: string
   Queues: Queue[]
 }
 
-export type User = {
+export type Person = {
   id: string
   email: string
   is_active: boolean
@@ -26,62 +26,64 @@ export type User = {
   Voip_Account: VoipAccount
 }
 
-interface AddUserProps {
+interface AddPersonProps {
   name: string
   email: string
   ramal_active?: boolean
   ramal?: number
 }
 
-interface EditUserProps {
+interface EditPersonProps {
   id: string
   name: string
 }
 
-interface EditUserRamalProps {
+interface EditPersonRamalProps {
   id: string
   ramal?: number
 }
 
-interface UserIdProps {
+interface PersonIdProps {
   id: string
 }
 
-interface UsersContextType {
-  users: User[]
-  fetchUsers: () => Promise<void>
-  addUser: (user: AddUserProps) => Promise<void>
-  editUser: (user: EditUserProps) => Promise<void>
-  desactivePerson: (user: UserIdProps) => Promise<void>
-  deleteRamal: (user: UserIdProps) => Promise<void>
-  createRamal: (user: EditUserRamalProps) => Promise<void>
-  updateRamal: (user: EditUserRamalProps) => Promise<void>
+interface PersonsContextType {
+  persons: Person[]
+  fetchPerson: () => Promise<void>
+  addPerson: (person: AddPersonProps) => Promise<void>
+  editPerson: (person: EditPersonProps) => Promise<void>
+  desactivePerson: (person: PersonIdProps) => Promise<void>
+  deleteRamal: (person: PersonIdProps) => Promise<void>
+  createRamal: (person: EditPersonRamalProps) => Promise<void>
+  updateRamal: (person: EditPersonRamalProps) => Promise<void>
 }
 
-export const UsersContext = createContext({} as UsersContextType)
+export const PersonsContext = createContext({} as PersonsContextType)
 
-export const UsersContextProvider = ({ children }: UsersContextInterface) => {
+export const PersonsContextProvider = ({
+  children,
+}: PersonsContextInterface) => {
   const { value } = usePersistanceStore()
 
-  const [users, setUsers] = useState<User[]>([])
+  const [persons, setPersons] = useState<Person[]>([])
   const { translateError, traslateSuccess } = useResponseTranslation()
 
-  const fetchUsers = useCallback(async () => {
+  const fetchPerson = useCallback(async () => {
     const result = await api.get('/persons', {
       headers: { Authorization: `Bearer ${value.token}` },
     })
-    setUsers(result.data.data)
+    setPersons(result.data.data)
   }, [])
 
-  const addUser = useCallback(async (user: AddUserProps) => {
+  const addPerson = useCallback(async (person: AddPersonProps) => {
     api
-      .post('/persons', user, {
+      .post('/persons', person, {
         headers: { Authorization: `Bearer ${value.token}` },
       })
       .then((response) => {
-        user.ramal_active &&
-          createRamal({ id: response.data.id, ramal: user.ramal })
-        setUsers((state) => [response.data, ...state])
+        person.ramal_active &&
+          createRamal({ id: response.data.id, ramal: person.ramal })
+        setPersons((state) => [response.data, ...state])
       })
       .catch((error) => {
         enqueueSnackbar(translateError(error.response.status), {
@@ -90,24 +92,24 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
       })
   }, [])
 
-  const createRamal = useCallback(async (user: EditUserRamalProps) => {
+  const createRamal = useCallback(async (person: EditPersonRamalProps) => {
     api
       .post(
-        '/persons/voip/' + user.id,
-        { voip: +user.ramal! },
+        '/persons/voip/' + person.id,
+        { voip: +person.ramal! },
         {
           headers: { Authorization: `Bearer ${value.token}` },
         },
       )
       .then((response) => {
-        setUsers((state) => {
-          const newState = state.map((user) => {
-            if (user.id === response.data.id) {
+        setPersons((state) => {
+          const newState = state.map((person) => {
+            if (person.id === response.data.id) {
               return {
                 ...response.data,
               }
             }
-            return user
+            return person
           })
           return newState
         })
@@ -122,20 +124,20 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
       })
   }, [])
 
-  const deleteRamal = useCallback(async (user: UserIdProps) => {
+  const deleteRamal = useCallback(async (person: PersonIdProps) => {
     api
-      .delete('/persons/voip/' + user.id, {
+      .delete('/persons/voip/' + person.id, {
         headers: { Authorization: `Bearer ${value.token}` },
       })
       .then((response) => {
-        setUsers((state) => {
-          const newState = state.map((user) => {
-            if (user.id === response.data.id) {
+        setPersons((state) => {
+          const newState = state.map((person) => {
+            if (person.id === response.data.id) {
               return {
                 ...response.data,
               }
             }
-            return user
+            return person
           })
           return newState
         })
@@ -150,24 +152,24 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
       })
   }, [])
 
-  const updateRamal = useCallback(async (user: EditUserRamalProps) => {
+  const updateRamal = useCallback(async (person: EditPersonRamalProps) => {
     api
       .patch(
-        '/persons/voip/' + user.id,
-        { voip: user.ramal },
+        '/persons/voip/' + person.id,
+        { voip: person.ramal },
         {
           headers: { Authorization: `Bearer ${value.token}` },
         },
       )
       .then((response) => {
-        setUsers((state) => {
-          const newState = state.map((user) => {
-            if (user.id === response.data.id) {
+        setPersons((state) => {
+          const newState = state.map((person) => {
+            if (person.id === response.data.id) {
               return {
                 ...response.data,
               }
             }
-            return user
+            return person
           })
           return newState
         })
@@ -182,20 +184,20 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
       })
   }, [])
 
-  const desactivePerson = useCallback(async (user: UserIdProps) => {
+  const desactivePerson = useCallback(async (person: PersonIdProps) => {
     api
-      .delete('/persons/' + user.id, {
+      .delete('/persons/' + person.id, {
         headers: { Authorization: `Bearer ${value.token}` },
       })
       .then((response) => {
-        setUsers((state) => {
-          const newState = state.map((userChanged) => {
-            if (userChanged.id === response.data.id) {
+        setPersons((state) => {
+          const newState = state.map((personChanged) => {
+            if (personChanged.id === response.data.id) {
               return {
                 ...response.data,
               }
             }
-            return userChanged
+            return personChanged
           })
           return newState
         })
@@ -210,24 +212,24 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
       })
   }, [])
 
-  const editUser = useCallback(async (user: EditUserProps) => {
-    const changeUser = await api
+  const editPerson = useCallback(async (person: EditPersonProps) => {
+    const changePerson = await api
       .patch(
-        '/persons/' + user.id,
-        { name: user.name },
+        '/persons/' + person.id,
+        { name: person.name },
         {
           headers: { Authorization: `Bearer ${value.token}` },
         },
       )
       .then((response) => {
-        setUsers((state) => {
-          const newState = state.map((userChanged) => {
-            if (userChanged.id === response.data.id) {
+        setPersons((state) => {
+          const newState = state.map((personChanged) => {
+            if (personChanged.id === response.data.id) {
               return {
                 ...response.data,
               }
             }
-            return userChanged
+            return personChanged
           })
           return newState
         })
@@ -243,19 +245,19 @@ export const UsersContextProvider = ({ children }: UsersContextInterface) => {
   }, [])
 
   return (
-    <UsersContext.Provider
+    <PersonsContext.Provider
       value={{
-        users,
-        fetchUsers,
+        persons,
+        fetchPerson,
         updateRamal,
-        addUser,
-        editUser,
+        addPerson,
+        editPerson,
         createRamal,
         deleteRamal,
         desactivePerson,
       }}
     >
       {children}
-    </UsersContext.Provider>
+    </PersonsContext.Provider>
   )
 }
