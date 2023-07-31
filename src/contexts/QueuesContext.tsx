@@ -8,18 +8,28 @@ interface QueuesContextInterface {
   children: ReactNode
 }
 
-export type Queue = {
+interface EditMembersProps {
+  members: Array<number>
   id: number
   name: string
   digit: number
   overflow: number
 }
 
+export type Queue = {
+  id: number
+  name: string
+  digit: number
+  overflow: number
+  Voip_Account: Array<any>
+}
+
 interface QueueContext {
   queues: Queue[]
   fetchQueues: () => void
   addQueue: (newQueue: Queue) => void
-  editQueue: (editedQueue: Queue) => void
+  editQueue: (editedQueue: EditMembersProps) => void
+  editMembers: (editMembersProps: EditMembersProps) => void
 }
 
 export const QueuesContext = createContext({} as QueueContext)
@@ -57,7 +67,7 @@ export const QueuesProvider = ({ children }: QueuesContextInterface) => {
     [value.token],
   )
 
-  const editQueue = useCallback(async (queue: Queue) => {
+  const editQueue = useCallback(async (queue: EditMembersProps) => {
     api
       .patch(
         `queues/${queue.id}`,
@@ -71,29 +81,51 @@ export const QueuesProvider = ({ children }: QueuesContextInterface) => {
         },
       )
       .then((response) => {
-        setQueues((state) => {
-          const newState = state.map((person) => {
-            if (person.id === response.data.id) {
-              return {
-                ...response.data,
-              }
-            }
-            return person
-          })
-          return newState
-        })
-        enqueueSnackbar(traslateSuccess(response.status), {
-          variant: 'success',
-        })
+        editMembers(queue)
       })
       .catch((error) => {
         enqueueSnackbar(translateError(error.status), { variant: 'error' })
       })
   }, [])
 
+  const editMembers = useCallback(
+    async (editMembersProps: EditMembersProps) => {
+      api
+        .patch(
+          `queues/members/${editMembersProps.id}`,
+          {
+            persons: editMembersProps.members,
+          },
+          {
+            headers: { Authorization: `Bearer ${value.token}` },
+          },
+        )
+        .then((response) => {
+          setQueues((state) => {
+            const newState = state.map((person) => {
+              if (person.id === response.data.id) {
+                return {
+                  ...response.data,
+                }
+              }
+              return person
+            })
+            return newState
+          })
+          enqueueSnackbar(traslateSuccess(response.status), {
+            variant: 'success',
+          })
+        })
+        .catch((error) => {
+          enqueueSnackbar(translateError(error.status), { variant: 'error' })
+        })
+    },
+    [],
+  )
+
   return (
     <QueuesContext.Provider
-      value={{ queues, fetchQueues, addQueue, editQueue }}
+      value={{ queues, fetchQueues, addQueue, editQueue, editMembers }}
     >
       {children}
     </QueuesContext.Provider>

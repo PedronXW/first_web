@@ -5,16 +5,24 @@ import {
   Phone,
 } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Queue, QueuesContext } from '../../../contexts/QueuesContext'
+import { usePersistanceStore } from '../../../hooks/usePersistanceStore'
+import { api } from '../../../lib/axios'
 import { Input } from '../../Input'
+import PersonCell from '../PersonList/PersonCell'
 import PersonCellSelectable from '../PersonList/PersonCellSelectable'
-import PersonList from '../PersonList/PersonList'
+
+export type PossibleRamal = {
+  person: string
+  voip: number
+  status: boolean
+  added: boolean
+}
 
 const editQueueFormSchema = z.object({
-  id: z.number().min(0).max(99),
   name: z.string().min(0),
   digit: z.number().min(0).max(99),
   overflow: z.number().min(0).max(9999),
@@ -29,14 +37,35 @@ interface QueueCellInterface {
 const QueueCell = ({ queue }: QueueCellInterface) => {
   const [open, setOpen] = useState(false)
 
-  const person = [1, 2, 3]
+  const { value } = usePersistanceStore()
 
-  const { editQueue } = useContext(QueuesContext)
+  const [persons, setPersons] = useState<Array<PossibleRamal>>([])
+
+  const { editQueue, editMembers } = useContext(QueuesContext)
+
+  async function getPersons() {
+    const response = await api.get('panel', {
+      headers: { Authorization: `Bearer ${value.token}` },
+    })
+    setPersons((state) => {
+      return response.data.map((person: any) => {
+        return {
+          ...person,
+          added: !!queue.Voip_Account.find(
+            (voip: any) => voip.exten === person.voip,
+          ),
+        }
+      })
+    })
+  }
+
+  useEffect(() => {
+    getPersons()
+  }, [])
 
   const editPersonForm = useForm<EditQueueType>({
     resolver: zodResolver(editQueueFormSchema),
     defaultValues: {
-      id: queue.id,
       name: queue.name,
       digit: queue.digit,
       overflow: queue.overflow,
@@ -52,12 +81,26 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
 
   function handleEditQueue(queueChanges: EditQueueType) {
     editQueue({
-      id: queueChanges.id,
+      id: queue.id,
       name: queueChanges.name,
       digit: queueChanges.digit,
       overflow: queueChanges.overflow,
+      members: persons
+        .filter((person) => person.added)
+        .map((person) => person.voip),
     })
     setOpen(false)
+  }
+
+  function handleChangePersonStatus(personExten: number) {
+    setPersons((state) => {
+      return state.map((person) => {
+        if (person.voip === personExten) {
+          person.added = !person.added
+        }
+        return person
+      })
+    })
   }
 
   return (
@@ -84,8 +127,16 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
             {queue.digit ? 'Ramal: ' + queue.digit : 'Ramal Desativado'}
           </strong>
         </div>
-        <div className="h-[142px] drop-shadow-3xl overflow-y-scroll w-full bg-secundary_color rounded-b-lg flex">
-          <PersonList />
+        <div className="h-[142px] drop-shadow-3xl overflow-y-scroll w-full bg-secundary_color rounded-b-lg flex flex-col">
+          {queue.Voip_Account.length > 0 ? (
+            queue.Voip_Account.map((queue: any) => (
+              <PersonCell key={queue.exten} person={queue} type="white" />
+            ))
+          ) : (
+            <div className="h-full w-full flex justify-center items-center text-primary_color font-medium">
+              Nenhuma usuário cadastrado
+            </div>
+          )}
         </div>
       </div>
 
@@ -143,8 +194,13 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
                   </h2>
                   <div className="h-[142px] overflow-y-scroll w-full flex">
                     <div className="flex flex-col w-full h-full">
-                      {person.map((person, key) => (
-                        <PersonCellSelectable key={key} person={person} />
+                      {persons.map((person: PossibleRamal) => (
+                        <PersonCellSelectable
+                          key={person.voip}
+                          status={person.added}
+                          changeStatus={handleChangePersonStatus}
+                          person={person}
+                        />
                       ))}
                     </div>
                   </div>

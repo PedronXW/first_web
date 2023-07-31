@@ -25,7 +25,7 @@ export type NewPersonType = z.infer<typeof createPersonFormSchema>
 const Person = () => {
   const { addPerson } = useContext(PersonsContext)
 
-  const loginForm = useForm<NewPersonType>({
+  const personForm = useForm<NewPersonType>({
     resolver: zodResolver(createPersonFormSchema),
     defaultValues: {
       ramal_active: 'true',
@@ -39,7 +39,7 @@ const Person = () => {
     reset,
     formState: { isSubmitting },
     control,
-  } = loginForm
+  } = personForm
 
   function handleCreateNewPerson(person: NewPersonType) {
     addPerson({
@@ -77,7 +77,7 @@ const Person = () => {
                     onSubmit={handleSubmit(handleCreateNewPerson)}
                     className="h-min w-80 bg-secundary_color rounded-lg flex flex-col gap-4"
                   >
-                    <FormProvider {...loginForm}>
+                    <FormProvider {...personForm}>
                       <Input.Root
                         id="name"
                         patternColor="background_color"

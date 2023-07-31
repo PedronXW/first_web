@@ -9,13 +9,13 @@ const PersonCell = ({
 }: PersonCellSelectableInterface) => {
   return (
     <div
-      className={` p-5 w-full flex items-center bg-secundary_color rounded-md opacity-100  border-b-[1px] border-gray`}
+      className={` h-16 p-5 w-full flex items-center bg-secundary_color rounded-md opacity-100  border-b-[1px] border-gray`}
     >
       <span className="grow-1 w-full text-primary_color text-base">
-        {person}
+        {person.Person.name}
       </span>
       <span className="text-primary_color text-base w-fit whitespace-nowrap">
-        (35) 3422-9066
+        {person.exten}
       </span>
     </div>
   )

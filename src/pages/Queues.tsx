@@ -47,6 +47,7 @@ const Queues = () => {
       id: parseInt(data.id),
       name: String(data.name),
       overflow: parseInt(data.overflow),
+      Voip_Account: [],
     })
     setOpen(false)
   }
