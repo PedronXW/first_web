@@ -1,14 +1,12 @@
+import { useContext } from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import { DashboardContext } from '../../contexts/DashboardContext'
 import DashboardActiveVoipCarouselCell from './DashboardActiveVoipCell'
 
-interface DashboardActiveVoipCarouselInterface {
-  voips: Array<any>
-}
+const DashboardActiveVoipCarousel = () => {
+  const { existingVoips } = useContext(DashboardContext)
 
-const DashboardActiveVoipCarousel = ({
-  voips,
-}: DashboardActiveVoipCarouselInterface) => {
   const responsive = {
     stage_7: {
       // the naming can be any, depends on you.
@@ -49,7 +47,7 @@ const DashboardActiveVoipCarousel = ({
       partialVisibilityGutter: 60,
     },
   }
-
+  if (existingVoips.length === 0) return <div></div>
   return (
     <div className="h-min w-full flex flex-col gap-5">
       <h3 className="text-primary_color text-2xl font-bold">Ramais Ativos</h3>
@@ -66,7 +64,7 @@ const DashboardActiveVoipCarousel = ({
         autoPlaySpeed={5000}
         transitionDuration={500}
       >
-        {voips.map((voip, index) => (
+        {existingVoips.map((voip, index) => (
           <DashboardActiveVoipCarouselCell key={index} voip={voip} />
         ))}
       </Carousel>

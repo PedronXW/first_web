@@ -8,7 +8,18 @@ interface CallsContextInterface {
   children: ReactNode
 }
 
-export type Call = {}
+export type Call = {
+  id: number
+  direction: string
+  time_call: Date
+  time_log: Date
+  src: string
+  dst: string
+  answered: string
+  dialed: string
+  result: string
+  unique_id: string
+}
 
 interface CallsContext {
   calls: Call[]

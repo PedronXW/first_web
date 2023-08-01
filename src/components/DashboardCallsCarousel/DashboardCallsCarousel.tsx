@@ -1,12 +1,12 @@
+import { useContext } from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import { DashboardContext } from '../../contexts/DashboardContext'
 import DashboardCallsCarouselCell from './DashboardCallsCarouselCell'
 
-interface DashboardCallsCarouselInterface {
-  calls: Array<any>
-}
+const DashboardCallsCarousel = () => {
+  const { todayCalls } = useContext(DashboardContext)
 
-const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
   const responsive = {
     stage_7: {
       // the naming can be any, depends on you.
@@ -66,7 +66,7 @@ const DashboardCallsCarousel = ({ calls }: DashboardCallsCarouselInterface) => {
         autoPlaySpeed={5000}
         transitionDuration={500}
       >
-        {calls.map((call, index) => (
+        {todayCalls.map((call, index) => (
           <DashboardCallsCarouselCell key={index} call={call} />
         ))}
       </Carousel>

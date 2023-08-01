@@ -1,4 +1,5 @@
 import { CheckFat, PhoneCall, PhoneX } from '@phosphor-icons/react'
+import { useContext, useEffect } from 'react'
 import 'react-multi-carousel/lib/styles.css'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
 import DashboardActiveVoipCarousel from '../components/DashboardActiveVoipCarousel/DashboardActiveVoipCarousel'
@@ -8,8 +9,22 @@ import DashboardOutDoor from '../components/DashboardOutDoor/DashboardOutDoor'
 import Header from '../components/Header/Header'
 import HeaderMobile from '../components/Header/HeaderMobile'
 import Drawer from '../components/Lists/Drawer/Drawer'
+import { DashboardContext } from '../contexts/DashboardContext'
 
 const Home = () => {
+  const {
+    dashboardResume,
+    existingVoips,
+    fetchDashboardResume,
+    fetchExistingVoips,
+    todayCalls,
+  } = useContext(DashboardContext)
+
+  useEffect(() => {
+    fetchDashboardResume()
+    fetchExistingVoips()
+  }, [])
+
   return (
     <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color">
       <Drawer selected={0} />
@@ -21,26 +36,32 @@ const Home = () => {
             <div className="grid lg:grid-cols-3 grid-cols-1 gap-2 xl:gap-8 w-full h-min">
               <DashboardOutDoor
                 name="Chamadas Recebidas"
-                quantityActually={20}
+                quantityActually={
+                  dashboardResume ? dashboardResume.summary.received : 0
+                }
                 quantityPast={10}
                 icon={<PhoneCall className="text-secundary_color" size={20} />}
               />
               <DashboardOutDoor
                 name="Atendidas"
-                quantityActually={20}
+                quantityActually={
+                  dashboardResume ? dashboardResume.summary.answered : 0
+                }
                 quantityPast={40}
                 icon={<CheckFat className="text-secundary_color" size={20} />}
               />
               <DashboardOutDoor
                 name="Perdidas"
-                quantityActually={20}
+                quantityActually={
+                  dashboardResume ? dashboardResume.summary.missed : 0
+                }
                 quantityPast={10}
                 icon={<PhoneX className="text-secundary_color" size={20} />}
               />
             </div>
-            <DashboardActiveVoipCarousel voips={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+            <DashboardActiveVoipCarousel />
             <DashboardChart />
-            <DashboardCallsCarousel calls={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+            <DashboardCallsCarousel />
           </div>
         </div>
         <BottomNavigationMenu selected={0} />

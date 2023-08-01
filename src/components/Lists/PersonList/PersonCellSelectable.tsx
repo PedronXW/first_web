@@ -14,7 +14,7 @@ const PersonCellSelectable = ({
   changeStatus,
 }: PersonCellSelectableInterface) => {
   function handleChangeState() {
-    changeStatus && changeStatus(person.voip)
+    changeStatus && changeStatus(person.voip.voip)
   }
 
   return (
@@ -28,10 +28,10 @@ const PersonCellSelectable = ({
     >
       <input type="checkbox" checked={status} />
       <span className="grow-1 w-full text-primary_color text-base whitespace-nowrap text-ellipsis overflow-hidden">
-        {person.person}
+        {person.voip.person}
       </span>
       <span className="text-primary_color text-base w-fit whitespace-nowrap">
-        {person.voip}
+        {person.voip.voip}
       </span>
     </div>
   )

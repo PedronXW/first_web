@@ -1,7 +1,8 @@
 import { PhoneCall } from '@phosphor-icons/react'
+import { Voip } from '../../contexts/DashboardContext'
 
 interface DashboardActiveVoipCarouselCellInterface {
-  voip: any
+  voip: Voip
 }
 
 const DashboardActiveVoipCarouselCell = ({
@@ -15,10 +16,10 @@ const DashboardActiveVoipCarouselCell = ({
         </header>
         <div className="h-min w-full flex flex-col justify-end">
           <strong className="text-primary_color font-bold text-sm text-end">
-            Administrativo - 3459
+            {voip.person + ' - ' + voip.voip}
           </strong>
           <span className="text-gray-400 font-medium text-xs text-end">
-            pedroalmeidan@gmail.com
+            {voip.status ? 'Ativo' : 'Inativo'}
           </span>
         </div>
       </div>

@@ -15,8 +15,8 @@ const QueuesList = () => {
         queues.length < 3 ? 'lg:grid-cols-2 xl:grid-cols-3' : 'grid-cols-auto'
       } md:h-min h-full grid-cols-1 w-full md:px-12 pl-7 pr-6 pb-4 gap-10`}
     >
-      {queues.map((queue: Queue, key) => (
-        <QueueCell key={key} queue={queue} />
+      {queues.map((queue: Queue) => (
+        <QueueCell key={queue.id} queue={queue} />
       ))}
     </ul>
   )

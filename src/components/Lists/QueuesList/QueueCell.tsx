@@ -8,6 +8,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useContext, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { Voip } from '../../../contexts/DashboardContext'
 import { Queue, QueuesContext } from '../../../contexts/QueuesContext'
 import { usePersistanceStore } from '../../../hooks/usePersistanceStore'
 import { api } from '../../../lib/axios'
@@ -16,9 +17,7 @@ import PersonCell from '../PersonList/PersonCell'
 import PersonCellSelectable from '../PersonList/PersonCellSelectable'
 
 export type PossibleRamal = {
-  person: string
-  voip: number
-  status: boolean
+  voip: Voip
   added: boolean
 }
 
@@ -87,7 +86,7 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
       overflow: queueChanges.overflow,
       members: persons
         .filter((person) => person.added)
-        .map((person) => person.voip),
+        .map((person) => person.voip.voip),
     })
     setOpen(false)
   }
@@ -95,7 +94,7 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
   function handleChangePersonStatus(personExten: number) {
     setPersons((state) => {
       return state.map((person) => {
-        if (person.voip === personExten) {
+        if (person.voip.voip === personExten) {
           person.added = !person.added
         }
         return person
@@ -196,7 +195,7 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
                     <div className="flex flex-col w-full h-full">
                       {persons.map((person: PossibleRamal) => (
                         <PersonCellSelectable
-                          key={person.voip}
+                          key={person.voip.voip}
                           status={person.added}
                           changeStatus={handleChangePersonStatus}
                           person={person}

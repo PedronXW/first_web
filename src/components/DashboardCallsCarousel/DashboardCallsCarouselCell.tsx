@@ -1,7 +1,8 @@
 import { PhoneCall } from '@phosphor-icons/react'
+import { Call } from '../../contexts/CallsContext'
 
 interface DashboardCallsCarouselCellInterface {
-  call: any
+  call: Call
 }
 
 const DashboardCallsCarouselCell = ({
@@ -17,7 +18,7 @@ const DashboardCallsCarouselCell = ({
             title="2022/08/20 - 22:40:33"
             className="text-primary_color font-bold text-sm"
           >
-            18:04:27
+            {new Date(call.time_call).toDateString()}
           </time>
         </header>
         <div className="h-min w-full flex flex-col gap-2">

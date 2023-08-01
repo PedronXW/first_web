@@ -10,7 +10,9 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { useContext } from 'react'
 import { Line } from 'react-chartjs-2'
+import { DashboardContext } from '../../contexts/DashboardContext'
 
 ChartJS.register(
   CategoryScale,
@@ -23,81 +25,58 @@ ChartJS.register(
   Legend,
 )
 
-export const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-      position: 'top' as const,
-    },
-    title: {
-      display: false,
-      text: 'Chart.js Line Chart',
-    },
-  },
-}
+const DashboardChart = () => {
+  const { dashboardResume } = useContext(DashboardContext)
 
-const labels = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
-  '13',
-  '14',
-  '15',
-  '16',
-  '17',
-  '18',
-  '19',
-  '20',
-  '21',
-  '22',
-  '23',
-  '24',
-  '25',
-  '26',
-  '27',
-  '28',
-  '29',
-  '30',
-]
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Chamadas',
-      fill: true,
-      data: [
-        100, 110, 95, 120, 94, 86, 110, 111, 117, 97, 85, 100, 110, 95, 120, 94,
-        86, 110, 111, 117, 97, 85, 100, 110, 95, 120, 94, 86, 110, 111,
-      ],
-      borderColor: 'rgb(0, 0, 0)',
-      backgroundColor: 'rgba(81, 81, 81, 1)',
-      maintainAspectRatio: false,
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+        position: 'top' as const,
+      },
+      title: {
+        display: false,
+        text: 'Chart.js Line Chart',
       },
     },
-  ],
-}
+  }
 
-const DashboardChart = () => {
+  const labels = dashboardResume
+    ? dashboardResume.amount_calls.map((amount) => {
+        return (
+          new Date(amount.day).getDate() + '/' + new Date(amount.day).getMonth()
+        )
+      })
+    : []
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Chamadas',
+        fill: true,
+        data: dashboardResume
+          ? dashboardResume.amount_calls.map((amount) => {
+              return amount.amount
+            })
+          : [],
+        borderColor: 'rgb(0, 0, 0)',
+        backgroundColor: 'rgba(81, 81, 81, 1)',
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  }
+
   return (
     <div className="w-full min-h-[420px] max-h-[420px] flex flex-col items-end justify-end">
       <figure className="min-h-[54px] min-w-[54px] bg-primary_color relative z-10 right-4 border-[8px] border-background_color rounded-full flex justify-center items-center">

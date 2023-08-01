@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
+import DashboardProvider from './contexts/DashboardContext'
 import { LogsProvider } from './contexts/LogsContext'
 import { PersonsContextProvider } from './contexts/PersonsContext'
 import { QueuesProvider } from './contexts/QueuesContext'
@@ -36,9 +37,11 @@ root.render(
           <QueuesProvider>
             <PersonsContextProvider>
               <LogsProvider>
-                <BrowserRouter>
-                  <App />
-                </BrowserRouter>
+                <DashboardProvider>
+                  <BrowserRouter>
+                    <App />
+                  </BrowserRouter>
+                </DashboardProvider>
               </LogsProvider>
             </PersonsContextProvider>
           </QueuesProvider>
