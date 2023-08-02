@@ -14,15 +14,15 @@ import { DashboardContext } from '../contexts/DashboardContext'
 const Home = () => {
   const {
     dashboardResume,
-    existingVoips,
     fetchDashboardResume,
     fetchExistingVoips,
-    todayCalls,
+    fetchTodayCalls,
   } = useContext(DashboardContext)
 
   useEffect(() => {
     fetchDashboardResume()
     fetchExistingVoips()
+    fetchTodayCalls()
   }, [])
 
   return (

@@ -48,6 +48,7 @@ const DashboardCallsCarousel = () => {
     },
   }
 
+  if (todayCalls.data.length === 0) return <div></div>
   return (
     <div className="h-min w-full flex flex-col gap-5">
       <h3 className="text-primary_color text-2xl font-bold">
@@ -66,7 +67,7 @@ const DashboardCallsCarousel = () => {
         autoPlaySpeed={5000}
         transitionDuration={500}
       >
-        {todayCalls.map((call, index) => (
+        {todayCalls.data.map((call, index) => (
           <DashboardCallsCarouselCell key={index} call={call} />
         ))}
       </Carousel>

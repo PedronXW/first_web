@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MagnifyingGlass } from '@phosphor-icons/react'
-import { useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
@@ -12,7 +12,7 @@ import CallsList from '../components/Lists/CallsList/CallsList'
 import Drawer from '../components/Lists/Drawer/Drawer'
 import { SelectorCallResult } from '../components/SelectorCallResult/SelectorCallResult'
 import { SelectorCallType } from '../components/SelectorCallType/SelectorCallType'
-import { usePersistanceStore } from '../hooks/usePersistanceStore'
+import { CallsContext } from '../contexts/CallsContext'
 
 const callSearchFormSchema = z.object({
   text: z
@@ -24,24 +24,32 @@ const callSearchFormSchema = z.object({
 export type CallSearchrFormType = z.infer<typeof callSearchFormSchema>
 
 const Calls = () => {
-  const store = usePersistanceStore()
+  const { fetchCalls } = useContext(CallsContext)
 
-  const HandleLogin = (data: CallSearchrFormType) => {
-    console.log(data)
-  }
+  const [searchingValue, setSearchingValue] = useState<string>('')
+  const [startSelected, setStartSelected] = useState<Date | null>(null)
+  const [endSelected, setEndSelected] = useState<Date | null>(null)
+
+  const searchForm = useForm<SearchLogFormData>({
+    resolver: zodResolver(searchLogFormSchema),
+  })
+
+  useEffect(() => {
+    fetchLogs(
+      searchingValue,
+      startSelected || undefined,
+      endSelected || undefined,
+    )
+  }, [startSelected, endSelected, searchingValue])
 
   const {
     register,
     handleSubmit,
     setFocus,
     formState: { errors },
-    clearErrors,
   } = useForm<CallSearchrFormType>({
     resolver: zodResolver(callSearchFormSchema),
   })
-  const [value, onChange] = useState(new Date())
-  const [startSelected, setStartSelected] = useState<Date | null>(null)
-  const [endSelected, setEndSelected] = useState<Date | null>(null)
 
   const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false)
 
@@ -49,7 +57,6 @@ const Calls = () => {
     number: z.number().min(1).max(50),
   })
 
-  const ref = useRef<any>(null)
   const callsFormProvider = useForm({ resolver: zodResolver(searchSchema) })
 
   return (

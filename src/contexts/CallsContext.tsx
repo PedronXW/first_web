@@ -8,6 +8,24 @@ interface CallsContextInterface {
   children: ReactNode
 }
 
+export type PersonClass = {
+  id: string
+  email: string
+  name: string
+}
+
+export type Person = {
+  exten: number
+  Person: PersonClass
+}
+
+export type Queue = {
+  id: number
+  name: string
+  digit: number
+  overflow: number
+}
+
 export type Call = {
   id: number
   direction: string
@@ -21,9 +39,16 @@ export type Call = {
   unique_id: string
 }
 
+export type CallSearch = {
+  data: Call[]
+  count: number
+  queues: Queue[]
+  persons: Person[]
+}
+
 interface CallsContext {
   calls: Call[]
-  fetchCalls: (name?: string, start?: Date, end?: Date) => void
+  fetchCalls: (direction?: string[], result?: string[], name?: string) => void
 }
 
 export const CallsContext = createContext({} as CallsContext)
@@ -34,15 +59,10 @@ const CallsProvider = ({ children }: CallsContextInterface) => {
   const { translateError } = useResponseTranslation()
 
   const fetchCalls = useCallback(
-    async (name?: string, start?: Date, end?: Date) => {
+    async (direction?: string[], result?: string[], name?: string) => {
       await api
-        .get('audit/easy', {
+        .get('calls', {
           headers: { Authorization: `Bearer ${value.token}` },
-          params: {
-            name,
-            start_time: start,
-            end_time: end,
-          },
         })
         .then((response) => {
           setCalls(response.data.data)

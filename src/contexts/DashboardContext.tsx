@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useState } from 'react'
 import { usePersistanceStore } from '../hooks/usePersistanceStore'
 import { api } from '../lib/axios'
-import { Call } from './CallsContext'
+import { CallSearch } from './CallsContext'
 
 interface DashboardContextInterface {
   children: ReactNode
@@ -35,7 +35,7 @@ interface DashboardContext {
   fetchDashboardResume: () => void
   fetchExistingVoips: () => void
   fetchTodayCalls: () => void
-  todayCalls: Array<Call>
+  todayCalls: CallSearch
 }
 
 export const DashboardContext = createContext({} as DashboardContext)
@@ -43,7 +43,12 @@ export const DashboardContext = createContext({} as DashboardContext)
 const DashboardProvider = ({ children }: DashboardContextInterface) => {
   const { value } = usePersistanceStore()
   const [existingVoips, setExistingVoips] = useState<Array<Voip>>([])
-  const [todayCalls, setTodayCalls] = useState<Array<Call>>([])
+  const [todayCalls, setTodayCalls] = useState<CallSearch>({
+    data: [],
+    count: 0,
+    queues: [],
+    persons: [],
+  })
   const [dashboardResume, setDashboardResume] = useState<
     DashboardResume | undefined
   >(undefined)
@@ -66,7 +71,7 @@ const DashboardProvider = ({ children }: DashboardContextInterface) => {
     const response = await api.get('calls', {
       headers: { Authorization: `Bearer ${value.token}` },
     })
-    setTodayCalls(response.data.data)
+    setTodayCalls(response.data)
   }
 
   return (

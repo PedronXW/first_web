@@ -1,5 +1,7 @@
 import { PhoneCall } from '@phosphor-icons/react'
+import { useContext } from 'react'
 import { Call } from '../../contexts/CallsContext'
+import { DashboardContext } from '../../contexts/DashboardContext'
 
 interface DashboardCallsCarouselCellInterface {
   call: Call
@@ -8,6 +10,21 @@ interface DashboardCallsCarouselCellInterface {
 const DashboardCallsCarouselCell = ({
   call,
 }: DashboardCallsCarouselCellInterface) => {
+  const { todayCalls } = useContext(DashboardContext)
+
+  if (todayCalls.data.length === 0) return <div></div>
+
+  function searchReceiverData() {
+    console.log(todayCalls)
+
+    return (
+      'O ramal ' +
+      call.src +
+      (call.direction === 'incomming' ? ' recebeu' : ' realizou') +
+      ' uma chamada.'
+    )
+  }
+
   return (
     <div className="h-52 w-full flex cursor-pointer">
       <div className=" w-full grow-1 bg-secundary_color flex flex-col rounded-md p-6 px-5 justify-between drop-shadow-3xl m-1">
@@ -23,15 +40,15 @@ const DashboardCallsCarouselCell = ({
         </header>
         <div className="h-min w-full flex flex-col gap-2">
           <strong className="text-primary_color font-bold text-sm">
-            Administrativo
+            {call.src +
+              ' - ' +
+              (call.direction === 'incomming' ? 'Recebida' : 'Realizada')}
           </strong>
           <span className="text-primary_color font-medium text-xs">
-            O setor administrativo recebeu uma chamada do número: (35)
-            99999-9999
+            {searchReceiverData()}
           </span>
         </div>
       </div>
-      <div className="h-full w-2 bg-background_color"></div>
     </div>
   )
 }

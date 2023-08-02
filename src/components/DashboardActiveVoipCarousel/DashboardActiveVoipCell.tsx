@@ -23,7 +23,6 @@ const DashboardActiveVoipCarouselCell = ({
           </span>
         </div>
       </div>
-      <div className="h-full w-2 bg-background_color"></div>
     </div>
   )
 }
