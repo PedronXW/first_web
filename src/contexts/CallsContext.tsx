@@ -14,6 +14,19 @@ export type PersonClass = {
   name: string
 }
 
+export type Direction = {
+  outgoing: boolean
+  incomming: boolean
+  internal: boolean
+}
+
+export type Result = {
+  answer: boolean
+  timeout: boolean
+  busy: boolean
+  cancel: boolean
+}
+
 export type Person = {
   exten: number
   Person: PersonClass
@@ -48,21 +61,70 @@ export type CallSearch = {
 
 interface CallsContext {
   calls: Call[]
-  fetchCalls: (direction?: string[], result?: string[], name?: string) => void
+  fetchCalls: (
+    name?: string,
+    direction?: Direction,
+    result?: Result,
+    start?: Date,
+    end?: Date,
+  ) => void
 }
 
 export const CallsContext = createContext({} as CallsContext)
 
-const CallsProvider = ({ children }: CallsContextInterface) => {
+export const CallsProvider = ({ children }: CallsContextInterface) => {
   const { value } = usePersistanceStore()
   const [calls, setCalls] = useState<Call[]>([])
   const { translateError } = useResponseTranslation()
 
+  function directionTransform(direction: Direction) {
+    const directionQuery = []
+
+    if (direction?.incomming) {
+      directionQuery.push('incomming')
+    }
+    if (direction?.outgoing) {
+      directionQuery.push('outgoing')
+    }
+    if (direction?.internal) {
+      directionQuery.push('local')
+    }
+    return directionQuery
+  }
+
+  function resultTransform(result: Result) {
+    const resultQuery = []
+
+    if (result?.answer) {
+      resultQuery.push('answer')
+    }
+    if (result?.timeout) {
+      resultQuery.push('timeout')
+    }
+    if (result?.busy) {
+      resultQuery.push('busy')
+    }
+    if (result?.cancel) {
+      resultQuery.push('cancel')
+    }
+    return resultQuery
+  }
+
   const fetchCalls = useCallback(
-    async (direction?: string[], result?: string[], name?: string) => {
+    async (
+      name?: string,
+      direction?: Direction,
+      result?: Result,
+      start?: Date,
+      end?: Date,
+    ) => {
       await api
         .get('calls', {
           headers: { Authorization: `Bearer ${value.token}` },
+          params: {
+            direction: directionTransform(direction!),
+            result: resultTransform(result!),
+          },
         })
         .then((response) => {
           setCalls(response.data.data)

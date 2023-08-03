@@ -1,11 +1,42 @@
 import { ArrowULeftDown, PhoneIncoming } from '@phosphor-icons/react'
-import { useState } from 'react'
+import { Result } from '../../contexts/CallsContext'
 
-export function SelectorCallResult() {
-  const [answeredCallStatus, setAnsweredCallStatus] = useState<boolean>(true)
-  const [busyCallStatus, setBusyCallStatus] = useState<boolean>(true)
-  const [timeoutedCallStatus, setTimeoutedCallStatus] = useState<boolean>(true)
-  const [canceledCallStatus, setCanceledCallStatus] = useState<boolean>(true)
+interface SelectorCallResultInterface {
+  result: Result
+  setResult: (result: Result) => void
+}
+
+export function SelectorCallResult({
+  result,
+  setResult,
+}: SelectorCallResultInterface) {
+  function changeResultAnswerStatus() {
+    setResult({
+      ...result,
+      answer: !result.answer,
+    })
+  }
+
+  function changeResultTimeoutStatus() {
+    setResult({
+      ...result,
+      timeout: !result.timeout,
+    })
+  }
+
+  function changeResultBusyStatus() {
+    setResult({
+      ...result,
+      busy: !result.busy,
+    })
+  }
+
+  function changeResultCancelStatus() {
+    setResult({
+      ...result,
+      cancel: !result.cancel,
+    })
+  }
 
   return (
     <div className="flex flex-col gap-5">
@@ -16,22 +47,20 @@ export function SelectorCallResult() {
         <div className="flex w-full h-min">
           <button
             type="button"
-            onClick={() => {
-              setAnsweredCallStatus(!answeredCallStatus)
-            }}
+            onClick={changeResultAnswerStatus}
             className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-              answeredCallStatus ? 'border-green-700' : 'border-primary_color'
+              result.answer ? 'border-green-700' : 'border-primary_color'
             } rounded-tl-lg drop-shadow-3xl`}
           >
             <PhoneIncoming
               size={20}
               className={`-ml-[5px] ${
-                answeredCallStatus ? 'text-green-700' : 'text-primary_color'
+                result.answer ? 'text-green-700' : 'text-primary_color'
               }`}
             />
             <p
               className={`${
-                answeredCallStatus ? 'text-green-700' : 'text-primary_color'
+                result.answer ? 'text-green-700' : 'text-primary_color'
               }`}
             >
               Atendida
@@ -39,22 +68,20 @@ export function SelectorCallResult() {
           </button>
           <button
             type="button"
-            onClick={() => {
-              setTimeoutedCallStatus(!timeoutedCallStatus)
-            }}
+            onClick={changeResultTimeoutStatus}
             className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-              timeoutedCallStatus ? 'border-yellow-700' : 'border-primary_color'
+              result.timeout ? 'border-yellow-700' : 'border-primary_color'
             } rounded-tr-lg drop-shadow-3xl`}
           >
             <ArrowULeftDown
               size={20}
               className={`-ml-[5px] ${
-                timeoutedCallStatus ? 'text-yellow-700' : 'text-primary_color'
+                result.timeout ? 'text-yellow-700' : 'text-primary_color'
               }`}
             />
             <p
               className={`${
-                timeoutedCallStatus ? 'text-yellow-700' : 'text-primary_color'
+                result.timeout ? 'text-yellow-700' : 'text-primary_color'
               }`}
             >
               Perdida
@@ -64,22 +91,20 @@ export function SelectorCallResult() {
         <div className="flex w-full h-min">
           <button
             type="button"
-            onClick={() => {
-              setBusyCallStatus(!busyCallStatus)
-            }}
+            onClick={changeResultBusyStatus}
             className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-              busyCallStatus ? 'border-blue-700' : 'border-primary_color'
+              result.busy ? 'border-blue-700' : 'border-primary_color'
             } rounded-bl-lg drop-shadow-3xl`}
           >
             <PhoneIncoming
               size={20}
               className={`-ml-[5px] ${
-                busyCallStatus ? 'text-blue-700' : 'text-primary_color'
+                result.busy ? 'text-blue-700' : 'text-primary_color'
               }`}
             />
             <p
               className={`${
-                busyCallStatus ? 'text-blue-700' : 'text-primary_color'
+                result.busy ? 'text-blue-700' : 'text-primary_color'
               }`}
             >
               Ocupada
@@ -87,22 +112,20 @@ export function SelectorCallResult() {
           </button>
           <button
             type="button"
-            onClick={() => {
-              setCanceledCallStatus(!canceledCallStatus)
-            }}
+            onClick={changeResultCancelStatus}
             className={`p-2 bg-white flex flex-col flex-1 justify-center items-center gap-2 border-2 ${
-              canceledCallStatus ? 'border-red-700' : 'border-primary_color'
+              result.cancel ? 'border-red-700' : 'border-primary_color'
             } rounded-br-lg drop-shadow-3xl`}
           >
             <ArrowULeftDown
               size={20}
               className={`-ml-[5px] ${
-                canceledCallStatus ? 'text-red-700' : 'text-primary_color'
+                result.cancel ? 'text-red-700' : 'text-primary_color'
               }`}
             />
             <p
               className={`${
-                canceledCallStatus ? 'text-red-700' : 'text-primary_color'
+                result.cancel ? 'text-red-700' : 'text-primary_color'
               }`}
             >
               Cancelada

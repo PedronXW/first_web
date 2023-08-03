@@ -17,8 +17,6 @@ const PersonCellSelectable = ({
     changeStatus && changeStatus(person.voip)
   }
 
-  console.log(person)
-
   return (
     <div
       onClick={handleChangeState}

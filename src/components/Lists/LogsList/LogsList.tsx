@@ -7,6 +7,7 @@ import LogCellReducted from './LogCellReducted'
 const LogsList = () => {
   const { logs } = useContext(LogsContext)
 
+  console.log(logs)
   return (
     <div className="">
       <div className="flex sm:hidden md:flex lg:hidden flex-col w-full gap-4 md:px-12 pl-7 pr-6">

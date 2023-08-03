@@ -1,8 +1,9 @@
 import { PhoneCall } from '@phosphor-icons/react'
+import { Call } from '../../../contexts/CallsContext'
 import AudioPlayer from '../../AudioPlayer/AudioPlayer'
 
 interface CallCellInterface {
-  call: any
+  call: Call
 }
 
 const CallCell = ({ call }: CallCellInterface) => {

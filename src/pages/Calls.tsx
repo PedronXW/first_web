@@ -12,7 +12,7 @@ import CallsList from '../components/Lists/CallsList/CallsList'
 import Drawer from '../components/Lists/Drawer/Drawer'
 import { SelectorCallResult } from '../components/SelectorCallResult/SelectorCallResult'
 import { SelectorCallType } from '../components/SelectorCallType/SelectorCallType'
-import { CallsContext } from '../contexts/CallsContext'
+import { CallsContext, Direction, Result } from '../contexts/CallsContext'
 
 const callSearchFormSchema = z.object({
   text: z
@@ -24,23 +24,42 @@ const callSearchFormSchema = z.object({
 export type CallSearchrFormType = z.infer<typeof callSearchFormSchema>
 
 const Calls = () => {
-  const { fetchCalls } = useContext(CallsContext)
+  const { fetchCalls, calls } = useContext(CallsContext)
 
+  const [resultSelected, setResultSelected] = useState<Result>({
+    answer: true,
+    timeout: true,
+    busy: true,
+    cancel: true,
+  })
+  const [directionSelected, setDirectionSelected] = useState<Direction>({
+    incomming: true,
+    outgoing: true,
+    internal: true,
+  })
   const [searchingValue, setSearchingValue] = useState<string>('')
   const [startSelected, setStartSelected] = useState<Date | null>(null)
   const [endSelected, setEndSelected] = useState<Date | null>(null)
 
-  const searchForm = useForm<SearchLogFormData>({
-    resolver: zodResolver(searchLogFormSchema),
+  const callsFormProvider = useForm<CallSearchrFormType>({
+    resolver: zodResolver(callSearchFormSchema),
   })
 
   useEffect(() => {
-    fetchLogs(
+    fetchCalls(
       searchingValue,
+      directionSelected,
+      resultSelected,
       startSelected || undefined,
       endSelected || undefined,
     )
-  }, [startSelected, endSelected, searchingValue])
+  }, [
+    startSelected,
+    endSelected,
+    searchingValue,
+    directionSelected,
+    resultSelected,
+  ])
 
   const {
     register,
@@ -52,12 +71,6 @@ const Calls = () => {
   })
 
   const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false)
-
-  const searchSchema = z.object({
-    number: z.number().min(1).max(50),
-  })
-
-  const callsFormProvider = useForm({ resolver: zodResolver(searchSchema) })
 
   return (
     <div className="h-screen w-screen flex flex-col md:flex-row bg-background_color overflow-hidden">
@@ -96,8 +109,14 @@ const Calls = () => {
               <Input.Action />
             </Input.Root>
           </FormProvider>
-          <SelectorCallType />
-          <SelectorCallResult />
+          <SelectorCallType
+            type={directionSelected}
+            changeType={setDirectionSelected}
+          />
+          <SelectorCallResult
+            result={resultSelected}
+            setResult={setResultSelected}
+          />
         </form>
       </div>
       <button

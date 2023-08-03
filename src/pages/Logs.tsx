@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useContext, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { z } from 'zod'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
 import DatePicker from '../components/DatePicker/DatePicker'
@@ -19,23 +20,26 @@ const searchLogFormSchema = z.object({
 export type SearchLogFormData = z.infer<typeof searchLogFormSchema>
 
 const Logs = () => {
-  const { fetchLogs } = useContext(LogsContext)
+  const { fetchLogs, logs } = useContext(LogsContext)
 
   const [searchingValue, setSearchingValue] = useState<string>('')
   const [startSelected, setStartSelected] = useState<Date | null>(null)
   const [endSelected, setEndSelected] = useState<Date | null>(null)
+  const [skip, setSkip] = useState<number>(0)
 
   const searchForm = useForm<SearchLogFormData>({
     resolver: zodResolver(searchLogFormSchema),
   })
 
   useEffect(() => {
+    console.log(1)
     fetchLogs(
+      skip,
       searchingValue,
       startSelected || undefined,
       endSelected || undefined,
     )
-  }, [startSelected, endSelected, searchingValue])
+  }, [startSelected, endSelected, searchingValue, skip])
 
   const [searchLayoutStatus, setSearchLayoutStatus] = useState<boolean>(false)
 
@@ -46,7 +50,14 @@ const Logs = () => {
         <HeaderMobile />
         <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll gap-2 pb-4">
           <Header title="Logs" />
-          <LogsList />
+          <InfiniteScroll
+            dataLength={300}
+            next={() => setSkip(skip + 1)}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+          >
+            <LogsList />
+          </InfiniteScroll>
         </div>
         <BottomNavigationMenu selected={3} />
       </div>

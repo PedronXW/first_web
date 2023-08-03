@@ -58,7 +58,6 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
       })
     })
   }
-  console.log(persons)
 
   useEffect(() => {
     getPersons()
@@ -94,7 +93,6 @@ const QueueCell = ({ queue }: QueueCellInterface) => {
   }
 
   function handleChangePersonStatus(personExten: number) {
-    console.log(personExten)
     setPersons((state) => {
       return state.map((person) => {
         if (person.voip === personExten) {

@@ -38,7 +38,7 @@ export type Log = {
 interface LogsContext {
   logs: Log[]
   setLogs: (logs: Log[]) => void
-  fetchLogs: (name?: string, start?: Date, end?: Date) => void
+  fetchLogs: (skip: number, name?: string, start?: Date, end?: Date) => void
 }
 
 export const LogsContext = createContext({} as LogsContext)
@@ -49,7 +49,8 @@ export const LogsProvider = ({ children }: LogsContextInterface) => {
   const { translateError } = useResponseTranslation()
 
   const fetchLogs = useCallback(
-    async (name?: string, start?: Date, end?: Date) => {
+    async (skip: number, name?: string, start?: Date, end?: Date) => {
+      console.log('a')
       await api
         .get('audit/easy', {
           headers: { Authorization: `Bearer ${value.token}` },
@@ -57,13 +58,14 @@ export const LogsProvider = ({ children }: LogsContextInterface) => {
             name,
             start_time: start,
             end_time: end,
+            skip: 5 * skip,
+            take: 5,
           },
         })
         .then((response) => {
-          setLogs(response.data.data)
+          setLogs((state) => [...state, ...response.data.data])
         })
         .catch((error) => {
-          console.log(error)
           enqueueSnackbar(translateError(error.status), { variant: 'error' })
         })
     },

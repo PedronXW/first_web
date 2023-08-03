@@ -15,8 +15,6 @@ const DashboardCallsCarouselCell = ({
   if (todayCalls.data.length === 0) return <div></div>
 
   function searchReceiverData() {
-    console.log(todayCalls)
-
     return (
       'O ramal ' +
       call.src +
