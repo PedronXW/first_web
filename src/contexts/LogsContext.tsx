@@ -50,7 +50,6 @@ export const LogsProvider = ({ children }: LogsContextInterface) => {
 
   const fetchLogs = useCallback(
     async (skip: number, name?: string, start?: Date, end?: Date) => {
-      console.log('a')
       await api
         .get('audit/easy', {
           headers: { Authorization: `Bearer ${value.token}` },

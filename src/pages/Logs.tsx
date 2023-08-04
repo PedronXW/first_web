@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MagnifyingGlass } from '@phosphor-icons/react'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import InfiniteScroll from 'react-infinite-scroll-component'
 import { z } from 'zod'
 import BottomNavigationMenu from '../components/BottomNavigationMenu/BottomNavigationMenu'
 import DatePicker from '../components/DatePicker/DatePicker'
@@ -27,12 +26,22 @@ const Logs = () => {
   const [endSelected, setEndSelected] = useState<Date | null>(null)
   const [skip, setSkip] = useState<number>(0)
 
+  const ref = useRef(null)
+
   const searchForm = useForm<SearchLogFormData>({
     resolver: zodResolver(searchLogFormSchema),
   })
 
   useEffect(() => {
-    console.log(1)
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setSkip((currentValue) => currentValue + 1)
+      }
+    })
+    observer.observe(ref.current!)
+  }, [])
+
+  useEffect(() => {
     fetchLogs(
       skip,
       searchingValue,
@@ -50,19 +59,13 @@ const Logs = () => {
         <HeaderMobile />
         <div className="grow-1 h-full w-full flex flex-col overflow-y-scroll gap-2 pb-4">
           <Header title="Logs" />
-          <InfiniteScroll
-            dataLength={300}
-            next={() => setSkip(skip + 1)}
-            hasMore={true}
-            loader={<h4>Loading...</h4>}
-          >
-            <LogsList />
-          </InfiniteScroll>
+          <LogsList />
+          <div ref={ref}>Loading...</div>
         </div>
         <BottomNavigationMenu selected={3} />
       </div>
       <div
-        className={` h-full w-screen z-40 xl:w-min absolute xl:relative ${
+        className={`h-full w-screen z-40 xl:w-min absolute xl:relative ${
           searchLayoutStatus ? 'flex' : 'hidden xl:flex'
         }`}
       >
