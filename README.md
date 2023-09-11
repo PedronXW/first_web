@@ -1,7 +1,9 @@
 # Getting Started with Create React App
-![download](https://github.com/PedronXW/first_web/assets/40511076/90c56807-7cf5-4eb5-a352-34f697c1b705)
-![download](https://github.com/PedronXW/first_web/assets/40511076/2157a760-ff21-4c9a-9d15-9060551959ab)
 
+<br>
+<img align = "left" width="256" src="https://github.com/PedronXW/first_web/assets/40511076/2157a760-ff21-4c9a-9d15-9060551959ab" />
+Carlos é dono de uma empresa pequena, tem sua rotina de horários muito apertada, tem 35 anos, é casado, gosta de assistir esportes como fórmula 1 nos domingos. Ele não tem condições de manter um funcionário especializado com carteira assinada, pois sua empresa está em ascensão, porém ele necessita de reparos na estrutura onde a empresa se localiza. Ele utilizará o aplicativo para conseguir contratar esses serviços sem a necessidade de um pagamento mensal ao prestador.
+<br clear = "left">
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
