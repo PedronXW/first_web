@@ -1,7 +1,5 @@
 # Getting Started with Create React App
 
-![image](https://github.com/PedronXW/first_web/assets/40511076/bffb2151-b182-42b6-a920-3527ba8e1dce)
-
 ## Available Scripts
 
 In the project directory, you can run:
